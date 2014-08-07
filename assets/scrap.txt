@@ -3,6 +3,7 @@ https://developers.google.com/appengine/docs/python/appidentity/functions#get_de
 get_default_gcs_bucket_name()
 http://stackoverflow.com/a/3643392
 http://stackoverflow.com/a/16876405
+https://developers.google.com/appengine/docs/python/googlecloudstorageclient/getstarted
 
 Upload
 - Get hash
