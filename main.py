@@ -23,8 +23,8 @@ from google.appengine.ext.webapp import template
 import webapp2
 
 import icalendar
-
 import xlsxwriter
+import hashlib
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -34,6 +34,8 @@ class MainHandler(webapp2.RequestHandler):
 
 class Upload(webapp2.RequestHandler):
     def post(self):
+
+        hashlib.md5()
 
         wb = xlsxwriter.Workbook()
 
