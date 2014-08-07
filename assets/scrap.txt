@@ -1,0 +1,47 @@
+https://developers.google.com/appengine/docs/python/blobstore/#Python_Using_the_Blobstore_API_with_Google_Cloud_Storage
+https://developers.google.com/appengine/docs/python/appidentity/functions#get_default_gcs_bucket_name
+get_default_gcs_bucket_name()
+http://stackoverflow.com/a/3643392
+http://stackoverflow.com/a/16876405
+
+Upload
+- Get hash
+if (!exists)
+	- Validate file, get #entries etc
+	- Store
+
+- Return links
+
+
+import hashlib
+
+hash = hashlib.md5(data).hexdigest()
+
+if !hash:
+	cal = Calendar().read(data)
+
+	if ok:
+		key = storeDataToGCS(hash, data)
+
+
+
+import cloudstorage as gcs
+import main
+import webapp2
+
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
+google.appengine.api.app_identity
+
+
+def storeDataToGCS(hash, data):
+	filename = '%s/%s/%s' % (app_identity.get_default_gcs_bucket_name(), 'ics', hash)
+
+	with gcs.open(gcs_filename, 'w') as f:
+    	f.write(data)
+
+	# Blobstore API requires extra /gs to distinguish against blobstore files.
+	blobstore_filename = '/gs' + filename
+	# This blob_key works with blobstore APIs that do not expect a
+	# corresponding BlobInfo in datastore.
+	return blobstore.create_gs_key(blobstore_filename)
