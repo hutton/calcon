@@ -5,6 +5,8 @@ http://stackoverflow.com/a/3643392
 http://stackoverflow.com/a/16876405
 https://developers.google.com/appengine/docs/python/googlecloudstorageclient/getstarted
 
+Hash, BlobKey, Created Date, Date Paid, FileName, FileSize
+
 Upload
 - Get hash
 if (!exists)
