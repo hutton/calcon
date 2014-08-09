@@ -25,20 +25,7 @@ var holder = document.getElementById('holder'),
 
 
 function previewfile(file) {
-    if (tests.filereader === true && acceptedTypes[file.type] === true) {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            var image = new Image();
-            image.src = event.target.result;
-            image.width = 250; // a fake resize
-            holder.appendChild(image);
-        };
-
-        reader.readAsDataURL(file);
-    } else {
-        holder.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size / 1024 | 0) + 'K' : '');
-        console.log(file);
-    }
+    holder.innerHTML += '<p>Uploaded ' + file.name + ' ' + (file.size ? (file.size / 1024 | 0) + 'K' : '');
 }
 
 function readfiles(files) {
@@ -53,14 +40,14 @@ function readfiles(files) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/upload');
         xhr.onload = function () {
-            progress.value = progress.innerHTML = 100;
+//            progress.value = progress.innerHTML = 100;
         };
 
         if (tests.progress) {
             xhr.upload.onprogress = function (event) {
                 if (event.lengthComputable) {
                     var complete = (event.loaded / event.total * 100 | 0);
-                    progress.value = progress.innerHTML = complete;
+//                    progress.value = progress.innerHTML = complete;
                 }
             }
         }
@@ -80,8 +67,8 @@ if (tests.dnd) {
     };
     holder.ondrop = function (e) {
         this.className = '';
-        e.preventDefault();
-        readfiles(e.dataTransfer.files);
+//        e.preventDefault();
+//        readfiles(e.dataTransfer.files);
     }
 } else {
     fileupload.className = 'hidden';
@@ -90,3 +77,33 @@ if (tests.dnd) {
     };
 }
 
+$(document).ready(function () {
+    var holder = $('#holder');
+
+    holder.on('drop', function (e) {
+        e.preventDefault();
+        sendFiles(e.originalEvent.dataTransfer.files);
+    });
+
+    function sendFiles(files) {
+        var formData = tests.formdata ? new FormData() : null;
+
+        for (var i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/upload",
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function(data){
+            var response = jQuery.parseJSON(data);
+
+            if (response.key != null){
+
+            }
+        });
+    }
+});
