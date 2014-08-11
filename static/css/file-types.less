@@ -1,0 +1,155 @@
+// *** Example ***
+//
+//    <div class="file-type">
+//        <div>
+//            <span></span>
+//            <p>XLSX</p>
+//        </div>
+//    </div>
+//
+
+.file-type {
+    display: inline-block;
+    -webkit-perspective: 300;
+    width: 4em;
+    height: 6em;
+}
+.file-type > div {
+    width: 100%;
+    text-align: center;
+    background: #f0f0f0;
+    position: relative;
+    height: 4em;
+    top: 2em;
+    cursor: pointer;
+    display: inline-block;
+    -webkit-transform: rotateX(0deg) translateY(0px);
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+}
+.file-type:hover div {
+    -webkit-transform: rotateX(-10deg) translateY(12px);
+}
+.file-type > div:before {
+    content:"";
+    position: absolute;
+    top: -2em;
+    right: 0;
+    border-width: 0 2em 2em 0;
+    border-style: solid;
+    border-color: white transparent;
+}
+.file-type > div:after {
+    content:"";
+    position: absolute;
+    top: -2em;
+    left: 0;
+    right: 2em;
+    border-width: 1em;
+    border-style: solid;
+    border-color: #f0f0f0;
+}
+.file-type > div > span {
+    position: absolute;
+    top: 0em;
+    right: 0;
+    border-width: 2em 0 0 2em;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.05) transparent;
+}
+.file-type > div > p {
+    font-family:"Trebuchet MS", Helvetica, sans-serif;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 1.4em;
+    color: white;
+}
+.big {
+    width: 8em;
+    height: 12em;
+}
+.big > div {
+    height: 8em;
+    top: 4em;
+}
+.big > div:before {
+    top: -4em;
+    border-width: 0 4em 4em 0;
+}
+.big > div:after {
+    top: -4em;
+    right: 4em;
+    border-width: 2em;
+}
+.big > div > span {
+    border-width: 4em 0 0 4em;
+}
+.big > div > p {
+    font-size: 2.5em;
+    margin-top: 1.4em;
+}
+.green > div {
+    background: #37C49C;
+}
+.green > div:before {
+    border-color: #4ECEA6 transparent;
+}
+.green > div:after {
+    border-color: #37C49C;
+}
+.red > div {
+    background: #EC5757;
+}
+.red > div:before {
+    border-color: #F47878 transparent;
+}
+.red > div:after {
+    border-color: #EC5757;
+}
+.blue > div {
+    background: #47B8F7;
+}
+.blue > div:before {
+    border-color: #6BD0FB transparent;
+}
+.blue > div:after {
+    border-color: #47B8F7;
+}
+.yellow > div {
+    background: #FFC35A;
+}
+.yellow > div:before {
+    border-color: #FFCE87 transparent;
+}
+.yellow > div:after {
+    border-color: #FFC35A;
+}
+.orange > div {
+    background: #F7974A;
+}
+.orange > div:before {
+    border-color: #FBAB75 transparent;
+}
+.orange > div:after {
+    border-color: #F7974A;
+}
+
+.pink > div {
+    background: #F76081;
+}
+.pink > div:before {
+    border-color: #F77BA1 transparent;
+}
+.pink > div:after {
+    border-color: #F76081;
+}
+
+.brown > div {
+    background: #998B79;
+}
+.brown > div:before {
+    border-color: #A2968D transparent;
+}
+.brown > div:after {
+    border-color: #998B79;
+}
