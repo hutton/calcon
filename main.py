@@ -15,12 +15,14 @@
 # limitations under the License.
 #
 import logging
+import string
 import sys
 
 from google.appengine.api import app_identity
 from google.appengine.ext import db
 
 import conversion
+import downloading
 
 
 sys.path.insert(0, 'libs')
@@ -42,10 +44,18 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write(template.render(path, {}))
 
 
+def drop_extension_from_filename(filename):
+    sp = filename.split('.')
+
+    if len(sp) > 1:
+        return string.join(sp[:-1], '.')
+    else:
+        return filename
+
 class Upload(webapp2.RequestHandler):
     @staticmethod
-    def get_conversion_from_hash(file_hash):
-        query = conversion.Conversion.gql("WHERE hash = :hash", hash=file_hash)
+    def get_conversion_from_hash(file_hash, original_filename):
+        query = conversion.Conversion.gql("WHERE hash = :hash AND original_filename = :original_filename", hash=file_hash, original_filename=original_filename)
         conversions = query.fetch(1)
         if conversions:
             return conversions[0]
@@ -66,12 +76,12 @@ class Upload(webapp2.RequestHandler):
         if len(self.request.params.multi.dicts) > 1 and 'file' in self.request.params.multi.dicts[1]:
             file_info = self.request.params.multi.dicts[1]['file']
 
-            filename = file_info.filename
+            full_filename = file_info.filename
             file_content = file_info.file.read()
             file_size = len(file_content)
             file_hash = hashlib.md5(file_content).hexdigest()
 
-            current_conversion = self.get_conversion_from_hash(file_hash)
+            current_conversion = self.get_conversion_from_hash(file_hash, full_filename)
 
             if not current_conversion:
                 # noinspection PyBroadException
@@ -79,13 +89,14 @@ class Upload(webapp2.RequestHandler):
                     cal = icalendar.Calendar.from_ical(file_content)
                 except Exception, e:
                     cal = None
-                    logging.info('File ' + filename + ' was not a valid calendar')
+                    logging.info('File ' + full_filename + ' was not a valid calendar')
 
                 if cal:
                     current_conversion = conversion.Conversion()
 
                     current_conversion.hash = file_hash
-                    current_conversion.filename = filename
+                    current_conversion.full_filename = full_filename
+                    current_conversion.filename = drop_extension_from_filename(full_filename)
                     current_conversion.file_size = file_size
 
                     current_conversion.blob_key = self.save_file(file_hash, file_content)
@@ -94,19 +105,22 @@ class Upload(webapp2.RequestHandler):
 
                     response = {'message': "Calendar created.",
                                 'paid': not current_conversion.paid_date is None,
+                                'filename': current_conversion.filename,
                                 'key': current_conversion.hash}
                 else:
                     # Not a valid iCalendar
                     response = {'message': "Not a valid calendar.",
+                                'filename': None,
                                 'paid': False,
                                 'key': None}
             else:
                 response = {'message': "Exisiting calendar.",
                             'paid': not current_conversion.paid_date is None,
+                            'filename': current_conversion.filename,
                             'key': current_conversion.hash}
 
         self.response.out.write(simplejson.dumps(response))
 
-
 app = webapp2.WSGIApplication([('/', MainHandler),
-                               ('/upload', Upload)], debug=True)
+                               ('/upload', Upload),
+                               ('/download/.*', downloading.Downloading)], debug=True)

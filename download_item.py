@@ -4,15 +4,14 @@ __author__ = 'simonhutton'
 
 # Hash, BlobKey, Created Date, Date Paid, FileName, FileSize
 
-class Conversion(db.Model):
+class Download(db.Model):
     '''
     classdocs
     '''
 
     hash = db.StringProperty()
-    blob_key = db.BlobProperty()
-    created_date = db.DateTimeProperty(auto_now_add=True)
-    paid_date = db.DateTimeProperty()
     filename = db.StringProperty()
+    extension = db.StringProperty()
     file_size = db.IntegerProperty()
-    full_filename = db.StringProperty()
+    time = db.IntegerProperty()
+    created_date = db.DateTimeProperty(auto_now_add=True)
