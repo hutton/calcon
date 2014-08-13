@@ -71,6 +71,8 @@ window.App = Backbone.View.extend({
 
             var extension = split[split.length - 1];
 
+            $('input[type=hidden]').val(key);
+
             el.attr("href", "/download/" + key + "/" + filename + "." + extension);
         });
     }

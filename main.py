@@ -17,15 +17,16 @@
 import logging
 import string
 import sys
+import datetime
+
+sys.path.insert(0, 'libs')
 
 from google.appengine.api import app_identity
 from google.appengine.ext import db
 
 import conversion
 import downloading
-
-
-sys.path.insert(0, 'libs')
+import stripe
 
 import os
 from google.appengine._internal.django.utils import simplejson
@@ -34,14 +35,65 @@ import webapp2
 import cloudstorage as gcs
 
 import icalendar
-import xlsxwriter
 import hashlib
 from google.appengine.ext import blobstore
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
-        self.response.out.write(template.render(path, {}))
+        self.response.out.write(template.render(path, {'show_file': False}))
+
+
+class ShowFile(webapp2.RequestHandler):
+    def get(self):
+
+        path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
+
+        self.response.out.write(template.render(path, {'show_file': True}))
+
+
+class Pay(webapp2.RequestHandler):
+    @staticmethod
+    def get_conversion_from_hash(file_hash):
+        query = conversion.Conversion.gql("WHERE hash = :hash", hash=file_hash)
+        conversions = query.fetch(1)
+        if conversions:
+            return conversions[0]
+        else:
+            return None
+
+    def post(self):
+
+        stripe.api_key = "c1r52uIFDTaniTJc29tMbGGo0CGJeDtu"
+
+        # Get the credit card details submitted by the form
+        token = self.request.POST['stripeToken']
+        file_hash = self.request.POST['key']
+
+        current_conversion = self.get_conversion_from_hash(file_hash)
+
+        if current_conversion:
+            # Create the charge on Stripe's servers - this will charge the user's card
+            try:
+                charge = stripe.Charge.create(
+                    amount=200,
+                    currency="usd",
+                    card=token,
+                    description=current_conversion.filename
+                )
+
+                current_conversion.paid_date = datetime.datetime.now()
+
+                current_conversion.put()
+
+            except stripe.CardError, e:
+                # The card has been declined
+                pass
+
+            self.redirect("/" + file_hash)
+
+        self.redirect("/" + file_hash)
 
 
 def drop_extension_from_filename(filename):
@@ -52,10 +104,12 @@ def drop_extension_from_filename(filename):
     else:
         return filename
 
+
 class Upload(webapp2.RequestHandler):
     @staticmethod
-    def get_conversion_from_hash(file_hash, original_filename):
-        query = conversion.Conversion.gql("WHERE hash = :hash AND original_filename = :original_filename", hash=file_hash, original_filename=original_filename)
+    def get_conversion_from_hash_and_full_filename(file_hash, original_filename):
+        query = conversion.Conversion.gql("WHERE hash = :hash AND full_filename = :original_filename", hash=file_hash,
+                                          original_filename=original_filename)
         conversions = query.fetch(1)
         if conversions:
             return conversions[0]
@@ -74,14 +128,14 @@ class Upload(webapp2.RequestHandler):
     def post(self):
 
         if len(self.request.params.multi.dicts) > 1 and 'file' in self.request.params.multi.dicts[1]:
-            file_info = self.request.params.multi.dicts[1]['file']
+            file_info = self.request.POST['file']
 
             full_filename = file_info.filename
             file_content = file_info.file.read()
             file_size = len(file_content)
             file_hash = hashlib.md5(file_content).hexdigest()
 
-            current_conversion = self.get_conversion_from_hash(file_hash, full_filename)
+            current_conversion = self.get_conversion_from_hash_and_full_filename(file_hash, full_filename)
 
             if not current_conversion:
                 # noinspection PyBroadException
@@ -121,6 +175,9 @@ class Upload(webapp2.RequestHandler):
 
         self.response.out.write(simplejson.dumps(response))
 
+
 app = webapp2.WSGIApplication([('/', MainHandler),
                                ('/upload', Upload),
-                               ('/download/.*', downloading.Downloading)], debug=True)
+                               ('/download/.*', downloading.Downloading),
+                               ('/pay', Pay),
+                               ('/.*', ShowFile)], debug=True)

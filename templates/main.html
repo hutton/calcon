@@ -9,7 +9,7 @@
     <div>CalCon</div>
     <div id="holder">drop</div>
 
-    <div class="link-container" style="display: none;">
+    <div class="link-container" {% if not show_file %}style="display: none;"{% endif %}>
         <a class="download-link" href="unset.csv">
             <div class="file-type blue">
                 <div>
@@ -26,7 +26,20 @@
                 </div>
             </div>
         </a>
+        <form action="/pay" method="POST">
+              <input type="hidden" name="key" value=""/>
+              <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_SPjp98jtIuyUn3t6DJtvZSc5lBeqr"
+                data-amount="200"
+                data-label="Pay with Card"
+                data-name="ICS Convert"
+                data-description="File conversion ($2.00)"
+                data-image="/128x128.png">
+          </script>
     </div>
+
+    </form>
 
     <script src="/static/javascript/tp/jquery-2.1.1.js" language="javascript" type="text/javascript"></script>
     <script src="/static/javascript/tp/underscore-min.js" language="javascript" type="text/javascript"></script>
