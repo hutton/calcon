@@ -51,14 +51,21 @@ def storeDataToGCS(hash, data):
 
 
 
-Temporary workaround is mirroring the online docs manually, e.g.
-$ httrack -N100 -%k https://developers.google.com/appengine/docs/python/
-
 [1] https://code.google.com/p/googleappengine/source/browse/#svn%2Ftrunk%2Fdocs%2Fappengine%2Fdocs%2Fpython
 [2] https://code.google.com/p/googleappengine/downloads/list
-[3] http://www.httrack.com
-
-http://jsfiddle.net/hutton/t08mtpL2/4/
 
 
-/download/(?P<hash>[0-9a-z]+)/(?P<filename>[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+).(?P<extension>txt|csv)
+.csv
+.tsv
+.xlsx
+.xls
+.json
+.yaml
+.ods
+
+
+.txt
+.html
+.xml
+.pdf
+

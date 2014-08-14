@@ -6,10 +6,20 @@
     <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
 </head>
 <body>
-    <div>CalCon</div>
-    <div id="holder">drop</div>
+    <div class="fixed-width">CalCon</div>
+    <div class="fixed-width" id="holder"></div>
 
-    <div class="link-container" {% if not show_file %}style="display: none;"{% endif %}>
+    <div class="fixed-width" id="status-panel" {% if not show_file %}style="display: none;"{% endif %}">
+        <div id="uploading-message">Uploading <span>{% filename %}</span></div>
+        <div id="processing-message">Processing <span>{% filename %}</span></div>
+        <div id="file-message">
+            <div id="filename">{%= filename %}</div>
+            <div id="event-count">53 Events</div>
+            <div id="todo-count">10 Todos</div>
+        </div>
+    </div>
+
+    <div class="fixed-width link-container" {% if not show_file %}style="display: none;"{% endif %}>
         <a class="download-link" href="unset.csv">
             <div class="file-type blue">
                 <div>
@@ -27,8 +37,8 @@
             </div>
         </a>
         <form action="/pay" method="POST">
-              <input type="hidden" name="key" value=""/>
-              <script
+            <input type="hidden" name="key" value=""/>
+            <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="pk_SPjp98jtIuyUn3t6DJtvZSc5lBeqr"
                 data-amount="200"
@@ -36,10 +46,9 @@
                 data-name="ICS Convert"
                 data-description="File conversion ($2.00)"
                 data-image="/128x128.png">
-          </script>
+            </script>
+        </form>
     </div>
-
-    </form>
 
     <script src="/static/javascript/tp/jquery-2.1.1.js" language="javascript" type="text/javascript"></script>
     <script src="/static/javascript/tp/underscore-min.js" language="javascript" type="text/javascript"></script>

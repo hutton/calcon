@@ -25,6 +25,14 @@ window.App = Backbone.View.extend({
 
     holder: $('#holder'),
 
+    statusPanel: $('#status-panel'),
+
+    uploadingMessage: $('#uploading-message'),
+
+    processingMessage: $('#processing-message'),
+
+    fileMessage: $('#file-message'),
+
     linkContainer: $('.link-container'),
 
     downloadLinks: $('.download-link'),
@@ -34,6 +42,8 @@ window.App = Backbone.View.extend({
 
     onDrop: function (e) {
         e.preventDefault();
+        this.clearFile();
+
         this.sendFiles(e.originalEvent.dataTransfer.files);
     },
 
@@ -44,7 +54,11 @@ window.App = Backbone.View.extend({
 
         for (var i = 0; i < files.length; i++) {
             formData.append('file', files[i]);
+
+            this.setFileInfo({'filename': files[i].name});
         }
+
+        this.showUploading();
 
         $.ajax({
             type: "POST",
@@ -57,6 +71,7 @@ window.App = Backbone.View.extend({
 
             if (response.key != null) {
                 that.showDownloadLinks(response.key, response.filename, response.paid);
+                that.showFileStatus({'filename': response.filename});
             }
         });
     },
@@ -75,6 +90,48 @@ window.App = Backbone.View.extend({
 
             el.attr("href", "/download/" + key + "/" + filename + "." + extension);
         });
+    },
+
+    clearFile: function(){
+        this.statusPanel.hide();
+        this.linkContainer.hide();
+    },
+
+    showUploading: function(){
+        this.statusPanel.show();
+
+        this.uploadingMessage.show();
+        this.processingMessage.hide();
+        this.fileMessage.hide();
+    },
+
+    showFileStatus: function(){
+        this.statusPanel.show();
+
+        this.uploadingMessage.hide();
+        this.processingMessage.hide();
+        this.fileMessage.show();
+    },
+
+    setFileInfo: function(convertionInfo){
+        this.uploadingMessage.find('span').html(convertionInfo.filename);
+        this.processingMessage.find('span').html(convertionInfo.filename);
+
+        this.fileMessage.find('#filename').html(convertionInfo.filename);
+
+        if (_.isUndefined(convertionInfo.eventCount)){
+            this.fileMessage.find('#event-count').hide();
+        } else {
+            this.fileMessage.find('#event-count').show();
+            this.fileMessage.find('#event-count').html(convertionInfo.eventCount + " Events");
+        }
+
+        if (_.isUndefined(convertionInfo.todoCount)){
+            this.fileMessage.find('#todo-count').hide();
+        } else {
+            this.fileMessage.find('#todo-count').show();
+            this.fileMessage.find('#todo-count').html(convertionInfo.todoCount + " Todos");
+        }
     }
 });
 

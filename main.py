@@ -18,6 +18,7 @@ import logging
 import string
 import sys
 import datetime
+import re
 
 sys.path.insert(0, 'libs')
 
@@ -39,6 +40,15 @@ import hashlib
 from google.appengine.ext import blobstore
 
 
+def get_conversion_from_hash(file_hash):
+    query = conversion.Conversion.gql("WHERE hash = :hash", hash=file_hash)
+    conversions = query.fetch(1)
+    if conversions:
+        return conversions[0]
+    else:
+        return None
+
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
@@ -48,9 +58,23 @@ class MainHandler(webapp2.RequestHandler):
 class ShowFile(webapp2.RequestHandler):
     def get(self):
 
-        path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
+        matches = re.match(
+            r"/(?P<hash>[0-9a-z]+)",
+            self.request.path)
 
-        self.response.out.write(template.render(path, {'show_file': True}))
+        if matches:
+            file_hash = matches.group("hash")
+
+            current_conversion = get_conversion_from_hash(file_hash)
+
+            if current_conversion:
+                path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
+
+                self.response.out.write(template.render(path, {'show_file': True,
+                                                               'filename': current_conversion.filename}));
+                return
+
+        self.redirect('/')
 
 
 class Pay(webapp2.RequestHandler):
