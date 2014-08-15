@@ -1,0 +1,9 @@
+Todo
+----
+
+- Open sans
+- Fix upload bug
+- File details styling
+- Paid vs. not paid styling
+
+- Refactor upload to own file
