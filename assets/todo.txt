@@ -1,9 +1,9 @@
-Todo
-----
-
 - Open sans
+- Better error handling of upload bug
 - Fix upload bug
 - File details styling
-- Paid vs. not paid styling
+- Paid vs. not paid styling, with don't pay more than once
 
+- Email errors
 - Refactor upload to own file
+- Support link
