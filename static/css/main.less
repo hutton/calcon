@@ -3,9 +3,20 @@
 @import "file-types.less";
 @import "progress.less";
 
+@font-face {
+  font-family: 'Open Sans Light';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url('/static/fonts/opensans-light.wof') format('woff');
+}
+
+/********************* Globals ********************/
+
 body{
-    font-family: Helvetica, "Trebuchet MS", sans-serif;
-    font-size: 14px;
+    //font-family: Helvetica, "Trebuchet MS", sans-serif;
+
+    font-family: 'Open Sans Light', sans-serif;
+    font-size: 16px;
 }
 
 .fixed-width{
@@ -13,24 +24,33 @@ body{
     margin: 0px auto;
 }
 
+.big-font{
+    font-size: 400%;
+}
+
+.medium-font{
+    font-size: 150%;
+}
+/********************* Header ********************/
+
 #header-title{
-    font-size: 300%;
+    .big-font;
 
     text-align: center;
-    margin: 20px auto;
+    margin: 40px auto 20px auto;
 }
 
 #header-sub-title{
     text-align: center;
-    margin: 20px auto;
-    font-size: 120%;
-    line-height: 1.6em;
+    margin-bottom: 60px;
+    .medium-font;
+    line-height: 1.4em;
 }
 
 #holder {
     width: 300px;
     height: 300px;
-    border: 5px #808080 dashed;
+    border: 5px rgba(0,0,0,0.2) dashed;
     margin-top: 40px;
     margin-bottom: 20px;
     border-radius: 20px;
@@ -39,9 +59,9 @@ body{
 
 #holder-title{
     text-align: center;
-    margin: 10px auto;
-    font-size: 200%;
-    color: #a0a0a0;
+    margin: 20px auto;
+    .medium-font;
+    color: #b0b0b0;
 }
 
 .hover{
@@ -49,6 +69,23 @@ body{
 }
 
 /********************* Status **********************/
+
+.status-messages{
+    .medium-font;
+    margin: 10px auto;
+}
+
+#processing-message{
+    .status-messages;
+}
+
+#uploading-message{
+    .status-messages;
+}
+
+#file-upload-failed{
+    .status-messages;
+}
 
 #status-panel{
     margin: 20px auto;
@@ -73,7 +110,12 @@ body{
 }
 
 .not-paid{
-    background: #e0e0e0;
+    background: rgba(0,0,0,0.1);
+}
+
+#not-paid-title{
+    .medium-font;
+    margin: 5px 0px 20px 0px;
 }
 
 .not-paid .download-link{

@@ -37,6 +37,8 @@ window.App = Backbone.View.extend({
 
     downloadLinks: $('.download-link'),
 
+    fileUploadFailedMessage: $('#file-upload-failed'),
+
     uploadingProgress: $('#uploading-message > .progress > span'),
 
     events: {
@@ -85,6 +87,8 @@ window.App = Backbone.View.extend({
                     that.setFileInfo(response);
                     that.showFileStatus();
                 }
+            }).fail(function(data){
+                that.showUploadingFailed();
             });
     },
 
@@ -128,6 +132,7 @@ window.App = Backbone.View.extend({
         this.uploadingMessage.show();
         this.processingMessage.hide();
         this.fileMessage.hide();
+        this.fileUploadFailedMessage.hide();
     },
 
     showProcessing: function(){
@@ -136,6 +141,7 @@ window.App = Backbone.View.extend({
         this.uploadingMessage.hide();
         this.processingMessage.show();
         this.fileMessage.hide();
+        this.fileUploadFailedMessage.hide();
     },
 
     showFileStatus: function(){
@@ -144,7 +150,18 @@ window.App = Backbone.View.extend({
         this.uploadingMessage.hide();
         this.processingMessage.hide();
         this.fileMessage.show();
+        this.fileUploadFailedMessage.hide();
     },
+
+    showUploadingFailed: function(){
+        this.statusPanel.show();
+
+        this.uploadingMessage.hide();
+        this.processingMessage.hide();
+        this.fileMessage.hide();
+        this.fileUploadFailedMessage.show();
+    },
+
 
     setFileInfo: function(convertionInfo){
         this.uploadingMessage.find('> span').html(convertionInfo.filename);
