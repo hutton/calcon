@@ -13,89 +13,11 @@
 .xml
 .pdf
 
-function upload(){
-    var fileIn = $("#fileToUpload")[0];
-    //Has any file been selected yet?
-    if (fileIn.files === undefined || fileIn.files.length == 0) {
-        alert("Please select a file");
-        return;
-    }
 
-    //We will upload only one file in this demo
-    var file = fileIn.files[0];
-    //Show the progress bar
-    $("#progressbar").show();
-
-    $.ajax({
-        url: "MediaUploader?fileName=" + file.name + "&mimeType=" + file.type,
-        type: "POST",
-        data: file,
-        processData: false, //Work around #1
-        contentType: file.type, //Work around #2
-        success: function(){
-            $("#progressbar").hide();
-        },
-        error: function(){alert("Failed");},
-        //Work around #3
-        xhr: function() {
-            myXhr = $.ajaxSettings.xhr();
-            if(myXhr.upload){
-                myXhr.upload.addEventListener('progress',showProgress, false);
-            } else {
-                console.log("Upload progress is not supported.");
-            }
-            return myXhr;
-        }
-    });
-}
-
-function showProgress(evt) {
-    if (evt.lengthComputable) {
-        var percentComplete = (evt.loaded / evt.total) * 100;
-        $('#progressbar').progressbar("option", "value", percentComplete );
-    }  
-}
-
-
-<div class='progress'>
-    <span style="width: 80%;"></span>
-</div>
-
-<div class='progress indefinite'>
-    <span style="width: 80%;"></span>
-</div>
-
-
-.progress{
-    width: 50%;
-    height: 2px;
-    background: rgba(0,0,0,0.05);
-    margin: 10px auto;
-}
-
-.progress > span{
-    display: block;
-    height: 100%;
-    background: #4679BD;
-}
-
-.indefinite > span{
-    position: relative;
-    width: 10% !important;
-    -webkit-animation: myfirst linear 2s infinite;
-    animation: myfirst linear 2s infinite;
-}
-
-/* Standard syntax */
-@keyframes myfirst {
-    0%   {left: 0%}
-    50%  {left: 90%}
-    100% {left: 0%}
-}
-
-@-webkit-keyframes myfirst {
-    0%   {left: 0%}
-    50%  {left: 90%}
-    100% {left: 0%}
-}
-
+  File &quot;/base/data/home/runtimes/python27/python27_lib/versions/third_party/webapp2-2.5.2/webapp2.py&quot;, line 570, in dispatch
+    return method(*args, **kwargs)
+  File &quot;/base/data/home/apps/s~icsconvert/1.377982994356156312/main.py&quot;, line 180, in post
+    events, todos = process_calendar(cal)
+  File &quot;/base/data/home/apps/s~icsconvert/1.377982994356156312/helper.py&quot;, line 17, in process_calendar
+    'Created': component.get('dtstamp').dt}
+AttributeError: 'NoneType' object has no attribute 'dt'
