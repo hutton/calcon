@@ -6,36 +6,117 @@
     <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
 </head>
 <body>
-    <div class="fixed-width">CalCon</div>
-    <div class="fixed-width" id="holder"></div>
+    <div class="fixed-width">
+        <div id="header-title">
+        Free ICS to CSV converter
+        </div>
+        <div id="header-sub-title">
+            <div>
+            Get all these other file formats for just $2
+            </div>
+            <div>
+            XLSX, HTML, XML, PDF, JSON, TXT, TSV
+            </div>
+        </div>
+    </div>
+    <div class="fixed-width" id="holder">
+        <div id="holder-title">Drop your</br>file here</div>
+        <div class="file-type red big">
+                <div>
+                    <span></span>
+                    <p>.ICS</p>
+                </div>
+            </div>
+    </div>
 
-    <div class="fixed-width" id="status-panel" {% if not show_file %}style="display: none;"{% endif %}">
-        <div id="uploading-message">Uploading <span>{% filename %}</span></div>
-        <div id="processing-message">Processing <span>{% filename %}</span></div>
+    <div class="fixed-width" id="status-panel" {% if not show_file %}style="display: none;"{% endif %}>
+        <div id="uploading-message" {% if show_file %}style="display: none;"{% endif %}>Uploading <span>{{ full_filename }}</span>
+            <div class='progress'>
+                <span style="width: 0%;"></span>
+            </div>
+        </div>
+        <div id="processing-message" {% if show_file %}style="display: none;"{% endif %}>Processing <span>{{ full_filename }}</span>
+            <div class='progress indefinite'>
+                <span></span>
+            </div>
+        </div>
         <div id="file-message">
-            <div id="filename">{%= filename %}</div>
-            <div id="event-count">53 Events</div>
-            <div id="todo-count">10 Todos</div>
+            <div id="filename">{{ full_filename }}</div>
+            <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Events</div>
+            <div id="todo-count" {% if not todo_count %}style="display: none;"{% endif %}>{{ todo_count }} Todos</div>
         </div>
     </div>
 
     <div class="fixed-width link-container" {% if not show_file %}style="display: none;"{% endif %}>
-        <a class="download-link" href="unset.csv">
-            <div class="file-type blue">
-                <div>
-                    <span></span>
-                    <p>CSV</p>
+        <div id="free-download-links">
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.csv">
+                <div class="file-type blue">
+                    <div>
+                        <span></span>
+                        <p>CSV</p>
+                    </div>
                 </div>
-            </div>
-        </a>
-        <a class="download-link" href="unset.txt">
-            <div class="file-type red">
-                <div>
-                    <span></span>
-                    <p>TXT</p>
+            </a>
+        </div>
+        <div class="not-paid" id="paid-download-links">
+            <div>Get all these other file types for just $2</div>
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.xlsx">
+                <div class="file-type green">
+                    <div>
+                        <span></span>
+                        <p>XLSX</p>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.html">
+                <div class="file-type pink">
+                    <div>
+                        <span></span>
+                        <p>HTML</p>
+                    </div>
+                </div>
+            </a>
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.xml">
+                <div class="file-type yellow">
+                    <div>
+                        <span></span>
+                        <p>XML</p>
+                    </div>
+                </div>
+            </a>
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.pdf">
+                <div class="file-type red">
+                    <div>
+                        <span></span>
+                        <p>PDF</p>
+                    </div>
+                </div>
+            </a>
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.json">
+                <div class="file-type orange">
+                    <div>
+                        <span></span>
+                        <p>JSON</p>
+                    </div>
+                </div>
+            </a>
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.txt">
+                <div class="file-type brown">
+                    <div>
+                        <span></span>
+                        <p>TXT</p>
+                    </div>
+                </div>
+            </a>
+            <a class="download-link" href="\download\{{ key }}\{{ filename }}.tsv">
+                <div class="file-type green">
+                    <div>
+                        <span></span>
+                        <p>TSV</p>
+                    </div>
+                </div>
+            </a>
+        </div>
         <form action="/pay" method="POST">
             <input type="hidden" name="key" value=""/>
             <script

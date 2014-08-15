@@ -1,4 +1,5 @@
 import sys
+from helper import process_calendar
 
 sys.path.insert(0, 'libs')
 
@@ -10,22 +11,6 @@ import tablib
 import icalendar
 
 __author__ = 'simonhutton'
-
-
-def process_calendar(calendar):
-    events = []
-
-    for component in calendar.walk():
-        if component.name == "VEVENT":
-            event = {'Summary': component.get('summary'),
-                     'Description': component.get('description'),
-                     'Start': component.get('dtstart').dt,
-                     'End': component.get('dtend').dt,
-                     'Created': component.get('dtstamp').dt}
-
-            events.append(event)
-
-    return events
 
 
 def build_tab_lib_dataset(events):
@@ -75,7 +60,7 @@ class Downloading(webapp2.RequestHandler):
 
                 gcal = icalendar.Calendar.from_ical(file_content)
 
-                events = process_calendar(gcal)
+                events, todos = process_calendar(gcal)
                 
                 if extension == 'csv':
                     self.response.headers['Content-Type'] = 'application/csv'

@@ -37,6 +37,8 @@ window.App = Backbone.View.extend({
 
     downloadLinks: $('.download-link'),
 
+    uploadingProgress: $('#uploading-message > .progress > span'),
+
     events: {
     },
 
@@ -65,15 +67,38 @@ window.App = Backbone.View.extend({
             url: "/upload",
             data: formData,
             processData: false,
-            contentType: false
-        }).done(function (data) {
-            var response = jQuery.parseJSON(data);
-
-            if (response.key != null) {
-                that.showDownloadLinks(response.key, response.filename, response.paid);
-                that.showFileStatus({'filename': response.filename});
+            contentType: false,
+            xhr: function() {
+                myXhr = $.ajaxSettings.xhr();
+                if(myXhr.upload){
+                    myXhr.upload.addEventListener('progress', that.showProgress, false);
+                } else {
+                    console.log("Upload progress is not supported.");
+                }
+                return myXhr;
             }
-        });
+            }).done(function (data) {
+                var response = jQuery.parseJSON(data);
+
+                if (response.key != null) {
+                    that.showDownloadLinks(response.key, response.filename, response.paid);
+                    that.setFileInfo(response);
+                    that.showFileStatus();
+                }
+            });
+    },
+
+    showProgress: function(evt){
+
+        if (evt.lengthComputable) {
+            var percentComplete = (evt.loaded / evt.total) * 100;
+
+            if (percentComplete < 100){
+                window.App.uploadingProgress.css("width", percentComplete + "%");
+            } else{
+                window.App.showProcessing();
+            }
+        }
     },
 
     showDownloadLinks: function(key, filename, paid){
@@ -105,6 +130,14 @@ window.App = Backbone.View.extend({
         this.fileMessage.hide();
     },
 
+    showProcessing: function(){
+        this.statusPanel.show();
+
+        this.uploadingMessage.hide();
+        this.processingMessage.show();
+        this.fileMessage.hide();
+    },
+
     showFileStatus: function(){
         this.statusPanel.show();
 
@@ -114,23 +147,23 @@ window.App = Backbone.View.extend({
     },
 
     setFileInfo: function(convertionInfo){
-        this.uploadingMessage.find('span').html(convertionInfo.filename);
-        this.processingMessage.find('span').html(convertionInfo.filename);
+        this.uploadingMessage.find('> span').html(convertionInfo.filename);
+        this.processingMessage.find('> span').html(convertionInfo.filename);
 
         this.fileMessage.find('#filename').html(convertionInfo.filename);
 
-        if (_.isUndefined(convertionInfo.eventCount)){
+        if (_.isUndefined(convertionInfo.event_count) && convertionInfo.event_count > 0){
             this.fileMessage.find('#event-count').hide();
         } else {
             this.fileMessage.find('#event-count').show();
-            this.fileMessage.find('#event-count').html(convertionInfo.eventCount + " Events");
+            this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Events");
         }
 
-        if (_.isUndefined(convertionInfo.todoCount)){
+        if (_.isUndefined(convertionInfo.todo_count) && convertionInfo.todo_count > 0){
             this.fileMessage.find('#todo-count').hide();
         } else {
             this.fileMessage.find('#todo-count').show();
-            this.fileMessage.find('#todo-count').html(convertionInfo.todoCount + " Todos");
+            this.fileMessage.find('#todo-count').html(convertionInfo.todo_count + " Todos");
         }
     }
 });

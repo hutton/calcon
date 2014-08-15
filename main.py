@@ -19,6 +19,7 @@ import string
 import sys
 import datetime
 import re
+from helper import process_calendar
 
 sys.path.insert(0, 'libs')
 
@@ -71,7 +72,11 @@ class ShowFile(webapp2.RequestHandler):
                 path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
 
                 self.response.out.write(template.render(path, {'show_file': True,
-                                                               'filename': current_conversion.filename}));
+                                                                'event_count': current_conversion.event_count,
+                                                                'todo_count': current_conversion.todo_count,
+                                                                'key': current_conversion.hash,
+                                                                'filename': current_conversion.filename,
+                                                                'full_filename': current_conversion.full_filename}))
                 return
 
         self.redirect('/')
@@ -172,10 +177,14 @@ class Upload(webapp2.RequestHandler):
                 if cal:
                     current_conversion = conversion.Conversion()
 
+                    events, todos = process_calendar(cal)
+
                     current_conversion.hash = file_hash
                     current_conversion.full_filename = full_filename
                     current_conversion.filename = drop_extension_from_filename(full_filename)
                     current_conversion.file_size = file_size
+                    current_conversion.event_count = len(events)
+                    current_conversion.todo_count = len(todos)
 
                     current_conversion.blob_key = self.save_file(file_hash, file_content)
 
@@ -184,6 +193,8 @@ class Upload(webapp2.RequestHandler):
                     response = {'message': "Calendar created.",
                                 'paid': not current_conversion.paid_date is None,
                                 'filename': current_conversion.filename,
+                                'event_count': current_conversion.event_count,
+                                'todo_count': current_conversion.todo_count,
                                 'key': current_conversion.hash}
                 else:
                     # Not a valid iCalendar
@@ -195,6 +206,8 @@ class Upload(webapp2.RequestHandler):
                 response = {'message': "Exisiting calendar.",
                             'paid': not current_conversion.paid_date is None,
                             'filename': current_conversion.filename,
+                            'event_count': current_conversion.event_count,
+                            'todo_count': current_conversion.todo_count,
                             'key': current_conversion.hash}
 
         self.response.out.write(simplejson.dumps(response))

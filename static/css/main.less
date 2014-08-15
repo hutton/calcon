@@ -1,6 +1,7 @@
 
 @import "reset.less";
 @import "file-types.less";
+@import "progress.less";
 
 body{
     font-family: Helvetica, "Trebuchet MS", sans-serif;
@@ -8,16 +9,39 @@ body{
 }
 
 .fixed-width{
-    width: 800px;
+    max-width: 800px;
     margin: 0px auto;
+}
+
+#header-title{
+    font-size: 300%;
+
+    text-align: center;
+    margin: 20px auto;
+}
+
+#header-sub-title{
+    text-align: center;
+    margin: 20px auto;
+    font-size: 120%;
+    line-height: 1.6em;
 }
 
 #holder {
     width: 300px;
     height: 300px;
     border: 5px #808080 dashed;
-    margin: 0px auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
     border-radius: 20px;
+    text-align: center;
+}
+
+#holder-title{
+    text-align: center;
+    margin: 10px auto;
+    font-size: 200%;
+    color: #a0a0a0;
 }
 
 .hover{
@@ -31,6 +55,37 @@ body{
     text-align: center;
 }
 
+/********************* Links ***********************/
+
+.download-link-container{
+    padding: 20px 20px;
+    display: inline-block;
+}
+
+#free-download-links{
+    .download-link-container;
+
+}
+
+#paid-download-links{
+    .download-link-container;
+
+}
+
+.not-paid{
+    background: #e0e0e0;
+}
+
+.not-paid .download-link{
+    pointer-events: none;
+}
+
+.download-link{
+    margin: 0px 5px;
+    text-decoration: none;
+}
+
 .link-container{
     text-align: center;
+    margin-bottom: 100px;
 }

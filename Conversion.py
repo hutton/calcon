@@ -16,3 +16,5 @@ class Conversion(db.Model):
     filename = db.StringProperty()
     file_size = db.IntegerProperty()
     full_filename = db.StringProperty()
+    event_count = db.IntegerProperty()
+    todo_count = db.IntegerProperty()
