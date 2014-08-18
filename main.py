@@ -72,6 +72,7 @@ class ShowFile(webapp2.RequestHandler):
                 path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
 
                 self.response.out.write(template.render(path, {'show_file': True,
+                                                               'paid': current_conversion.paid_date is not None,
                                                                 'event_count': current_conversion.event_count,
                                                                 'todo_count': current_conversion.todo_count,
                                                                 'key': current_conversion.hash,

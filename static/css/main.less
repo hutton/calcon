@@ -57,6 +57,10 @@ body{
     text-align: center;
 }
 
+#holder > .file-type{
+    margin-top: 37px;
+}
+
 #holder-title{
     text-align: center;
     margin: 20px auto;
@@ -94,6 +98,26 @@ body{
 
 /********************* Links ***********************/
 
+.show_file #free-download-links .link-section-container{
+    background: transparent;
+}
+
+
+
+.link-section-container{
+    background: rgba(0,0,0,0.1);
+    margin: 0px 10px;
+}
+
+.link-section-container > .title{
+    .medium-font;
+    margin: 5px 0px 20px 0px;
+}
+
+.link-section-container > .footer{
+    margin: 5px 0px 5px 0px;
+}
+
 .download-link-container{
     padding: 20px 20px;
     display: inline-block;
@@ -109,16 +133,7 @@ body{
 
 }
 
-.not-paid{
-    background: rgba(0,0,0,0.1);
-}
-
-#not-paid-title{
-    .medium-font;
-    margin: 5px 0px 20px 0px;
-}
-
-.not-paid .download-link{
+.not-paid #paid-download-links .download-link{
     pointer-events: none;
 }
 

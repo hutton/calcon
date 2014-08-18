@@ -10,25 +10,25 @@
 <body>
     <div class="fixed-width">
         <div id="header-title">
-        Free ICS to CSV converter
+        ICS File Converter
         </div>
-        <div id="header-sub-title">
-            <div>
-            Get all these other file formats for just $2
-            </div>
-            <div>
-            XLSX, HTML, XML, PDF, JSON, TXT, TSV
-            </div>
-        </div>
+        <!--<div id="header-sub-title">-->
+            <!--<div>-->
+            <!--Get all these other file formats for just $2-->
+            <!--</div>-->
+            <!--<div>-->
+            <!--XLSX, HTML, XML, PDF, JSON, TXT, TSV-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <div class="fixed-width" id="holder">
-        <div id="holder-title">Drop file here</div>
         <div class="file-type red big">
-                <div>
-                    <span></span>
-                    <p>.ICS</p>
-                </div>
+            <div>
+                <span></span>
+                <p>.ICS</p>
             </div>
+        </div>
+        <div id="holder-title">Drop file here</div>
     </div>
 
     <div class="fixed-width" id="status-panel" {% if not show_file %}style="display: none;"{% endif %}>
@@ -42,7 +42,7 @@
                 <span></span>
             </div>
         </div>
-        <div id="file-upload-failed" style="display: false;">
+        <div id="file-upload-failed" style="display: none;">
             <div>Opps! There was a problem processing your file.<br/>Try another?!</div>
         </div>
         <div id="file-message">
@@ -52,8 +52,9 @@
         </div>
     </div>
 
-    <div class="fixed-width link-container" {% if not show_file %}style="display: none;"{% endif %}>
-        <div id="free-download-links">
+    <div class="fixed-width link-container {% if paid %}paid{% else %}not-paid{% endif %} {% if show_file %}show_file{% endif %}">
+        <div class="link-section-container" id="free-download-links">
+            <div class="title">Free</div>
             <a class="download-link" href="\download\{{ key }}\{{ filename }}.csv">
                 <div class="file-type blue">
                     <div>
@@ -62,9 +63,12 @@
                     </div>
                 </div>
             </a>
+            {% if show_file %}
+            <div class="footer">Click to<br/>download</div>
+            {% endif %}
         </div>
-        <div class="not-paid" id="paid-download-links">
-            <div id="not-paid-title">Get all these other file types for just $2</div>
+        <div class="link-section-container" id="paid-download-links">
+            <div class="title" id="not-paid-title">All these other file types for just $2</div>
             <a class="download-link" href="\download\{{ key }}\{{ filename }}.xlsx">
                 <div class="file-type green">
                     <div>
@@ -121,6 +125,7 @@
                     </div>
                 </div>
             </a>
+            <div class="pay-button">
             <form action="/pay" method="POST">
                 <input type="hidden" name="key" value=""/>
                 <script
@@ -133,6 +138,7 @@
                     data-image="/128x128.png">
                 </script>
             </form>
+            </div>
         </div>
     </div>
 
