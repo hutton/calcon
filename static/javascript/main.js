@@ -106,7 +106,12 @@ window.App = Backbone.View.extend({
     },
 
     showDownloadLinks: function(key, filename, paid){
-        this.linkContainer.show();
+
+        this.linkContainer.addClass('show_file');
+
+        if (paid){
+            this.linkContainer.addClass('paid');
+        }
 
         this.downloadLinks.each(function(index, element){
             var el = $(element);
@@ -123,7 +128,6 @@ window.App = Backbone.View.extend({
 
     clearFile: function(){
         this.statusPanel.hide();
-        this.linkContainer.hide();
     },
 
     showUploading: function(){

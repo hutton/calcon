@@ -96,31 +96,45 @@ body{
     text-align: center;
 }
 
-/********************* Links ***********************/
-
-.show_file #free-download-links .link-section-container{
-    background: transparent;
+#filename{
+    .medium-font;
+    margin-bottom: 10px;
 }
 
+/********************* Links ***********************/
 
+@padding: 20px;
+
+.link-container{
+    margin-top: 80px;
+}
 
 .link-section-container{
     background: rgba(0,0,0,0.1);
     margin: 0px 10px;
+    position: relative;
 }
 
 .link-section-container > .title{
     .medium-font;
-    margin: 5px 0px 20px 0px;
+    top: @padding;
+    width: 100%;
+    position: absolute;
+}
+
+.link-section-container > .content{
+    margin-top: 50px;
+    padding: 20px @padding;
 }
 
 .link-section-container > .footer{
-    margin: 5px 0px 5px 0px;
+    display: none;
+    padding-bottom: @padding;
 }
 
 .download-link-container{
-    padding: 20px 20px;
     display: inline-block;
+    vertical-align: top;
 }
 
 #free-download-links{
@@ -134,15 +148,84 @@ body{
 }
 
 .not-paid #paid-download-links .download-link{
-    pointer-events: none;
 }
 
 .download-link{
     margin: 0px 5px;
     text-decoration: none;
+
+    pointer-events: none;
 }
 
 .link-container{
     text-align: center;
     margin-bottom: 100px;
 }
+
+#link-container-footer{
+    display: none;
+    .medium-font;
+    margin-top: 20px;
+}
+
+#never-pay-twice{
+    margin-top: 10px;
+}
+
+/* Conditional */
+
+.show_file #free-download-links.link-section-container{
+    background: transparent;
+}
+
+.show_file #free-download-links .download-link{
+    pointer-events: auto;
+}
+
+.show_file #free-download-links .title{
+    display: none;
+}
+
+.show_file #free-download-links .footer{
+    display: block;
+}
+
+.show_file #paid-download-links .footer{
+    display: block;
+}
+
+.paid .link-section-container{
+    margin: 0px;
+}
+
+.paid #free-download-links .footer{
+    display: none;
+}
+
+.paid #paid-download-links .title{
+    display: none;
+}
+
+.paid #paid-download-links .footer{
+    display: none;
+}
+
+.paid .content{
+    margin-top: 0px;
+    padding: 0px;
+}
+
+.paid #paid-download-links .download-link{
+    pointer-events: auto;
+}
+
+.paid #paid-download-links.link-section-container{
+    background: transparent;
+}
+
+.paid #link-container-footer{
+    display: block;
+}
+
+
+

@@ -52,94 +52,98 @@
         </div>
     </div>
 
-    <div class="fixed-width link-container {% if paid %}paid{% else %}not-paid{% endif %} {% if show_file %}show_file{% endif %}">
+    <div class="fixed-width link-container {% if paid %}paid{% endif %} {% if show_file %}show_file{% endif %}">
         <div class="link-section-container" id="free-download-links">
             <div class="title">Free</div>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.csv">
-                <div class="file-type blue">
-                    <div>
-                        <span></span>
-                        <p>CSV</p>
+            <div class="content">
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.csv">
+                    <div class="file-type blue">
+                        <div>
+                            <span></span>
+                            <p>CSV</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            {% if show_file %}
+                </a>
+            </div>
             <div class="footer">Click to<br/>download</div>
-            {% endif %}
         </div>
         <div class="link-section-container" id="paid-download-links">
             <div class="title" id="not-paid-title">All these other file types for just $2</div>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.xlsx">
-                <div class="file-type green">
-                    <div>
-                        <span></span>
-                        <p>XLSX</p>
+            <div class="content">
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.xlsx">
+                    <div class="file-type green">
+                        <div>
+                            <span></span>
+                            <p>XLSX</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.html">
-                <div class="file-type pink">
-                    <div>
-                        <span></span>
-                        <p>HTML</p>
+                </a>
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.html">
+                    <div class="file-type pink">
+                        <div>
+                            <span></span>
+                            <p>HTML</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.xml">
-                <div class="file-type yellow">
-                    <div>
-                        <span></span>
-                        <p>XML</p>
+                </a>
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.xml">
+                    <div class="file-type yellow">
+                        <div>
+                            <span></span>
+                            <p>XML</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.pdf">
-                <div class="file-type red">
-                    <div>
-                        <span></span>
-                        <p>PDF</p>
+                </a>
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.pdf">
+                    <div class="file-type red">
+                        <div>
+                            <span></span>
+                            <p>PDF</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.json">
-                <div class="file-type orange">
-                    <div>
-                        <span></span>
-                        <p>JSON</p>
+                </a>
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.json">
+                    <div class="file-type orange">
+                        <div>
+                            <span></span>
+                            <p>JSON</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.txt">
-                <div class="file-type brown">
-                    <div>
-                        <span></span>
-                        <p>TXT</p>
+                </a>
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.txt">
+                    <div class="file-type brown">
+                        <div>
+                            <span></span>
+                            <p>TXT</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a class="download-link" href="\download\{{ key }}\{{ filename }}.tsv">
-                <div class="file-type green">
-                    <div>
-                        <span></span>
-                        <p>TSV</p>
+                </a>
+                <a class="download-link" href="\download\{{ key }}\{{ filename }}.tsv">
+                    <div class="file-type green">
+                        <div>
+                            <span></span>
+                            <p>TSV</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <div class="pay-button">
-            <form action="/pay" method="POST">
-                <input type="hidden" name="key" value=""/>
-                <script
-                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="pk_SPjp98jtIuyUn3t6DJtvZSc5lBeqr"
-                    data-amount="200"
-                    data-label="Pay with Card"
-                    data-name="ICS Convert"
-                    data-description="File conversion ($2.00)"
-                    data-image="/128x128.png">
-                </script>
-            </form>
+                </a>
+            </div>
+            <div class="footer">
+                <form action="/pay" method="POST">
+                    <input type="hidden" name="key" value=""/>
+                    <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_SPjp98jtIuyUn3t6DJtvZSc5lBeqr"
+                        data-amount="200"
+                        data-label="Pay with Card"
+                        data-name="ICS Convert"
+                        data-description="File conversion ($2.00)"
+                        data-image="/128x128.png">
+                    </script>
+                </form>
+                <div id="never-pay-twice">* Never pay twice for the same .ics file.</div>
             </div>
         </div>
+        <div id="link-container-footer">Click to download</div>
     </div>
 
     <script src="/static/javascript/tp/jquery-2.1.1.js" language="javascript" type="text/javascript"></script>
