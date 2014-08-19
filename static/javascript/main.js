@@ -41,8 +41,6 @@ window.App = Backbone.View.extend({
 
     uploadingProgress: $('#uploading-message > .progress > span'),
 
-    linkContainerHeader: $('#link-container-header'),
-
     events: {
     },
 
@@ -61,7 +59,7 @@ window.App = Backbone.View.extend({
         for (var i = 0; i < files.length; i++) {
             formData.append('file', files[i]);
 
-            this.setFileInfo({'filename': files[i].name});
+            this.setFileInfo({'full_filename': files[i].name});
         }
 
         this.showUploading();
@@ -132,10 +130,12 @@ window.App = Backbone.View.extend({
 
     clearFile: function(){
         this.statusPanel.hide();
+        this.linkContainer.removeClass('show_file');
+        this.linkContainer.removeClass('paid');
     },
 
     showUploading: function(){
-        this.linkContainerHeader.hide();
+
         this.statusPanel.show();
 
         this.uploadingMessage.show();
@@ -145,7 +145,6 @@ window.App = Backbone.View.extend({
     },
 
     showProcessing: function(){
-        this.linkContainerHeader.hide();
         this.statusPanel.show();
 
         this.uploadingMessage.hide();
@@ -155,7 +154,6 @@ window.App = Backbone.View.extend({
     },
 
     showFileStatus: function(){
-        this.linkContainerHeader.hide();
         this.statusPanel.show();
 
         this.uploadingMessage.hide();
@@ -165,7 +163,6 @@ window.App = Backbone.View.extend({
     },
 
     showUploadingFailed: function(message){
-        this.linkContainerHeader.hide();
         this.statusPanel.show();
 
         this.uploadingMessage.hide();
@@ -174,9 +171,6 @@ window.App = Backbone.View.extend({
         this.fileUploadFailedMessage.show();
 
         $('#file-upload-failed-message').html(message);
-
-        this.linkContainer.removeClass('show_file');
-        this.linkContainer.removeClass('paid');
     },
 
     setFileInfo: function(convertionInfo){

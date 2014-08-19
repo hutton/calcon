@@ -12,7 +12,7 @@
 
 /********************* Globals ********************/
 
-@section-margin: 40px;
+@section-margin: 60px;
 
 body{
     //font-family: Helvetica, "Trebuchet MS", sans-serif;
@@ -63,7 +63,7 @@ body{
 }
 
 #holder > .file-type{
-    margin-top: @section-margin;
+    margin-top: 40px;
 }
 
 #holder-title{
@@ -80,7 +80,6 @@ body{
 
 .status-messages{
     .medium-font;
-    margin: 10px auto;
 }
 
 #processing-message{
@@ -112,6 +111,13 @@ body{
     margin-bottom: 20px;
 }
 
+#paid-title{
+    display: none;
+    .medium-font;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 @padding: 20px;
 
 .link-container{
@@ -121,7 +127,7 @@ body{
 }
 
 .link-section-container{
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.07);
     margin: 0px 10px;
     position: relative;
 }
@@ -203,6 +209,10 @@ body{
     display: block;
 }
 
+.show_file #link-container-header {
+    display: none;
+}
+
 .paid .link-section-container{
     margin: 0px;
 }
@@ -233,6 +243,10 @@ body{
 }
 
 .paid #link-container-footer{
+    display: block;
+}
+
+.paid #paid-title{
     display: block;
 }
 

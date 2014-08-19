@@ -1,6 +1,7 @@
 import string
 from google.appengine.api.app_identity import app_identity
 from google.appengine.ext import db
+import time
 
 __author__ = 'simonhutton'
 
@@ -17,7 +18,7 @@ import hashlib
 from google.appengine.ext import blobstore
 import logging
 import cloudstorage as gcs
-from helper import process_calendar
+from helper import process_calendar, log_upload
 from google.appengine._internal.django.utils import simplejson
 
 def drop_extension_from_filename(filename):
@@ -61,6 +62,8 @@ class Upload(webapp2.RequestHandler):
 
             current_conversion = self.get_conversion_from_hash_and_full_filename(file_hash, full_filename)
 
+            start_time = time.time()
+
             if not current_conversion:
                 # noinspection PyBroadException
                 try:
@@ -92,6 +95,8 @@ class Upload(webapp2.RequestHandler):
                                 'event_count': current_conversion.event_count,
                                 'todo_count': current_conversion.todo_count,
                                 'key': current_conversion.hash}
+
+                    log_upload(current_conversion, time.time() - start_time)
                 else:
                     # Not a valid iCalendar
                     response = {'message': "That's not a valid iCalendar file.",
@@ -108,6 +113,8 @@ class Upload(webapp2.RequestHandler):
                             'event_count': current_conversion.event_count,
                             'todo_count': current_conversion.todo_count,
                             'key': current_conversion.hash}
+
+                log_upload(current_conversion, time.time() - start_time)
 
         self.response.out.write(simplejson.dumps(response))
 

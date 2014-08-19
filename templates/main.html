@@ -5,6 +5,7 @@
     <title>ICS Converter</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
     <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
+    <link rel="shortcut icon" href="/static/images/32x32.png">
 
 </head>
 <body>
@@ -53,7 +54,8 @@
     </div>
 
     <div class="fixed-width link-container {% if paid %}paid{% endif %} {% if show_file %}show_file{% endif %}">
-        <div id="link-container-header" {% if show_file %}style="display: none;"{% endif %}>Convert your ICS files to any of these formats.</div>
+        <div id="link-container-header">Convert your ICS files to any of these formats.</div>
+        <div id="paid-title">You Rock! Here's your files.</div>
         <div class="link-section-container" id="free-download-links">
             <div class="title">Free</div>
             <div class="content">
@@ -135,7 +137,7 @@
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key="pk_SPjp98jtIuyUn3t6DJtvZSc5lBeqr"
                         data-amount="200"
-                        data-label="Pay with Card"
+                        data-label="Pay Now"
                         data-name="ICS Convert"
                         data-description="File conversion ($2.00)"
                         data-image="/static/images/128x128.png">

@@ -1,12 +1,3 @@
-- Increase section spacing, make backgrounds not so dark
-- Remove paid and show_file class when uploading new
-- When paid show a message
-  - You Rock! Here's your files
-- Show filename during upload and progress
-- url: .*
-  script: main.app
-  secure: always
-- Handle big files
 - Download logging
 - Sensible download errors
 - Email errors
@@ -15,6 +6,15 @@
 
 Done
 ----
+- Handle big files
+- When paid show a message
+  - You Rock! Here's your files
+- Show filename during upload and progress
+- url: .*
+  script: main.app
+  secure: always
+- Remove paid and show_file class when uploading new
+- Increase section spacing, make backgrounds not so dark
 - Open sans
 - Better error handling of upload bug
 - Fix upload bug

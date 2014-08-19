@@ -16,7 +16,7 @@ __author__ = 'simonhutton'
 def build_tab_lib_dataset(events):
     data = tablib.Dataset()
     for event in events:
-        data.append([event['Summary'], str(event['Description'])])
+        data.append([unicode(event['Summary']), unicode(event['Description'])])
     return data
 
 
@@ -56,7 +56,9 @@ class Downloading(webapp2.RequestHandler):
             current_conversion = self.get_conversion_from_hash(file_hash)
 
             if current_conversion:
-                file_content = blobstore.fetch_data(current_conversion.blob_key, 0, current_conversion.file_size)
+                blob_reader = blobstore.BlobReader(current_conversion.blob_key)
+
+                file_content = blob_reader.read() #blobstore.fetch_data(current_conversion.blob_key, 0, current_conversion.file_size)
 
                 gcal = icalendar.Calendar.from_ical(file_content)
 
