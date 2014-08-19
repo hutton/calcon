@@ -1,8 +1,30 @@
 .csv, .tsv, .xlsx, .xls, .json, .yaml, .ods, .txt, .html, .xml, .pdf 
 
 
-.file-type-section
-  display: inline-block;
-  vertical-align: top;
+from google.appengine.ext import blobstore
 
-section title has absolute position with margin-top above file-types
+# blob_key = ...
+
+# Instantiate a BlobReader for a given Blobstore value.
+blob_reader = blobstore.BlobReader(blob_key)
+
+# Instantiate a BlobReader for a given Blobstore value, setting the
+# buffer size to 1 MB.
+blob_reader = blobstore.BlobReader(blob_key, buffer_size=1048576)
+
+# Instantiate a BlobReader for a given Blobstore value, setting the
+# initial read position.
+blob_reader = blobstore.BlobReader(blob_key, position=4194304)
+
+# Read the entire value into memory. This may take a while depending
+# on the size of the value and the size of the read buffer, and is not
+# recommended for large values.
+value = blob_reader.read()
+
+# Set the read position, then read 100 bytes.
+blob_reader.seek(2097152)
+data = blob_reader.read(100)
+
+# Read the value, one line (up to and including a '\n' character) at a time.
+for line in blob_reader:
+    # ...
