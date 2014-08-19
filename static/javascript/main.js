@@ -41,6 +41,8 @@ window.App = Backbone.View.extend({
 
     uploadingProgress: $('#uploading-message > .progress > span'),
 
+    linkContainerHeader: $('#link-container-header'),
+
     events: {
     },
 
@@ -88,7 +90,9 @@ window.App = Backbone.View.extend({
                     that.showFileStatus();
                 }
             }).fail(function(data){
-                that.showUploadingFailed();
+                var response = jQuery.parseJSON(data.responseText);
+
+                that.showUploadingFailed(response.message);
             });
     },
 
@@ -131,6 +135,7 @@ window.App = Backbone.View.extend({
     },
 
     showUploading: function(){
+        this.linkContainerHeader.hide();
         this.statusPanel.show();
 
         this.uploadingMessage.show();
@@ -140,6 +145,7 @@ window.App = Backbone.View.extend({
     },
 
     showProcessing: function(){
+        this.linkContainerHeader.hide();
         this.statusPanel.show();
 
         this.uploadingMessage.hide();
@@ -149,6 +155,7 @@ window.App = Backbone.View.extend({
     },
 
     showFileStatus: function(){
+        this.linkContainerHeader.hide();
         this.statusPanel.show();
 
         this.uploadingMessage.hide();
@@ -157,21 +164,26 @@ window.App = Backbone.View.extend({
         this.fileUploadFailedMessage.hide();
     },
 
-    showUploadingFailed: function(){
+    showUploadingFailed: function(message){
+        this.linkContainerHeader.hide();
         this.statusPanel.show();
 
         this.uploadingMessage.hide();
         this.processingMessage.hide();
         this.fileMessage.hide();
         this.fileUploadFailedMessage.show();
+
+        $('#file-upload-failed-message').html(message);
+
+        this.linkContainer.removeClass('show_file');
+        this.linkContainer.removeClass('paid');
     },
 
-
     setFileInfo: function(convertionInfo){
-        this.uploadingMessage.find('> span').html(convertionInfo.filename);
-        this.processingMessage.find('> span').html(convertionInfo.filename);
+        this.uploadingMessage.find('> span').html(convertionInfo.full_filename);
+        this.processingMessage.find('> span').html(convertionInfo.full_filename);
 
-        this.fileMessage.find('#filename').html(convertionInfo.filename);
+        this.fileMessage.find('#filename').html(convertionInfo.full_filename);
 
         if (_.isUndefined(convertionInfo.event_count) && convertionInfo.event_count > 0){
             this.fileMessage.find('#event-count').hide();

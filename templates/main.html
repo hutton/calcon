@@ -43,7 +43,7 @@
             </div>
         </div>
         <div id="file-upload-failed" style="display: none;">
-            <div>Opps! There was a problem processing your file.<br/>Try another?!</div>
+            <p>Opps!</p><p><br/><span id="file-upload-failed-message">There was a problem processing your file.</span><br/>Try another?</p>
         </div>
         <div id="file-message">
             <div id="filename">{{ full_filename }}</div>
@@ -53,6 +53,7 @@
     </div>
 
     <div class="fixed-width link-container {% if paid %}paid{% endif %} {% if show_file %}show_file{% endif %}">
+        <div id="link-container-header" {% if show_file %}style="display: none;"{% endif %}>Convert your ICS files to any of these formats.</div>
         <div class="link-section-container" id="free-download-links">
             <div class="title">Free</div>
             <div class="content">
@@ -68,7 +69,7 @@
             <div class="footer">Click to<br/>download</div>
         </div>
         <div class="link-section-container" id="paid-download-links">
-            <div class="title" id="not-paid-title">All these other file types for just $2</div>
+            <div class="title" id="not-paid-title">All these file types for <span class="underline">just $2</span>!</div>
             <div class="content">
                 <a class="download-link" href="\download\{{ key }}\{{ filename }}.xlsx">
                     <div class="file-type green">
@@ -137,7 +138,7 @@
                         data-label="Pay with Card"
                         data-name="ICS Convert"
                         data-description="File conversion ($2.00)"
-                        data-image="/128x128.png">
+                        data-image="/static/images/128x128.png">
                     </script>
                 </form>
                 <div id="never-pay-twice">* Never pay twice for the same .ics file.</div>

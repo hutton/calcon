@@ -12,6 +12,8 @@
 
 /********************* Globals ********************/
 
+@section-margin: 40px;
+
 body{
     //font-family: Helvetica, "Trebuchet MS", sans-serif;
 
@@ -31,13 +33,17 @@ body{
 .medium-font{
     font-size: 150%;
 }
+
+.underline{
+    text-decoration: underline;
+}
 /********************* Header ********************/
 
 #header-title{
     .big-font;
 
     text-align: center;
-    margin: 40px auto 20px auto;
+    margin: @section-margin auto 20px auto;
 }
 
 #header-sub-title{
@@ -51,21 +57,19 @@ body{
     width: 300px;
     height: 300px;
     border: 5px rgba(0,0,0,0.2) dashed;
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-top: @section-margin;
     border-radius: 20px;
     text-align: center;
 }
 
 #holder > .file-type{
-    margin-top: 37px;
+    margin-top: @section-margin;
 }
 
 #holder-title{
     text-align: center;
     margin: 20px auto;
     .medium-font;
-    color: #b0b0b0;
 }
 
 .hover{
@@ -92,7 +96,7 @@ body{
 }
 
 #status-panel{
-    margin: 20px auto;
+    margin: @section-margin auto 0px auto;
     text-align: center;
 }
 
@@ -102,11 +106,18 @@ body{
 }
 
 /********************* Links ***********************/
+#link-container-header{
+    .medium-font;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
 @padding: 20px;
 
 .link-container{
-    margin-top: 80px;
+    margin-top: @section-margin;
+    text-align: center;
+    margin-bottom: 100px;
 }
 
 .link-section-container{
@@ -158,8 +169,6 @@ body{
 }
 
 .link-container{
-    text-align: center;
-    margin-bottom: 100px;
 }
 
 #link-container-footer{

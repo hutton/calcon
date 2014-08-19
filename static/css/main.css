@@ -325,6 +325,9 @@ body {
 .medium-font {
   font-size: 150%;
 }
+.underline {
+  text-decoration: underline;
+}
 /********************* Header ********************/
 #header-title {
   font-size: 400%;
@@ -342,18 +345,16 @@ body {
   height: 300px;
   border: 5px rgba(0, 0, 0, 0.2) dashed;
   margin-top: 40px;
-  margin-bottom: 20px;
   border-radius: 20px;
   text-align: center;
 }
 #holder > .file-type {
-  margin-top: 37px;
+  margin-top: 40px;
 }
 #holder-title {
   text-align: center;
   margin: 20px auto;
   font-size: 150%;
-  color: #b0b0b0;
 }
 .hover {
   border: 5px #8080ff dashed;
@@ -376,7 +377,7 @@ body {
   margin: 10px auto;
 }
 #status-panel {
-  margin: 20px auto;
+  margin: 40px auto 0px auto;
   text-align: center;
 }
 #filename {
@@ -384,8 +385,15 @@ body {
   margin-bottom: 10px;
 }
 /********************* Links ***********************/
+#link-container-header {
+  font-size: 150%;
+  text-align: center;
+  margin-bottom: 20px;
+}
 .link-container {
-  margin-top: 80px;
+  margin-top: 40px;
+  text-align: center;
+  margin-bottom: 100px;
 }
 .link-section-container {
   background: rgba(0, 0, 0, 0.1);
@@ -422,10 +430,6 @@ body {
   margin: 0px 5px;
   text-decoration: none;
   pointer-events: none;
-}
-.link-container {
-  text-align: center;
-  margin-bottom: 100px;
 }
 #link-container-footer {
   display: none;
