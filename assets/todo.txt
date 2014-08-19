@@ -1,3 +1,4 @@
+- Increase section spacing, make backgrounds not so dark
 - Remove paid and show_file class when uploading new
 - When paid show a message
   - You Rock! Here's your files
