@@ -28,3 +28,6 @@ data = blob_reader.read(100)
 # Read the value, one line (up to and including a '\n' character) at a time.
 for line in blob_reader:
     # ...
+
+
+https://developers.google.com/appengine/docs/python/blobstore/blobreaderclass
