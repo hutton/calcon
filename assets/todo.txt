@@ -2,6 +2,9 @@
 - When paid show a message
   - You Rock! Here's your files
 - Show filename during upload and progress
+- url: .*
+  script: main.app
+  secure: always
 - Handle big files
 - Email errors
 - Support link
