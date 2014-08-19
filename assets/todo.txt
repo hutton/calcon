@@ -6,6 +6,8 @@
   script: main.app
   secure: always
 - Handle big files
+- Download logging
+- Sensible download errors
 - Email errors
 - Support link
 
