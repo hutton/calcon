@@ -3,7 +3,7 @@
 - Better file display
 - Email errors
 - Support link
-
+- Added header meta tags
 
 Done
 ----
