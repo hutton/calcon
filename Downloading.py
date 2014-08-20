@@ -16,8 +16,16 @@ __author__ = 'simonhutton'
 
 def build_tab_lib_dataset(events):
     data = tablib.Dataset()
-    for event in events:
-        data.append([unicode(event['Summary']), unicode(event['Description'])])
+
+    keys = list(set([key for event in events for key in event.keys()]))
+
+    rows = [[event.get(key, '') for key in keys] for event in events]
+
+    data.headers = keys
+
+    for row in rows:
+        data.append(row)
+
     return data
 
 
@@ -65,7 +73,7 @@ class Downloading(webapp2.RequestHandler):
 
                 gcal = icalendar.Calendar.from_ical(file_content)
 
-                events, todos = process_calendar(gcal)
+                events = process_calendar(gcal)
                 
                 if extension == 'csv':
                     self.response.headers['Content-Type'] = 'application/csv'

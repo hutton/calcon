@@ -1,4 +1,5 @@
 import sys
+from types import *
 import download_item
 
 sys.path.insert(0, 'libs')
@@ -8,7 +9,6 @@ from google.appengine.ext import db
 
 
 def add_text_field(component, component_name, dict, dict_name):
-
     value = component.get(component_name)
 
     if value:
@@ -22,9 +22,30 @@ def add_date_field(component, component_name, dict, dict_name):
         dict[dict_name] = value.dt
 
 
+def add_attendee_field(component, event):
+    attendee = component.get('attendee')
+    if attendee:
+        if type(attendee) == ListType:
+            names = [name[7:] if name.startswith('mailto:') else name for name in attendee]
+
+            event['Attendees'] = unicode(', '.join(names))
+        else:
+            att = unicode(attendee)
+
+            event['Attendees'] = att[7:] if att.startswith('mailto:') else att
+
+
+def add_mail_field(component, component_name, dict, dict_name):
+    value = component.get(component_name)
+
+    if value:
+        name = unicode(value)
+
+        dict[dict_name] = name[7:] if name.startswith('mailto:') else name
+
+
 def process_calendar(calendar):
     events = []
-    todos = []
 
     for component in calendar.walk():
         if component.name == "VEVENT":
@@ -32,13 +53,18 @@ def process_calendar(calendar):
 
             add_text_field(component, 'summary', event, 'Summary')
             add_text_field(component, 'description', event, 'Description')
+            add_mail_field(component, 'organizer', event, 'Organizer')
+            add_text_field(component, 'location', event, 'Location')
+
             add_date_field(component, 'dtstart', event, 'Start')
             add_date_field(component, 'dtend', event, 'End')
             add_date_field(component, 'created', event, 'Created')
 
+            add_attendee_field(component, event)
+
             events.append(event)
 
-    return events, todos
+    return events
 
 
 def log_upload(current_conversion, time):

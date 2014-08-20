@@ -75,14 +75,13 @@ class Upload(webapp2.RequestHandler):
                 if cal:
                     current_conversion = conversion.Conversion()
 
-                    events, todos = process_calendar(cal)
+                    events = process_calendar(cal)
 
                     current_conversion.hash = file_hash
                     current_conversion.full_filename = full_filename
                     current_conversion.filename = drop_extension_from_filename(full_filename)
                     current_conversion.file_size = file_size
                     current_conversion.event_count = len(events)
-                    current_conversion.todo_count = len(todos)
 
                     current_conversion.blob_key = self.save_file(file_hash, file_content)
 

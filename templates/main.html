@@ -49,7 +49,6 @@
         <div id="file-message">
             <div id="filename">{{ full_filename }}</div>
             <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Events</div>
-            <div id="todo-count" {% if not todo_count %}style="display: none;"{% endif %}>{{ todo_count }} Todos</div>
         </div>
     </div>
 
@@ -154,5 +153,17 @@
     <script src="/static/javascript/tp/backbone.js" language="javascript" type="text/javascript"></script>
 
     <script type="text/javascript" src="/static/javascript/main.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-53976130-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
 </body>
 </html>
