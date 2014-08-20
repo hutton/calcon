@@ -1,3 +1,4 @@
+- Add analytics
 - Sensible download errors
 - Remove todos
 - Better file display
