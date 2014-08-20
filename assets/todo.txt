@@ -1,5 +1,6 @@
 - Sensible download errors
 - Remove todos
+- Better file display
 - Email errors
 - Support link
 
