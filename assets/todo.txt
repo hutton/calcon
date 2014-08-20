@@ -1,4 +1,3 @@
-- Download logging
 - Sensible download errors
 - Email errors
 - Support link
@@ -6,6 +5,7 @@
 
 Done
 ----
+- Download logging
 - Handle big files
 - When paid show a message
   - You Rock! Here's your files

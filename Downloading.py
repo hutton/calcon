@@ -1,5 +1,6 @@
 import sys
-from helper import process_calendar
+import time
+from helper import process_calendar, log_download
 
 sys.path.insert(0, 'libs')
 
@@ -53,12 +54,14 @@ class Downloading(webapp2.RequestHandler):
             filename = matches.group("filename")
             extension = matches.group("extension")
 
+            start_time = time.time()
+
             current_conversion = self.get_conversion_from_hash(file_hash)
 
             if current_conversion:
                 blob_reader = blobstore.BlobReader(current_conversion.blob_key)
 
-                file_content = blob_reader.read() #blobstore.fetch_data(current_conversion.blob_key, 0, current_conversion.file_size)
+                file_content = blob_reader.read()
 
                 gcal = icalendar.Calendar.from_ical(file_content)
 
@@ -72,4 +75,9 @@ class Downloading(webapp2.RequestHandler):
                     self.response.headers['Content-Type'] = 'application/xls'
                     output_content = generate_xls_content(events)
 
-        self.response.out.write(output_content)
+                log_download(current_conversion, time.time() - start_time, extension)
+
+                self.response.out.write(output_content)
+                return
+
+        self.response.status = 404

@@ -7,13 +7,19 @@ import icalendar
 from google.appengine.ext import db
 
 
-def try_get_date_field(component, field):
-    value = component.get(field)
+def add_text_field(component, component_name, dict, dict_name):
+
+    value = component.get(component_name)
 
     if value:
-        return value.dt
+        dict[dict_name] = unicode(value)
 
-    return None
+
+def add_date_field(component, component_name, dict, dict_name):
+    value = component.get(component_name)
+
+    if value:
+        dict[dict_name] = value.dt
 
 
 def process_calendar(calendar):
@@ -22,12 +28,13 @@ def process_calendar(calendar):
 
     for component in calendar.walk():
         if component.name == "VEVENT":
+            event = {}
 
-            event = {'Summary': unicode(component.get('summary')),
-                     'Description': unicode(component.get('description')),
-                     'Start': try_get_date_field(component, 'dtstart'),
-                     'End': try_get_date_field(component, 'dtend'),
-                     'Created': try_get_date_field(component, 'dtstamp')}
+            add_text_field(component, 'summary', event, 'Summary')
+            add_text_field(component, 'description', event, 'Description')
+            add_date_field(component, 'dtstart', event, 'Start')
+            add_date_field(component, 'dtend', event, 'End')
+            add_date_field(component, 'created', event, 'Created')
 
             events.append(event)
 
@@ -45,7 +52,7 @@ def log_upload(current_conversion, time):
 
     db.put(new_upload)
 
-def log_download(current_conversion, time):
+def log_download(current_conversion, time, extension):
     new_download = download_item.Download()
 
     new_download.download = True
@@ -53,5 +60,6 @@ def log_download(current_conversion, time):
     new_download.filename = current_conversion.full_filename
     new_download.file_size = current_conversion.file_size
     new_download.time = time
+    new_download.extension = extension
 
     db.put(new_download)
