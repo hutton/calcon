@@ -1,4 +1,5 @@
 - Sensible download errors
+- Remove todos
 - Email errors
 - Support link
 
