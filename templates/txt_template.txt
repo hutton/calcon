@@ -1,0 +1,8 @@
+Events
+------
+
+{% for event in events %}
+    {% if 'Summary' in event %}
+{{ event.Summary }}
+    {% endif %}
+{% endfor %}

@@ -19,7 +19,7 @@ def add_date_field(component, component_name, dict, dict_name):
     value = component.get(component_name)
 
     if value:
-        dict[dict_name] = value.dt
+        dict[dict_name] = str(value.dt)
 
 
 def add_attendee_field(component, event):
