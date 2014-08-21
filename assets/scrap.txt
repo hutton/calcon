@@ -2,8 +2,9 @@ TabLib
 .csv, .tsv, .xlsx, .xls, .json, .yaml, .ods, 
 
 Template
-.txt, .html, .xml, .pdf 
+.txt, .html, .xml, .pdf, .docx
 
+https://python-docx.readthedocs.org/en/latest/#api-documentation
 
 Events
 ------
