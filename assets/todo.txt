@@ -1,7 +1,9 @@
 - Add attendees to column order
+- New file-type animations
 - .txt format
 - .xml format
 - .html format
+- Download progress
 - .pdf format
 - Config settings
 - Better file display
