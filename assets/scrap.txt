@@ -11,7 +11,7 @@ Events
 
 Summary:     Migraine
 Description: Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.
-Start: 		   26/07/2010
+Start:       26/07/2010
 End:         26/07/2010
 Attendees:   simon
 Location:    Dartmouth
