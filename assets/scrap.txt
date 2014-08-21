@@ -26,3 +26,54 @@ Created:     26/07/2010
 		<location>Dartmouth</location>
 	</event>
 </events>
+
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Migraines.ics</title>
+
+    <style type="text/css">
+    * { 
+        border:none;
+        margin:0;
+        padding:0;
+    }
+
+    body {
+    	font-family: sans-serif;
+    	margin: 20px;
+    }
+
+    .event{
+    	margin: 10px 0px;
+    }
+
+    .event > div > span{
+    	min-width: 100px;
+    	display: inline-block;
+    }
+    </style>
+
+</head>
+<body>
+	<h1>Events</h1>
+
+	<div class="event">
+		<div>
+			<span>Summary:</span>Migraine
+		</div>
+		<div>
+			<span>Description: </span>Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.
+		</div>
+		<div>
+			<span>Start: </span>26/07/2010
+		</div>
+		<div>
+			<span>End: </span>26/07/2010
+		</div>
+	</div>
+</body>
+</html>
