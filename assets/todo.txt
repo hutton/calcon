@@ -1,6 +1,8 @@
-- Add analytics
-- Sensible download errors
-- Remove todos
+- Add attendees to column order
+- .txt format
+- .xml format
+- .html format
+- .pdf format
 - Better file display
 - Email errors
 - Support link
@@ -8,6 +10,9 @@
 
 Done
 ----
+- Add analytics
+- Sensible download errors
+- Remove todos
 - Download logging
 - Handle big files
 - When paid show a message
