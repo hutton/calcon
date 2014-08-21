@@ -3,6 +3,7 @@
 - .txt format
 - .xml format
 - .html format
+- Effect on hover over drop zone
 - Download progress
 - .pdf format
 - Config settings
