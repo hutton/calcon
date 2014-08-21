@@ -3,10 +3,13 @@
 - .xml format
 - .html format
 - .pdf format
+- Config settings
 - Better file display
 - Email errors
 - Support link
 - Added header meta tags
+*** Launch ***
+- .docx format
 
 Done
 ----
