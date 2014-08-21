@@ -1,8 +1,40 @@
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
 .file-type {
   display: inline-block;
   -webkit-perspective: 300;
   width: 4em;
   height: 6em;
+}
+.file-type-spin div {
+  transition-duration: 0.0s;
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
+  -o-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
+  transform: rotateY(0deg);
+}
+.file-type-spin:hover div {
+  -webkit-transform: rotateY(360deg);
+  -moz-transform: rotateY(360deg);
+  -o-transform: rotateY(360deg);
+  -ms-transform: rotateY(360deg);
+  transform: rotateY(360deg);
+  transition-duration: 0.8s;
+}
+.file-type-jump div {
+  transition-duration: 0.2s;
+}
+.file-type-jump:hover div {
+  -webkit-transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
+  -moz-transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
+  -o-transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
+  -ms-transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
+  transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
 }
 .file-type > div {
   width: 100%;
@@ -16,9 +48,6 @@
   -webkit-transform: rotateX(0deg) translateY(0px);
   transition-duration: 0.1s;
   transition-timing-function: ease-in-out;
-}
-.file-type:hover div {
-  -webkit-transform: rotateX(-10deg) translateY(12px);
 }
 .file-type > div:before {
   content: "";

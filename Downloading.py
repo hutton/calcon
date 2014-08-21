@@ -15,7 +15,7 @@ import icalendar
 
 __author__ = 'simonhutton'
 
-column_order = ['Summary', 'Description', 'Start', 'End', 'Organizer', 'Location', 'Created']
+column_order = ['Summary', 'Description', 'Start', 'End', 'Organizer', 'Attendees', 'Location', 'Created']
 
 
 def order_columns(column_name, keys):
@@ -76,6 +76,20 @@ def generate_txt_content(events):
     return template.render(path, {'events': events})
 
 
+def generate_xml_content(events):
+
+    path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/xml_template.xml')
+
+    return template.render(path, {'events': events})
+
+
+def generate_html_content(events):
+
+    path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/html_template.html')
+
+    return template.render(path, {'events': events})
+
+
 class Downloading(webapp2.RequestHandler):
     @staticmethod
     def get_conversion_from_hash(file_hash):
@@ -89,7 +103,7 @@ class Downloading(webapp2.RequestHandler):
     def get(self):
 
         matches = re.match(
-            r"/download/(?P<hash>[0-9a-z]+)/(?P<filename>[-\w^&'@{}[\],$=!#().%+~ ]+).(?P<extension>txt|csv|xls|xlsx|json|tsv)",
+            r"/download/(?P<hash>[0-9a-z]+)/(?P<filename>[-\w^&'@{}[\],$=!#().%+~ ]+).(?P<extension>txt|csv|xls|xlsx|json|tsv|xml|html)",
             self.request.path)
 
         if matches:
@@ -133,6 +147,14 @@ class Downloading(webapp2.RequestHandler):
                 if extension == 'txt':
                     self.response.headers['Content-Type'] = 'application/txt'
                     output_content = generate_txt_content(events)
+
+                if extension == 'xml':
+                    self.response.headers['Content-Type'] = 'application/xml'
+                    output_content = generate_xml_content(events)
+
+                if extension == 'html':
+                    self.response.headers['Content-Type'] = 'application/html'
+                    output_content = generate_html_content(events)
 
                 log_download(current_conversion, time.time() - start_time, extension)
 

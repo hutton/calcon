@@ -1,4 +1,3 @@
-- Add attendees to column order
 - New file-type animations
 - .txt format
 - .xml format
@@ -17,6 +16,7 @@
 
 Done
 ----
+- Add attendees to column order
 - Add analytics
 - Sensible download errors
 - Remove todos

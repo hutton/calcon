@@ -8,6 +8,8 @@
 //    </div>
 //
 
+@import "elements.less";
+
 .file-type {
     display: inline-block;
     -webkit-perspective: 300;
@@ -16,12 +18,13 @@
 }
 
 .file-type-spin div{
+
     transition-duration: 0.0s;    
-    -webkit-transform: rotateY(0deg);
+    .transform(rotateY(0deg));
 }
 
 .file-type-spin:hover div {
-    -webkit-transform: rotateY(360deg);
+    .transform(rotateY(360deg));
     transition-duration: 0.8s;    
 }
 .file-type-jump div{
@@ -29,7 +32,7 @@
 }
 
 .file-type-jump:hover div {
-    -webkit-transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
+    .transform(rotateX(-18deg) translateY(-13px) translateZ(40px));
 }
 
 .file-type > div {
