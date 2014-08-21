@@ -79,3 +79,21 @@ Created:     26/07/2010
 	</div>
 </body>
 </html>
+
+
+
+http://stackoverflow.com/questions/3777367/what-is-a-good-place-to-store-configuration-in-google-appengine-python
+
+class Configuration(db.Model):
+  CACHE_TIME = datetime.timedelta(minutes=5)
+
+  _INSTANCE = None
+  _INSTANCE_AGE = None
+
+  @classmethod
+  def get_instance(cls):
+    now = datetime.datetime.now()
+    if not cls._INSTANCE or cls._INSTANCE_AGE + cls.CACHE_TIME < now:
+      cls._INSTANCE = cls.get_or_insert('config')
+      cls._INSTANCE_AGE = now
+    return cls._INSTANCE
