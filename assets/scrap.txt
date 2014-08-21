@@ -5,6 +5,7 @@ Template
 .txt, .html, .xml, .pdf, .docx
 
 https://python-docx.readthedocs.org/en/latest/#api-documentation
+https://docs.djangoproject.com/en/dev/topics/templates/
 
 Events
 ------
