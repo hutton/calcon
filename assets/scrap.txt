@@ -4,18 +4,25 @@ TabLib
 Template
 .txt, .html, .xml, .pdf 
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-53976130-1', 'auto');
-  ga('send', 'pageview');
+Events
+------
 
-</script>
+Summary:     Migraine
+Description: Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.
+Start: 		   26/07/2010
+End:         26/07/2010
+Attendees:   simon
+Location:    Dartmouth
+Created:     26/07/2010
 
 
-keys = list(set([key for event in events for key in event.keys()]))
-
-[[event.get(key) for key in keys] for event in events]
+<events>
+	<event>
+		<summary>Migraine</summary>
+		<description>Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.</description>
+		<start>26/07/2010</start>
+		<end>26/07/2010</end>
+		<location>Dartmouth</location>
+	</event>
+</events>
