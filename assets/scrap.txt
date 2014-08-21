@@ -97,3 +97,20 @@ class Configuration(db.Model):
       cls._INSTANCE = cls.get_or_insert('config')
       cls._INSTANCE_AGE = now
     return cls._INSTANCE
+
+
+
+.file-type-spin div{
+    transition-duration: 0.8s;    
+}
+
+.file-type-spin:hover div {
+    -webkit-transform: rotateY(360deg);
+}
+.file-type-jump div{
+    transition-duration: 0.2s;
+}
+
+.file-type-jump:hover div {
+    -webkit-transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
+}
