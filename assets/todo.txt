@@ -10,6 +10,7 @@
 - Email errors
 - Support link
 - Added header meta tags
+- Manual file upload
 *** Launch ***
 - .docx format
 
