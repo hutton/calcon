@@ -14,16 +14,21 @@ window.App = Backbone.View.extend({
 
         this.holder.on('drop', function (e) {
             that.onDrop(e);
+            //that.holderDropFile.removeClass('file-type-jump-now');
         });
         this.holder.on('dragover', function (e) {
+            //that.holderDropFile.addClass('file-type-jump-now');
             return false;
         });
         this.holder.on('dragend', function (e) {
+            that.holderDropFile.removeClass('file-type-jump-now');
             return false;
         });
     },
 
     holder: $('#holder'),
+
+    holderDropFile: $('#holder-drop-file'),
 
     statusPanel: $('#status-panel'),
 

@@ -109,6 +109,7 @@ class Pay(webapp2.RequestHandler):
 
             except stripe.CardError, e:
                 # The card has been declined
+
                 pass
 
             self.redirect("/" + file_hash)

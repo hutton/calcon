@@ -23,7 +23,7 @@
         <!--</div>-->
     </div>
     <div class="fixed-width" id="holder">
-        <div class="file-type red big">
+        <div id="holder-drop-file" class="file-type red big file-type-jump">
             <div>
                 <span></span>
                 <p>.ICS</p>
@@ -131,7 +131,7 @@
             </div>
             <div class="footer">
                 <form action="/pay" method="POST">
-                    <input type="hidden" name="key" value=""/>
+                    <input type="hidden" name="key" value="{{ key }}"/>
                     <script
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key="pk_SPjp98jtIuyUn3t6DJtvZSc5lBeqr"

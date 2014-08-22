@@ -2,6 +2,8 @@ import os
 import sys
 import time
 from helper import process_calendar, log_download
+# from pdf_convert import convertHtmlToPdf
+from pdf_convert import convertHtmlToPdf
 
 sys.path.insert(0, 'libs')
 
@@ -90,6 +92,18 @@ def generate_html_content(events):
     return template.render(path, {'events': events})
 
 
+def generate_pdf_content(events):
+
+    path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/pdf_template.html')
+
+    html_output = template.render(path, {'events': events})
+
+    convertHtmlToPdf(html_output, "test.pdf")
+    #pisaStatus = pisa.CreatePDF(html_output)
+
+    return template.render(path, {'events': events})
+
+
 class Downloading(webapp2.RequestHandler):
     @staticmethod
     def get_conversion_from_hash(file_hash):
@@ -103,7 +117,7 @@ class Downloading(webapp2.RequestHandler):
     def get(self):
 
         matches = re.match(
-            r"/download/(?P<hash>[0-9a-z]+)/(?P<filename>[-\w^&'@{}[\],$=!#().%+~ ]+).(?P<extension>txt|csv|xls|xlsx|json|tsv|xml|html)",
+            r"/download/(?P<hash>[0-9a-z]+)/(?P<filename>[-\w^&'@{}[\],$=!#().%+~ ]+).(?P<extension>txt|csv|xls|xlsx|json|tsv|xml|html|pdf)",
             self.request.path)
 
         if matches:
@@ -155,6 +169,10 @@ class Downloading(webapp2.RequestHandler):
                 if extension == 'html':
                     self.response.headers['Content-Type'] = 'application/html'
                     output_content = generate_html_content(events)
+
+                if extension == 'pdf':
+                    self.response.headers['Content-Type'] = 'application/pdf'
+                    output_content = generate_pdf_content(events)
 
                 log_download(current_conversion, time.time() - start_time, extension)
 

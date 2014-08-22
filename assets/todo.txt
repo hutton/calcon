@@ -1,7 +1,4 @@
 - New file-type animations
-- .txt format
-- .xml format
-- .html format
 - Effect on hover over drop zone
 - Download progress
 - .pdf format
@@ -16,6 +13,9 @@
 
 Done
 ----
+- .txt format
+- .xml format
+- .html format
 - Add attendees to column order
 - Add analytics
 - Sensible download errors

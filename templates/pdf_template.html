@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Migraines.ics</title>
+
+    <style type="text/css">
+    * {
+        border:none;
+        margin:0;
+        padding:0;
+    }
+
+    body {
+    	font-family: sans-serif;
+    	margin: 20px;
+    }
+
+    .event{
+    	margin: 20px 0px;
+    }
+
+    .event > div > span{
+    	min-width: 120px;
+    	display: inline-block;
+    }
+    </style>
+
+</head>
+<body>
+	<h1>Events</h1>
+
+    {% for event in events %}
+    <div class="event">{% if 'Summary' in event %}
+        <div>
+			<span>Summary:</span>{{ event.Summary }}
+        </div>{% endif %}{% if 'Description' in event %}
+        <div>
+			<span>Description: </span>{{ event.Description }}
+        </div>{% endif %}{% if 'Start' in event %}
+        <div>
+			<span>Start: </span>{{ event.Start }}
+        </div>{% endif %}{% if 'End' in event %}
+        <div>
+			<span>End: </span>{{ event.End }}
+        </div>{% endif %}{% if 'Organizer' in event %}
+        <div>
+			<span>Organizer: </span>{{ event.Organizer }}
+        </div>{% endif %}{% if 'Attendees' in event %}
+        <div>
+			<span>Attendees: </span>{{ event.Attendees }}
+        </div>{% endif %}{% if 'Location' in event %}
+        <div>
+			<span>Location: </span>{{ event.Location }}
+        </div>{% endif %}{% if 'Created' in event %}
+        <div>
+			<span>Created: </span>{{ event.Created }}
+        </div>{% endif %}
+    </div>{% endfor %}
+</body>
+</html>
