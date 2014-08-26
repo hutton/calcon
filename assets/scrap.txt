@@ -74,20 +74,30 @@ from google.appengine.api import memcache
 
 class download_progress(webapp2.RequestHandler):
 	def get(self):
-		data = memcache.get(downloadId)
+		download_id = self.request.get('downloadId')
+	
+		data = memcache.get(download_id)
 		
 		retry = True
 		
 		start_time = time.time()
 		
 		while (data or retry) and time.time() - start_time < 60:
-			data = memcache.get(downloadId)
+			data = memcache.get(download_id)
 			retry = False
 			time.sleep(0.5)
 			
 		if data:
-			logging.warning('Timeout waiting for: ' + downloadId) 
+			logging.warning('Timeout waiting for: ' + download_id) 
 			
 		self.response.status = 200
+
+
+download_id = file_hash + '_' + filename + '.' + extension
+
+memcache.add(download_id, 'Downloading', 120)
+
+memcache.delete(download_id)
+
 
 
