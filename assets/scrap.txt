@@ -69,4 +69,25 @@ if (matches != null){
 	var downloadId = hash + "_" + filename;
 }
 
+from google.appengine.api import memcache
+
+
+class download_progress(webapp2.RequestHandler):
+	def get(self):
+		data = memcache.get(downloadId)
+		
+		retry = True
+		
+		start_time = time.time()
+		
+		while (data or retry) and time.time() - start_time < 60:
+			data = memcache.get(downloadId)
+			retry = False
+			time.sleep(0.5)
+			
+		if data:
+			logging.warning('Timeout waiting for: ' + downloadId) 
+			
+		self.response.status = 200
+
 
