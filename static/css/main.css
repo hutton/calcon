@@ -401,6 +401,9 @@ body {
 #processing-message {
   font-size: 150%;
 }
+#processing-message > .progress {
+  width: 260px;
+}
 #uploading-message {
   font-size: 150%;
 }

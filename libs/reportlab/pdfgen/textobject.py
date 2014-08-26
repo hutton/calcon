@@ -15,6 +15,16 @@ from reportlab.lib.colors import Color, CMYKColor, CMYKColorSep, toColor, black,
 from reportlab.lib.utils import isBytes, isStr, asUnicode
 from reportlab.lib.rl_accel import fp_str
 from reportlab.pdfbase import pdfmetrics
+from reportlab.rl_config import rtlSupport
+
+log2vis = None
+if rtlSupport:
+    try:
+        from pyfribidi2 import log2vis, ON as DIR_ON, LTR as DIR_LTR, RTL as DIR_RTL
+        directionsMap = dict(LTR=DIR_LTR,RTL=DIR_RTL)
+    except:
+        import warnings
+        warnings.warn('pyfribidi is not installed - RTL not supported')
 
 class _PDFColorSetter:
     '''Abstracts the color setting operations; used in Canvas and Textobject
@@ -168,7 +178,7 @@ class PDFTextObject(_PDFColorSetter):
 
     It keeps track of x and y coordinates relative to its origin."""
 
-    def __init__(self, canvas, x=0,y=0):
+    def __init__(self, canvas, x=0,y=0, direction=None):
         self._code = ['BT']    #no point in [] then append RGB
         self._canvas = canvas  #canvas sets this so it has access to size info
         self._fontname = self._canvas._fontname
@@ -179,6 +189,7 @@ class PDFTextObject(_PDFColorSetter):
         self._enforceColorSpace = getattr(canvas,'_enforceColorSpace',None)
         font = pdfmetrics.getFont(self._fontname)
         self._curSubset = -1
+        self.direction = direction
         self.setTextOrigin(x, y)
         self._textRenderMode = 0
         self._clipping = 0
@@ -355,13 +366,16 @@ class PDFTextObject(_PDFColorSetter):
             self._code.append('%d Tr' % mode)
 
     def setRise(self, rise):
-        "Move text baseline up or down to allow superscrip/subscripts"
+        "Move text baseline up or down to allow superscript/subscripts"
         self._rise = rise
         self._y = self._y - rise    # + ?  _textLineMatrix?
         self._code.append('%s Ts' % fp_str(rise))
 
     def _formatText(self, text):
         "Generates PDF text output operator(s)"
+        if log2vis and self.direction in ('LTR','RTL'):
+            # Use pyfribidi to write the text in the correct visual order.
+            text = log2vis(text, directionsMap.get(self.direction.upper(),DIR_ON))
         canv = self._canvas
         font = pdfmetrics.getFont(self._fontname)
         R = []
@@ -433,7 +447,7 @@ class PDFTextObject(_PDFColorSetter):
         off each line and from the beginning; set trim=0 to preserve
         whitespace."""
         if isStr(stuff):
-            lines = '\n'.split(asUnicode(stuff).strip())
+            lines = asUnicode(stuff).strip().split(u'\n')
             if trim==1:
                 lines = [s.strip() for s in lines]
         elif isinstance(stuff,(tuple,list)):

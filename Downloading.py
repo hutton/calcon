@@ -1,9 +1,10 @@
+import StringIO
+import logging
 import os
 import sys
 import time
+from xhtml2pdf import pisa
 from helper import process_calendar, log_download
-# from pdf_convert import convertHtmlToPdf
-from pdf_convert import convertHtmlToPdf
 
 sys.path.insert(0, 'libs')
 
@@ -72,36 +73,40 @@ def generate_tsv_content(events):
 
 
 def generate_txt_content(events):
-
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/txt_template.txt')
 
     return template.render(path, {'events': events})
 
 
 def generate_xml_content(events):
-
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/xml_template.xml')
 
     return template.render(path, {'events': events})
 
 
 def generate_html_content(events):
-
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/html_template.html')
 
     return template.render(path, {'events': events})
 
 
 def generate_pdf_content(events):
-
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/pdf_template.html')
 
     html_output = template.render(path, {'events': events})
 
-    convertHtmlToPdf(html_output, "test.pdf")
-    #pisaStatus = pisa.CreatePDF(html_output)
+    pdf_output = StringIO.StringIO()
 
-    return template.render(path, {'events': events})
+    # convert HTML to PDF
+    pisa_status = pisa.CreatePDF(html_output, dest=pdf_output)
+
+    if pisa_status.err:
+        logging.error('Failed to covert to pdf')
+        raise
+
+    pdf_output.seek(0)
+
+    return pdf_output.getvalue()
 
 
 class Downloading(webapp2.RequestHandler):
@@ -137,7 +142,7 @@ class Downloading(webapp2.RequestHandler):
                 gcal = icalendar.Calendar.from_ical(file_content)
 
                 events = process_calendar(gcal)
-                
+
                 if extension == 'csv':
                     self.response.headers['Content-Type'] = 'application/csv'
                     output_content = generate_csv_content(events)

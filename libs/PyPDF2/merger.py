@@ -42,8 +42,7 @@ else:
 
 class _MergedPage(object):
     """
-    _MergedPage is used internally by PdfFileMerger to collect necessary
-    information on each page that is being merged.
+    _MergedPage is used internally by PdfFileMerger to collect necessary information on each page that is being merged.
     """
     def __init__(self, pagedata, src, id):
         self.src = src
@@ -53,19 +52,19 @@ class _MergedPage(object):
         
 class PdfFileMerger(object):
     """
-    Initializes a PdfFileMerger object. PdfFileMerger merges multiple PDFs
-    into a single PDF. It can concatenate, slice, insert, or any combination
-    of the above.
+    PdfFileMerger merges multiple PDFs into a single PDF. It can concatenate, 
+    slice, insert, or any combination of the above.
     
-    See the functions :meth:`merge()<merge>` (or :meth:`append()<append>`)
-    and :meth:`write()<write>` for usage information.
-
-    :param bool strict: Determines whether user should be warned of all
-            problems and also causes some correctable problems to be fatal.
-            Defaults to ``True``.
+    See the functions "merge" (or "append") and "write" (or "overwrite") for
+    usage information.
     """
     
     def __init__(self, strict=True):
+        """
+        >>> PdfFileMerger()
+        
+        Initializes a PdfFileMerger, no parameters required
+        """
         self.inputs = []
         self.pages = []
         self.output = PdfFileWriter()
@@ -76,25 +75,20 @@ class PdfFileMerger(object):
         
     def merge(self, position, fileobj, bookmark=None, pages=None, import_bookmarks=True):
         """
-        Merges the pages from the given file into the output file at the
-        specified page number.
-
-        :param int position: The *page number* to insert this file. File will
-            be inserted after the given number.
-
-        :param fileobj: A File Object or an object that supports the standard read
-            and seek methods similar to a File Object. Could also be a
-            string representing a path to a PDF file.
+        >>> merge(position, file, bookmark=None, pages=None, import_bookmarks=True)
         
-        :param str bookmark: Optionally, you may specify a bookmark to be applied at
-            the beginning of the included file by supplying the text of the bookmark.
-
-        :param pages: can be a :ref:`Page Range <page-range>` or a ``(start, stop[, step])`` tuple
-            to merge only the specified range of pages from the source
-            document into the output document.
+        Merges the pages from the source document specified by "file" into the output
+        file at the page number specified by "position".
         
-        :param bool import_bookmarks: You may prevent the source document's bookmarks
-            from being imported by specifying this as ``False``.
+        Optionally, you may specify a bookmark to be applied at the beginning of the 
+        included file by supplying the text of the bookmark in the "bookmark" parameter.
+        
+        You may prevent the source document's bookmarks from being imported by
+        specifying "import_bookmarks" as False.
+        
+        The optional "pages" parameter can be a PageRange or a 
+        (start, stop[, step]) tuple to merge only the specified range of pages
+        from the source document into the output document.
         """
         
         # This parameter is passed to self.inputs.append and means
@@ -177,22 +171,10 @@ class PdfFileMerger(object):
         
     def append(self, fileobj, bookmark=None, pages=None, import_bookmarks=True):
         """
-        Identical to the :meth:`merge()<merge>` method, but assumes you want to concatenate
-        all pages onto the end of the file instead of specifying a position.
-
-        :param fileobj: A File Object or an object that supports the standard read
-            and seek methods similar to a File Object. Could also be a
-            string representing a path to a PDF file.
+        >>> append(file, bookmark=None, pages=None, import_bookmarks=True):
         
-        :param str bookmark: Optionally, you may specify a bookmark to be applied at
-            the beginning of the included file by supplying the text of the bookmark.
-
-        :param pages: can be a :ref:`Page Range <page-range>` or a ``(start, stop[, step])`` tuple
-            to merge only the specified range of pages from the source
-            document into the output document.
-
-        :param bool import_bookmarks: You may prevent the source document's bookmarks
-            from being imported by specifying this as ``False``.
+        Identical to the "merge" function, but assumes you want to concatenate all pages
+        onto the end of the file instead of specifying a position.
         """
         
         self.merge(len(self.pages), fileobj, bookmark, pages, import_bookmarks)
@@ -200,10 +182,10 @@ class PdfFileMerger(object):
     
     def write(self, fileobj):
         """
-        Writes all data that has been merged to the given output file.
-
-        :param fileobj: Output file. Can be a filename or any kind of
-            file-like object.
+        >>> write(file)
+        
+        Writes all data that has been merged to "file" (which can be a filename or any
+        kind of file-like object)
         """
         my_file = False
         if type(fileobj) in (str, str):
@@ -233,8 +215,9 @@ class PdfFileMerger(object):
         
     def close(self):
         """
-        Shuts all file descriptors (input and output) and clears all memory
-        usage.
+        >>> close()
+        
+        Shuts all file descriptors (input and output) and clears all memory usage
         """
         self.pages = []
         for fo, pdfr, mine in self.inputs:
@@ -245,46 +228,15 @@ class PdfFileMerger(object):
         self.output = None
 
     def addMetadata(self, infos):
-        """
-        Add custom metadata to the output.
-
-        :param dict infos: a Python dictionary where each key is a field
-            and each value is your new metadata.
-            Example: ``{u'/Title': u'My title'}``
-        """
+        """See addMetadata method in PdfFileWriter class"""
         self.output.addMetadata(infos)
     
     def setPageLayout(self, layout):
-        """
-        Set the page layout
-
-        :param str layout: The page layout to be used
-
-        Valid layouts are:
-             /NoLayout        Layout explicitly not specified
-             /SinglePage      Show one page at a time
-             /OneColumn       Show one column at a time
-             /TwoColumnLeft   Show pages in two columns, odd-numbered pages on the left
-             /TwoColumnRight  Show pages in two columns, odd-numbered pages on the right
-             /TwoPageLeft     Show two pages at a time, odd-numbered pages on the left
-             /TwoPageRight    Show two pages at a time, odd-numbered pages on the right
-        """
+        """See setPageLayout() methods in pdf.py"""
         self.output.setPageLayout(layout)
 
     def setPageMode(self, mode):
-        """
-        Set the page mode.
-
-        :param str mode: The page mode to use.
-
-        Valid modes are:
-            /UseNone         Do not show outlines or thumbnails panels
-            /UseOutlines     Show outlines (aka bookmarks) panel
-            /UseThumbs       Show page thumbnails panel
-            /FullScreen      Fullscreen view
-            /UseOC           Show Optional Content Group (OCG) panel
-            /UseAttachments  Show attachments panel
-        """
+        """See setPageMode() methods in pdf.py"""
         self.output.setPageMode(mode)
 
     def _trim_dests(self, pdf, dests, pages):
@@ -475,13 +427,11 @@ class PdfFileMerger(object):
 
     def addBookmark(self, title, pagenum, parent=None):
         """
-        Add a bookmark to this PDF file.
-
-        :param str title: Title to use for this bookmark.
-        :param int pagenum: Page number this bookmark will point to.
-        :param parent: A reference to a parent bookmark to create nested
-            bookmarks.
+        Add a bookmark to the pdf, using the specified title and pointing at 
+        the specified page number. A parent can be specified to make this a
+        nested bookmark below the parent.
         """
+
         if parent == None:
         	iloc = [len(self.bookmarks)-1]
         elif isinstance(parent, list):
@@ -507,10 +457,8 @@ class PdfFileMerger(object):
         
     def addNamedDestination(self, title, pagenum):
         """
-        Add a destination to the output.
-
-        :param str title: Title to use
-        :param int pagenum: Page number this destination points at.
+        Add a destination to the pdf, using the specified title and pointing
+        at the specified page number.
         """
         
         dest = Destination(TextStringObject(title), NumberObject(pagenum), NameObject('/FitH'), NumberObject(826))
@@ -529,7 +477,7 @@ class OutlinesObject(list):
         del self[index]
         self.tree.removeChild(obj)
         
-    def add(self, title, pagenum):
+    def add(self, title, page):
         pageRef = self.pdf.getObject(self.pdf._pages)['/Kids'][pagenum]
         action = DictionaryObject()
         action.update({
@@ -544,7 +492,7 @@ class OutlinesObject(list):
             NameObject('/Title'): createStringObject(title),
         })
 
-        self.pdf._addObject(bookmark)
+        pdf._addObject(bookmark)
 
         self.tree.addChild(bookmark)
         

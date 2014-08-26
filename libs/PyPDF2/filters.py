@@ -265,7 +265,6 @@ class ASCII85Decode(object):
             elif c == 'z':
                 assert len(group) == 0
                 retval += '\x00\x00\x00\x00'
-                x += 1
                 continue
             elif c == "~" and data[x+1] == ">":
                 if len(group) != 0:

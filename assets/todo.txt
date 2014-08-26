@@ -1,8 +1,5 @@
-- New file-type animations
 - Effect on hover over drop zone
 - Download progress
-- .pdf format
-- Config settings
 - Better file display
 - Email errors
 - Support link
@@ -13,6 +10,9 @@
 
 Done
 ----
+- New file-type animations
+- .pdf format
+- Config settings
 - .txt format
 - .xml format
 - .html format

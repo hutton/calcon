@@ -14,9 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import logging
 import sys
 import datetime
 import re
+from configuration import Configuration
 
 import upload
 
@@ -43,12 +45,19 @@ def get_conversion_from_hash(file_hash):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+
+        config = Configuration.get_instance()
+
         path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
-        self.response.out.write(template.render(path, {'show_file': False}))
+        self.response.out.write(template.render(path, {'show_file': False,
+                                                       'stripe_key': config.public_stripe_key,
+                                                       'web_debug': config.web_debug}))
 
 
 class ShowFile(webapp2.RequestHandler):
     def get(self):
+
+        config = Configuration.get_instance()
 
         matches = re.match(
             r"/(?P<hash>[0-9a-z]+)",
@@ -63,11 +72,13 @@ class ShowFile(webapp2.RequestHandler):
                 path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
 
                 self.response.out.write(template.render(path, {'show_file': True,
+                                                               'stripe_key': config.public_stripe_key,
                                                                'paid': current_conversion.paid_date is not None,
                                                                 'event_count': current_conversion.event_count,
                                                                 'key': current_conversion.hash,
                                                                 'filename': current_conversion.filename,
-                                                                'full_filename': current_conversion.full_filename}))
+                                                                'full_filename': current_conversion.full_filename,
+                                                                'web_debug': config.web_debug}))
                 return
 
         self.redirect('/')
@@ -109,7 +120,7 @@ class Pay(webapp2.RequestHandler):
 
             except stripe.CardError, e:
                 # The card has been declined
-
+                logging.error('Card payment declined' + e.message)
                 pass
 
             self.redirect("/" + file_hash)

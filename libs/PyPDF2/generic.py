@@ -45,17 +45,25 @@ import decimal
 import codecs
 #import debugging
 
-ObjectPrefix = b_('/<[tf(n%')
-NumberSigns = b_('+-')
-IndirectPattern = re.compile(b_(r"(\d+)\s+(\d+)\s+R[^a-zA-Z]"))
 def readObject(stream, pdf):
     tok = stream.read(1)
     stream.seek(-1, 1) # reset to start
-    idx = ObjectPrefix.find(tok)
-    if idx == 0:
+    if tok == b_('t') or tok == b_('f'):
+        # boolean object
+        return BooleanObject.readFromStream(stream)
+    elif tok == b_('('):
+        # string object
+        return readStringFromStream(stream)
+    elif tok == b_('/'):
         # name object
         return NameObject.readFromStream(stream, pdf)
-    elif idx == 1:
+    elif tok == b_('['):
+        # array object
+        return ArrayObject.readFromStream(stream, pdf)
+    elif tok == b_('n'):
+        # null object
+        return NullObject.readFromStream(stream)
+    elif tok == b_('<'):
         # hexadecimal string OR dictionary
         peek = stream.read(2)
         stream.seek(-2, 1) # reset to start
@@ -63,19 +71,7 @@ def readObject(stream, pdf):
             return DictionaryObject.readFromStream(stream, pdf)
         else:
             return readHexStringFromStream(stream)
-    elif idx == 2:
-        # array object
-        return ArrayObject.readFromStream(stream, pdf)
-    elif idx == 3 or idx == 4:
-        # boolean object
-        return BooleanObject.readFromStream(stream)
-    elif idx == 5:
-        # string object
-        return readStringFromStream(stream)
-    elif idx == 6:
-        # null object
-        return NullObject.readFromStream(stream)
-    elif idx == 7:
+    elif tok == b_('%'):
         # comment
         while tok not in (b_('\r'), b_('\n')):
             tok = stream.read(1)
@@ -84,12 +80,12 @@ def readObject(stream, pdf):
         return readObject(stream, pdf)
     else:
         # number object OR indirect reference
-        if tok in NumberSigns:
+        if tok == b_('+') or tok == b_('-'):
             # number
             return NumberObject.readFromStream(stream)
         peek = stream.read(20)
         stream.seek(-len(peek), 1) # reset to start
-        if IndirectPattern.match(peek) != None:
+        if re.match(b_(r"(\d+)\s+(\d+)\s+R[^a-zA-Z]"), peek) != None:
             return IndirectObject.readFromStream(stream, pdf)
         else:
             return NumberObject.readFromStream(stream)
@@ -231,21 +227,19 @@ class FloatObject(decimal.Decimal, PdfObject):
         else:
             # XXX: this adds useless extraneous zeros.
             return "%.5f" % self
-
+            
     def as_numeric(self):
         return float(b_(repr(self)))
-
+        
     def writeToStream(self, stream, encryption_key):
         stream.write(b_(repr(self)))
 
 
 class NumberObject(int, PdfObject):
-    NumberPattern = re.compile(b_('[^+-.0-9]'))
-    ByteDot = b_(".")
-
+    
     def __new__(cls, value):
         return int.__new__(cls, value)
-
+            
     def as_numeric(self):
         return int(b_(repr(self)))
 
@@ -255,15 +249,12 @@ class NumberObject(int, PdfObject):
     def readFromStream(stream):
         num = b_("")
         while True:
-            tok = stream.read(16)
-            m = NumberObject.NumberPattern.search(tok)
-            if m is not None:
-                stream.seek(m.start() - len(tok), 1)
-                num += tok[:m.start()]
+            tok = stream.read(1)
+            if tok != b_('+') and tok != b_('-') and tok != b_('.') and not tok.isdigit():
+                stream.seek(-1, 1)
                 break
-
             num += tok
-        if num.find(NumberObject.ByteDot) != -1:
+        if num.find(b_(".")) != -1:
             return FloatObject(num)
         else:
             return NumberObject(num)
@@ -456,8 +447,7 @@ class TextStringObject(utils.string_type, PdfObject):
 
 
 class NameObject(str, PdfObject):
-    delimiterPattern = re.compile(b_("\s+|[()<>[\]{}/%]"))
-    surfix = b_("/")
+    delimiterCharacters = tuple(b_(c) for c in "()<>[]{}/%")
 
     def writeToStream(self, stream, encryption_key):
         stream.write(b_(self))
@@ -466,9 +456,17 @@ class NameObject(str, PdfObject):
         debug = False
         if debug: print((stream.tell()))
         name = stream.read(1)
-        if name != NameObject.surfix:
+        if name != b_("/"):
             raise utils.PdfReadError("name read error")
-        name += utils.readUntilRegex(stream, NameObject.delimiterPattern)
+        while True:
+            tok = stream.read(1)
+            if not tok:
+                # stream has truncated prematurely
+                raise PdfStreamError("Stream has ended unexpectedly")
+            if tok.isspace() or tok in NameObject.delimiterCharacters:
+                stream.seek(-1, 1)
+                break
+            name += tok
         if debug: print(name)
         try:
             return NameObject(name.decode('utf-8'))
@@ -480,7 +478,7 @@ class NameObject(str, PdfObject):
                 return NameObject(name)
             else:
                 raise utils.PdfReadError("Illegal character in Name Object")
-
+        
     readFromStream = staticmethod(readFromStream)
 
 
@@ -633,29 +631,29 @@ class DictionaryObject(dict, PdfObject):
 class TreeObject(DictionaryObject):
     def __init__(self):
         DictionaryObject.__init__(self)
-
+        
     def hasChildren(self):
         return '/First' in self
-
+    
     def __iter__(self):
         return self.children()
-
+        
     def children(self):
         if not self.hasChildren():
             raise StopIteration
-
+            
         child = self['/First']
         while True:
             yield child
             if child == self['/Last']:
                 raise StopIteration
             child = child['/Next']
-
+        
     def addChild(self, child, pdf):
         childObj = child.getObject()
         child = pdf.getReference(childObj)
         assert isinstance(child, IndirectObject)
-
+        
         if '/First' not in self:
             self[NameObject('/First')] = child
             self[NameObject('/Count')] = NumberObject(0)
@@ -675,22 +673,22 @@ class TreeObject(DictionaryObject):
         parentRef = pdf.getReference(self)
         assert isinstance(parentRef, IndirectObject)
         childObj[NameObject('/Parent')] = parentRef
-
+        
     def removeChild(self, child):
         childObj = child.getObject()
-
+        
         if NameObject('/Parent') not in childObj:
             raise ValueError("Removed child does not appear to be a tree item")
         elif childObj[NameObject('/Parent')] != self:
             raise ValueError("Removed child is not a member of this tree")
-
+        
         found = False
         prevRef = None
         prev = None
         curRef = self[NameObject('/First')]
         cur = curRef.getObject()
         lastRef = self[NameObject('/Last')]
-        last = lastRef.getObject()
+        last = lastRef.getObject() 
         while cur != None:
             if cur == childObj:
                 if prev == None:
@@ -701,7 +699,7 @@ class TreeObject(DictionaryObject):
                         del next[NameObject('/Prev')]
                         self[NameObject('/First')] = nextRef
                         self[NameObject('/Count')] = self[NameObject('/Count')] - 1
-
+                        
                     else:
                         # Removing only tree node
                         assert self[NameObject('/Count')] == 1
@@ -724,9 +722,9 @@ class TreeObject(DictionaryObject):
                         self[NameObject('/Last')] = prevRef
                         self[NameObject('/Count')] = self[NameObject('/Count')] - 1
                 found = True
-                break
-
-
+                break        
+                    
+            
             prevRef = curRef
             prev = cur
             if NameObject('/Next') in cur:
@@ -735,10 +733,10 @@ class TreeObject(DictionaryObject):
             else:
                 curRef = None
                 cur = None
-
+       
         if not found:
             raise ValueError("Removal couldn't find item in tree")
-
+       
         del childObj[NameObject('/Parent')]
         if NameObject('/Next') in childObj:
             del childObj[NameObject('/Next')]
@@ -827,7 +825,7 @@ class EncodedStreamObject(StreamObject):
         else:
             # create decoded object
             decoded = DecodedStreamObject()
-
+            
             decoded._data = filters.decodeStreamData(self)
             for key, value in list(self.items()):
                 if not key in ("/Length", "/Filter", "/DecodeParms"):
@@ -840,15 +838,6 @@ class EncodedStreamObject(StreamObject):
 
 
 class RectangleObject(ArrayObject):
-    """
-    This class is used to represent *page boxes* in PyPDF2. These boxes include:
-
-        * :attr:`artBox <PyPDF2.pdf.PageObject.artBox>`
-        * :attr:`bleedBox <PyPDF2.pdf.PageObject.bleedBox>`
-        * :attr:`cropBox <PyPDF2.pdf.PageObject.cropBox>`
-        * :attr:`mediaBox <PyPDF2.pdf.PageObject.mediaBox>`
-        * :attr:`trimBox <PyPDF2.pdf.PageObject.trimBox>`
-    """
     def __init__(self, arr):
         # must have four points
         assert len(arr) == 4
@@ -877,7 +866,7 @@ class RectangleObject(ArrayObject):
 
     def getUpperLeft_x(self):
         return self.getLowerLeft_x()
-
+    
     def getUpperLeft_y(self):
         return self.getUpperRight_y()
 
@@ -918,125 +907,23 @@ class RectangleObject(ArrayObject):
         return self.getUpperRight_y() - self.getLowerLeft_y()
 
     lowerLeft = property(getLowerLeft, setLowerLeft, None, None)
-    """
-    Property to read and modify the lower left coordinate of this box
-    in (x,y) form.
-    """
     lowerRight = property(getLowerRight, setLowerRight, None, None)
-    """
-    Property to read and modify the lower right coordinate of this box
-    in (x,y) form.
-    """
     upperLeft = property(getUpperLeft, setUpperLeft, None, None)
-    """
-    Property to read and modify the upper left coordinate of this box
-    in (x,y) form.
-    """
     upperRight = property(getUpperRight, setUpperRight, None, None)
-    """
-    Property to read and modify the upper right coordinate of this box
-    in (x,y) form.
-    """
 
-class Field(TreeObject):
-    """
-    A class representing a field dictionary. This class is accessed through
-    :meth:`getFields()<PyPDF2.PdfFileReader.getFields>`
-    """
-    def __init__(self, data):
-        DictionaryObject.__init__(self)
-        attributes = ("/FT", "/Parent", "/Kids", "/T", "/TU", "/TM", "/Ff",
-                      "/V", "/DV", "/AA")
-        for attr in attributes:
-            try:
-                self[NameObject(attr)] = data[attr]
-            except KeyError:
-                pass
 
-    fieldType = property(lambda self: self.get("/FT"))
-    """
-    Read-only property accessing the type of this field.
-    """
-
-    parent = property(lambda self: self.get("/Parent"))
-    """
-    Read-only property accessing the parent of this field.
-    """
-
-    kids = property(lambda self: self.get("/Kids"))
-    """
-    Read-only property accessing the kids of this field.
-    """
-
-    name = property(lambda self: self.get("/T"))
-    """
-    Read-only property accessing the name of this field.
-    """
-
-    altName = property(lambda self: self.get("/TU"))
-    """
-    Read-only property accessing the alternate name of this field.
-    """
-
-    mappingName = property(lambda self: self.get("/TM"))
-    """
-    Read-only property accessing the mapping name of this field. This
-    name is used by PyPDF2 as a key in the dictionary returned by
-    :meth:`getFields()<PyPDF2.PdfFileReader.getFields>`
-    """
-
-    flags = property(lambda self: self.get("/Ff"))
-    """
-    Read-only property accessing the field flags, specifying various
-    characteristics of the field (see Table 8.70 of the PDF 1.7 reference).
-    """
-
-    value = property(lambda self: self.get("/V"))
-    """
-    Read-only property accessing the value of this field. Format
-    varies based on field type.
-    """
-
-    defaultValue = property(lambda self: self.get("/DV"))
-    """
-    Read-only property accessing the default value of this field.
-    """
-
-    additionalActions = property(lambda self: self.get("/AA"))
-    """
-    Read-only property accessing the additional actions dictionary.
-    This dictionary defines the field's behavior in response to trigger events.
-    See Section 8.5.2 of the PDF 1.7 reference.
-    """
-
+##
+# A class representing a destination within a PDF file.
+# See section 8.2.1 of the PDF 1.6 reference.
+# Stability: Added in v1.10, will exist for all v1.x releases.
 class Destination(TreeObject):
-    """
-    A class representing a destination within a PDF file.
-    See section 8.2.1 of the PDF 1.6 reference.
-
-    :param str title: Title of this destination.
-    :param int page: Page number of this destination.
-    :param str typ: How the destination is displayed.
-    :param args: Additional arguments may be necessary depending on the type.
-    :raises PdfReadError: If destination type is invalid.
-
-    Valid ``typ`` arguments (see PDF spec for details):
-             /Fit       No additional arguments
-             /XYZ       [left] [top] [zoomFactor]
-             /FitH      [top]
-             /FitV      [left]
-             /FitR      [left] [bottom] [right] [top]
-             /FitB      No additional arguments
-             /FitBH     [top]
-             /FitBV     [left]
-    """
     def __init__(self, title, page, typ, *args):
         DictionaryObject.__init__(self)
         self[NameObject("/Title")] = title
         self[NameObject("/Page")] = page
         self[NameObject("/Type")] = typ
-
-        # from table 8.2 of the PDF 1.7 reference.
+        
+        # from table 8.2 of the PDF 1.6 reference.
         if typ == "/XYZ":
             (self[NameObject("/Left")], self[NameObject("/Top")],
                 self[NameObject("/Zoom")]) = args
@@ -1051,10 +938,10 @@ class Destination(TreeObject):
             pass
         else:
             raise utils.PdfReadError("Unknown Destination Type: %r" % typ)
-
+            
     def getDestArray(self):
         return ArrayObject([self.raw_get('/Page'), self['/Type']] + [self[x] for x in ['/Left', '/Bottom', '/Right', '/Top', '/Zoom'] if x in self])
-
+        
     def writeToStream(self, stream, encryption_key):
         stream.write(b_("<<\n"))
         key = NameObject('/D')
@@ -1068,66 +955,50 @@ class Destination(TreeObject):
         stream.write(b_(" "))
         value = NameObject("/GoTo")
         value.writeToStream(stream, encryption_key)
-
+        
         stream.write(b_("\n"))
         stream.write(b_(">>"))
-
+         
+    ##
+    # Read-only property accessing the destination title.
+    # @return A string.
     title = property(lambda self: self.get("/Title"))
-    """
-    Read-only property accessing the destination title.
 
-    :rtype: str
-    """
-
+    ##
+    # Read-only property accessing the destination page.
+    # @return An integer.
     page = property(lambda self: self.get("/Page"))
-    """
-    Read-only property accessing the destination page number.
 
-    :rtype: int
-    """
-
+    ##
+    # Read-only property accessing the destination type.
+    # @return A string.
     typ = property(lambda self: self.get("/Type"))
-    """
-    Read-only property accessing the destination type.
 
-    :rtype: str
-    """
-
+    ##
+    # Read-only property accessing the zoom factor.
+    # @return A number, or None if not available.
     zoom = property(lambda self: self.get("/Zoom", None))
-    """
-    Read-only property accessing the zoom factor.
 
-    :rtype: int, or ``None`` if not available.
-    """
-
+    ##
+    # Read-only property accessing the left horizontal coordinate.
+    # @return A number, or None if not available.
     left = property(lambda self: self.get("/Left", None))
-    """
-    Read-only property accessing the left horizontal coordinate.
 
-    :rtype: int, or ``None`` if not available.
-    """
-
+    ##
+    # Read-only property accessing the right horizontal coordinate.
+    # @return A number, or None if not available.
     right = property(lambda self: self.get("/Right", None))
-    """
-    Read-only property accessing the right horizontal coordinate.
 
-    :rtype: int, or ``None`` if not available.
-    """
-
+    ##
+    # Read-only property accessing the top vertical coordinate.
+    # @return A number, or None if not available.
     top = property(lambda self: self.get("/Top", None))
-    """
-    Read-only property accessing the top vertical coordinate.
 
-    :rtype: int, or ``None`` if not available.
-    """
-
+    ##
+    # Read-only property accessing the bottom vertical coordinate.
+    # @return A number, or None if not available.
     bottom = property(lambda self: self.get("/Bottom", None))
-    """
-    Read-only property accessing the bottom vertical coordinate.
-
-    :rtype: int, or ``None`` if not available.
-    """
-
+        
 
 class Bookmark(Destination):
     def writeToStream(self, stream, encryption_key):
@@ -1145,8 +1016,8 @@ class Bookmark(Destination):
         value.writeToStream(stream, encryption_key)
         stream.write(b_("\n"))
         stream.write(b_(">>"))
-
-
+        
+ 
 def encode_pdfdocencoding(unicode_string):
     retval = b_('')
     for c in unicode_string:

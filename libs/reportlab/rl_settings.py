@@ -43,6 +43,8 @@ ttfAsciiReadable
 pdfMultiLine
 pdfComments
 debug
+rtlSupport
+listWrapOnFakeWidth
 T1SearchPath
 TTFSearchPath
 CMapSearchPath'''.split())
@@ -92,6 +94,9 @@ ttfAsciiReadable=           1                       #smaller subsets when set to
 pdfMultiLine=               0                       #use more lines in pdf etc
 pdfComments=                0                       #put in pdf comments
 debug=                      0                       #for debugging code
+rtlSupport=                 0                       #set to 1 to attempt import of RTL assistance eg fribidi etc etc
+listWrapOnFakeWidth=        1                       #set to 0/False to force platypus.flowables._listWrapOn to report correct widths
+                                                    #else it reports minimum(required,available) width
 
 # places to look for T1Font information
 T1SearchPath =  (
@@ -114,6 +119,7 @@ T1SearchPath =  (
                 '/usr/local/Acrobat6/Resource/Font',    #Linux, Acrobat 5?
                 '/usr/local/Acrobat5/Resource/Font',    #Linux, Acrobat 5?
                 '/usr/local/Acrobat4/Resource/Font',    #Linux, Acrobat 4
+                '/usr/share/fonts/default/Type1',       #Linux, Fedora
                 '%(REPORTLAB_DIR)s/fonts',              #special
                 '%(REPORTLAB_DIR)s/../fonts',           #special
                 '%(REPORTLAB_DIR)s/../../fonts',        #special
@@ -130,6 +136,8 @@ TTFSearchPath = (
                 'c:/windows/fonts',
                 '/usr/lib/X11/fonts/TrueType/',
                 '/usr/share/fonts/truetype',
+                '/usr/share/fonts',             #Linux, Fedora
+                '/usr/share/fonts/dejavu',      #Linux, Fedora
                 '%(REPORTLAB_DIR)s/fonts',      #special
                 '%(REPORTLAB_DIR)s/../fonts',   #special
                 '%(REPORTLAB_DIR)s/../../fonts',#special

@@ -272,6 +272,7 @@ class Canvas(textobject._PDFColorSetter):
         self._cropMarks = cropMarks
 
         self._pagesize = pagesize
+        self._hanging_pagesize = None
         self._pageRotation = 0
         #self._currentPageHasImages = 0
         self._pageTransition = None
@@ -646,6 +647,9 @@ class Canvas(textobject._PDFColorSetter):
 
     def _startPage(self):
         #now get ready for the next one
+        if self._hanging_pagesize:
+            self.setPageSize(self._hanging_pagesize)
+            self._hanging_pagesize = None
         self._pageNumber += 1
         self._restartAccumulators()
         self.init_graphics_state()
@@ -997,7 +1001,7 @@ class Canvas(textobject._PDFColorSetter):
         self._doc.inForm()
         #self._inForm0()
 
-    def endForm(self):
+    def endForm(self,**extra_attributes):
         """emit the current collection of graphics operations as a Form
            as declared previously in beginForm."""
         (name, lowerx, lowery, upperx, uppery) = self._formData
@@ -1012,6 +1016,8 @@ class Canvas(textobject._PDFColorSetter):
         form = pdfdoc.PDFFormXObject(lowerx=lowerx, lowery=lowery, upperx=upperx, uppery=uppery)
         form.compression = self._pageCompression
         form.setStreamList([self._preamble] + self._code) # ??? minus preamble (seems to be needed!)
+        for k, v in extra_attributes.items():
+            setattr(form,k,v)
         self._setColorSpace(form)
         self._setExtGState(form)
         self._setXObjects(form)

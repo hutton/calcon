@@ -46,7 +46,10 @@ window.App = Backbone.View.extend({
 
     uploadingProgress: $('#uploading-message > .progress > span'),
 
+    el: $("body"),
+
     events: {
+        "click .download-link": "downloadStart"
     },
 
     onDrop: function (e) {
@@ -197,6 +200,19 @@ window.App = Backbone.View.extend({
             this.fileMessage.find('#todo-count').show();
             this.fileMessage.find('#todo-count').html(convertionInfo.todo_count + " Todos");
         }
+    },
+
+    downloadStart: function(event){
+        var target = $(event.currentTarget);
+
+        var link = target.attr('href');
+
+        var downloadId = link;
+
+        $.get( "download-progress?downloadId=" + downloadId, function( data ) {
+        }).always(function() {
+
+        });
     }
 });
 

@@ -44,7 +44,7 @@
             </div>
         </div>
         <div id="file-upload-failed" style="display: none;">
-            <p>Opps!</p><p><br/><span id="file-upload-failed-message">There was a problem processing your file.</span><br/>Try another?</p>
+            <p>Opps!</p><p><br/><p><span id="file-upload-failed-message">There was a problem processing your file.</span></p><br/>Try another?</p>
         </div>
         <div id="file-message">
             <div id="filename">{{ full_filename }}</div>
@@ -134,7 +134,7 @@
                     <input type="hidden" name="key" value="{{ key }}"/>
                     <script
                         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                        data-key="pk_SPjp98jtIuyUn3t6DJtvZSc5lBeqr"
+                        data-key="{{ stripe_key }}"
                         data-amount="200"
                         data-label="Pay Now"
                         data-name="ICS Convert"
@@ -148,11 +148,15 @@
         <div id="link-container-footer">Click to download</div>
     </div>
 
+    {% if web_debug %}
     <script src="/static/javascript/tp/jquery-2.1.1.js" language="javascript" type="text/javascript"></script>
     <script src="/static/javascript/tp/underscore-min.js" language="javascript" type="text/javascript"></script>
     <script src="/static/javascript/tp/backbone.js" language="javascript" type="text/javascript"></script>
 
     <script type="text/javascript" src="/static/javascript/main.js"></script>
+    {% else %}
+    <script type="text/javascript" src="/static/javascript/all-min.js"></script>
+    {% endif %}
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

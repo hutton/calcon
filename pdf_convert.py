@@ -1,3 +1,5 @@
+import StringIO
+
 __author__ = 'simonhutton'
 
 from xhtml2pdf import pisa             # import python module
@@ -7,20 +9,20 @@ sourceHtml = "<html><body><p>To PDF or not to PDF<p></body></html>"
 outputFilename = "test.pdf"
 
 # Utility function
-def convertHtmlToPdf(sourceHtml, outputFilename):
+def convertHtmlToPdf(source_html):
     # open output file for writing (truncated binary)
-    resultFile = open(outputFilename, "w+b")
+    packet = StringIO.StringIO()
 
     # convert HTML to PDF
     pisaStatus = pisa.CreatePDF(
-            sourceHtml,                # the HTML to convert
-            dest=resultFile)           # file handle to recieve result
+            source_html,                # the HTML to convert
+            dest=packet)           # file handle to recieve result
 
-    # close output file
-    resultFile.close()                 # close output file
+
+    packet.seek(0)
 
     # return True on success and False on errors
-    return pisaStatus.err
+    return packet
 
 # Main program
 if __name__=="__main__":
