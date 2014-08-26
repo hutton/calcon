@@ -105,3 +105,66 @@ memcache.delete(download_id)
 
 
 
+
+.file-type-spinny div{
+    transform-style: preserve-3d;
+    animation: spinny linear 1s infinite;
+    -webkit-animation: spinny linear 2s infinite;
+}
+
+
+/* Standard syntax */
+@keyframes spinny {
+  0% {
+    -webkit-transform: rotateY(0deg);
+  }
+  50% {
+    -webkit-transform: rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: rotateY(360deg);
+  }
+}
+@-webkit-keyframes spinny {
+  0% {
+    -webkit-transform: rotateY(0deg) ;
+  }
+  25% {
+    -webkit-transform: rotateY(-90deg);
+  }
+  50% {
+    -webkit-transform: rotateY(-180deg);
+        
+  }
+  75% {
+    -webkit-transform: rotateY(-270deg);
+  }
+  100% {
+    -webkit-transform: rotateY(-360deg);
+  }
+}
+
+@-webkit-keyframes spinny2 {
+  0% {
+    -webkit-transform: rotateY(0deg) translateZ(0px);;
+    left: 0px;
+  }
+  25% {
+    -webkit-transform: rotateY(-90deg) translateZ(10px);
+    left: -20px;
+  }
+  50% {
+    -webkit-transform: rotateY(-180deg) translateZ(20px);
+    left: 0px;
+        
+  }
+  75% {
+    -webkit-transform: rotateY(-270deg) translateZ(10px);
+    left: 20px;
+  }
+  100% {
+    -webkit-transform: rotateY(-360deg) translateZ(0px);
+    left: 0px;
+  }
+}
+
