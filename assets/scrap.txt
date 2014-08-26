@@ -7,6 +7,7 @@ Template
 https://python-docx.readthedocs.org/en/latest/#api-documentation
 https://docs.djangoproject.com/en/dev/topics/templates/
 
+
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -28,11 +29,25 @@ https://docs.djangoproject.com/en/dev/topics/templates/
 
     .event{
     	margin: 10px 0px;
+        padding: 10px;
     }
 
-    .event > div > span{
-    	min-width: 100px;
+    .event > div{
+        padding: 3px 0px;
+    }
+
+    .event:nth-child(even){
+        background: rgba(0,0,0,0.05);
+    }
+
+    .label{
+    	float: left;
     	display: inline-block;
+        font-weight: bold;
+    }
+
+    .content{
+        margin-left: 140px;
     }
     </style>
 
@@ -42,18 +57,62 @@ https://docs.djangoproject.com/en/dev/topics/templates/
 
 	<div class="event">
 		<div>
-			<span>Summary:</span>Migraine
+			<div class="label">Summary</div><div class="content">Migraine</div>
 		</div>
 		<div>
-			<span>Description: </span>Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.
+			<div class="label">Description</div><div class="content">Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.</div>
 		</div>
 		<div>
-			<span>Start: </span>26/07/2010
+			<div class="label">Start</div><div class="content">26/07/2010</div>
 		</div>
 		<div>
-			<span>End: </span>26/07/2010
+			<div class="label">End</div><div class="content">26/07/2010</div>
 		</div>
 	</div>
+
+    <div class="event">
+        <div>
+            <div class="label">Summary</div><div class="content">Migraine</div>
+        </div>
+        <div>
+            <div class="label">Description</div><div class="content">Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.</div>
+        </div>
+        <div>
+            <div class="label">Start</div><div class="content">26/07/2010</div>
+        </div>
+        <div>
+            <div class="label">End</div><div class="content">26/07/2010</div>
+        </div>
+    </div>
+    <div class="event">
+        <div>
+            <div class="label">Summary</div><div class="content">Migraine</div>
+        </div>
+        <div>
+            <div class="label">Description</div><div class="content">Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.</div>
+        </div>
+        <div>
+            <div class="label">Start</div><div class="content">26/07/2010</div>
+        </div>
+        <div>
+            <div class="label">End</div><div class="content">26/07/2010</div>
+        </div>
+    </div>
+    <div class="event">
+        <div>
+            <div class="label">Summary</div><div class="content">Migraine</div>
+        </div>
+        <div>
+            <div class="label">Description</div><div class="content">Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.</div>
+        </div>
+        <div>
+            <div class="label">Start</div><div class="content">26/07/2010</div>
+        </div>
+        <div>
+            <div class="label">End</div><div class="content">26/07/2010</div>
+        </div>
+    </div>
+
 </body>
 </html>
 
