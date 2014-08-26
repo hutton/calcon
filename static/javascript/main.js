@@ -207,12 +207,32 @@ window.App = Backbone.View.extend({
 
         var link = target.attr('href');
 
-        var downloadId = link;
+        var pattern = /[\/\\]download[\/\\]([0-9a-z]+)[\/\\]([0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+)/g
 
-        $.get( "download-progress?downloadId=" + downloadId, function( data ) {
-        }).always(function() {
+        var matches = pattern.exec(link)
 
-        });
+        if (matches != null){
+            var hash = matches[1];
+            var filename = matches[2];
+
+            var downloadId = hash + "_" + filename;
+
+            var fileType = target.find('.file-type');
+
+            fileType.addClass('file-type-spinny');
+
+            _.delay(function(){
+                $.ajax({
+                    type: 'GET',
+                    url: '/download-progress',
+                    data: { 'downloadId' : downloadId },
+                    dataType: "json"
+                }).always(function() {
+                    fileType.removeClass('file-type-spinny');
+                });
+            }, 100);
+
+        }
     }
 });
 

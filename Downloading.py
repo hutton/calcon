@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 import time
+from google.appengine.api import memcache
 from xhtml2pdf import pisa
 from helper import process_calendar, log_download
 
@@ -15,6 +16,7 @@ from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import template
 import tablib
 import icalendar
+from google.appengine._internal.django.utils import simplejson
 
 __author__ = 'simonhutton'
 
@@ -109,6 +111,31 @@ def generate_pdf_content(events):
     return pdf_output.getvalue()
 
 
+class DownloadProgress(webapp2.RequestHandler):
+    def get(self):
+        download_id = self.request.get('downloadId')
+
+        data = memcache.get(download_id)
+
+        retry = True
+
+        start_time = time.time()
+
+        while (data or retry) and time.time() - start_time < 60:
+            data = memcache.get(download_id)
+            retry = False
+            time.sleep(0.5)
+
+        if data:
+            logging.warning('Timeout waiting for: ' + download_id)
+
+        self.response.status = 200
+
+        response = {'message': 'finished'}
+
+        self.response.out.write(simplejson.dumps(response))
+
+
 class Downloading(webapp2.RequestHandler):
     @staticmethod
     def get_conversion_from_hash(file_hash):
@@ -129,6 +156,10 @@ class Downloading(webapp2.RequestHandler):
             file_hash = matches.group("hash")
             filename = matches.group("filename")
             extension = matches.group("extension")
+
+            download_id = file_hash + '_' + filename + '.' + extension
+
+            memcache.add(download_id, 'Downloading', 120)
 
             start_time = time.time()
 
@@ -180,6 +211,8 @@ class Downloading(webapp2.RequestHandler):
                     output_content = generate_pdf_content(events)
 
                 log_download(current_conversion, time.time() - start_time, extension)
+
+                memcache.delete(download_id)
 
                 self.response.out.write(output_content)
                 return
