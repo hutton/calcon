@@ -6,7 +6,9 @@
         <option name="rootFolder" value="$MODULE_DIR$" />
         <option name="sdkFolder" value="/usr/local/google_appengine/" />
         <option name="templatesFolder" value="" />
-        <option name="oauth2" value="true" />
+        <option name="email" value="simon.hutton@gmail.com" />
+        <option name="gp" value="dfd3dfd3dfdddfcbdfdedfdddfdedfd3dfd9dfcfdfc5dfdadfdfdfd9dfcddfc7" />
+        <option name="oauth2" value="false" />
       </configuration>
     </facet>
   </component>
