@@ -7,29 +7,6 @@ Template
 https://python-docx.readthedocs.org/en/latest/#api-documentation
 https://docs.djangoproject.com/en/dev/topics/templates/
 
-Events
-------
-
-Summary:     Migraine
-Description: Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.
-Start:       26/07/2010
-End:         26/07/2010
-Attendees:   simon
-Location:    Dartmouth
-Created:     26/07/2010
-
-<?xml version="1.0" encoding="utf-8"?>
-<events>
-	<event>
-		<summary>Migraine</summary>
-		<description>Just finished Christmas in Banstead back in Blackheath about to head up to Worksop.  Had eaten and drank lots over past couple of days, also slept well.</description>
-		<start>26/07/2010</start>
-		<end>26/07/2010</end>
-		<location>Dartmouth</location>
-	</event>
-</events>
-
-
 <!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -81,36 +58,50 @@ Created:     26/07/2010
 </html>
 
 
+var pattern = /\/download\/([0-9a-z]+)\/([0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+)/g
 
-http://stackoverflow.com/questions/3777367/what-is-a-good-place-to-store-configuration-in-google-appengine-python
+var matches = pattern.exec(link)
 
-class Configuration(db.Model):
-  CACHE_TIME = datetime.timedelta(minutes=5)
-
-  _INSTANCE = None
-  _INSTANCE_AGE = None
-
-  @classmethod
-  def get_instance(cls):
-    now = datetime.datetime.now()
-    if not cls._INSTANCE or cls._INSTANCE_AGE + cls.CACHE_TIME < now:
-      cls._INSTANCE = cls.get_or_insert('config')
-      cls._INSTANCE_AGE = now
-    return cls._INSTANCE
-
-
-
-.file-type-spin div{
-    transition-duration: 0.8s;    
+if (matches != null){
+	var hash = matches[1];
+	var filename = matches[2];
+	
+	var downloadId = hash + "_" + filename;
 }
 
-.file-type-spin:hover div {
-    -webkit-transform: rotateY(360deg);
-}
-.file-type-jump div{
-    transition-duration: 0.2s;
-}
+from google.appengine.api import memcache
 
-.file-type-jump:hover div {
-    -webkit-transform: rotateX(-18deg) translateY(-13px) translateZ(40px);
-}
+
+class download_progress(webapp2.RequestHandler):
+	def get(self):
+		download_id = self.request.get('downloadId')
+	
+		data = memcache.get(download_id)
+		
+		retry = True
+		
+		start_time = time.time()
+		
+		while (data or retry) and time.time() - start_time < 60:
+			data = memcache.get(download_id)
+			retry = False
+			time.sleep(0.5)
+			
+		if data:
+			logging.warning('Timeout waiting for: ' + download_id) 
+			
+		self.response.status = 200
+
+
+download_id = file_hash + '_' + filename + '.' + extension
+
+memcache.add(download_id, 'Downloading', 120)
+
+memcache.delete(download_id)
+
+
+<meta name="description" content="Convert ics files to csv, pdf, html, xml and lots of other formats">
+<meta name="keywords" content="ics to csv, convert ics, ics, convert icalendar, icalendar to csv, ics to pdf, ics to xslx, ics to xsl, ics to xml, ics to html, ics to Excel">
+
+
+
