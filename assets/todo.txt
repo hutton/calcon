@@ -1,3 +1,4 @@
+- border-radius on .link-section-container
 - Effect on hover over drop zone
 - Download progress
 - Better file display
