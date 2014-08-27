@@ -1,7 +1,8 @@
 - rel="nofollow" on links
 - Fix xls order in regex
-- Effect on hover over drop zone
 - Pdf format
+- Titles in templates
+- Effect on hover over drop zone
 - Better file display
 - Email errors
 - Support link
