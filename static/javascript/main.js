@@ -24,6 +24,8 @@ window.App = Backbone.View.extend({
             that.holderDropFile.removeClass('file-type-jump-now');
             return false;
         });
+
+        this.currentPaid = this.linkContainer.hasClass('paid');
     },
 
     holder: $('#holder'),
@@ -54,7 +56,8 @@ window.App = Backbone.View.extend({
 
     onDrop: function (e) {
         e.preventDefault();
-        this.clearFile();
+
+        this.Routes.navigate("", {trigger: true});
 
         this.sendFiles(e.originalEvent.dataTransfer.files);
     },
@@ -91,9 +94,14 @@ window.App = Backbone.View.extend({
                 var response = jQuery.parseJSON(data);
 
                 if (response.key != null) {
-                    that.showDownloadLinks(response.key, response.filename, response.paid);
+                    that.currentPaid = response.paid;
+
+                    that.showDownloadLinks(response.key, response.filename);
                     that.setFileInfo(response);
-                    that.showFileStatus();
+
+                    that.Routes.navigate(response.key, {trigger: true});
+
+                    // that.showFileStatus();
                 }
             }).fail(function(data){
                 var response = jQuery.parseJSON(data.responseText);
@@ -115,14 +123,7 @@ window.App = Backbone.View.extend({
         }
     },
 
-    showDownloadLinks: function(key, filename, paid){
-
-        this.linkContainer.addClass('show_file');
-
-        if (paid){
-            this.linkContainer.addClass('paid');
-        }
-
+    showDownloadLinks: function(key, filename){
         this.downloadLinks.each(function(index, element){
             var el = $(element);
 
@@ -168,6 +169,12 @@ window.App = Backbone.View.extend({
         this.processingMessage.hide();
         this.fileMessage.show();
         this.fileUploadFailedMessage.hide();
+
+        this.linkContainer.addClass('show_file');
+
+        if (this.currentPaid){
+            this.linkContainer.addClass('paid');
+        }
     },
 
     showUploadingFailed: function(message){
@@ -219,6 +226,7 @@ window.App = Backbone.View.extend({
 
             var fileType = target.find('.file-type');
 
+            target.addClass('disable-link');
             fileType.addClass('file-type-spinny');
 
             _.delay(function(){
@@ -229,8 +237,9 @@ window.App = Backbone.View.extend({
                     dataType: "json"
                 }).always(function() {
                     fileType.removeClass('file-type-spinny');
+                    target.removeClass('disable-link');
                 });
-            }, 100);
+            }, 10);
 
         }
     }
@@ -257,7 +266,26 @@ window.App = Backbone.View.extend({
 //    };
 //}
 
+window.Workspace = Backbone.Router.extend({
+
+    routes: {
+        ":hash":        "showFile",
+        "":             "home"
+    },
+
+    home: function() {
+        App.clearFile();
+    },
+
+    showFile: function() {
+        App.showFileStatus();
+    }
+});
+
 $(document).ready(function () {
     window.App = new App();
 
+    window.App.Routes = new Workspace();
+
+    Backbone.history.start({pushState: true});
 });

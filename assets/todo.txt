@@ -1,16 +1,17 @@
-- border-radius on .link-section-container
 - Effect on hover over drop zone
-- Download progress
+- Pdf format
 - Better file display
 - Email errors
 - Support link
-- Added header meta tags
 - Manual file upload
 *** Launch ***
 - .docx format
 
 Done
 ----
+- Added header meta tags
+- Download progress
+- border-radius on .link-section-container
 - New file-type animations
 - .pdf format
 - Config settings

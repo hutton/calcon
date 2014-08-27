@@ -601,12 +601,20 @@ body {
   text-decoration: none;
   pointer-events: none;
 }
+.disable-link {
+  pointer-events: none !important;
+}
 #link-container-footer {
   display: none;
   margin-top: 20px;
 }
 #never-pay-twice {
   margin-top: 10px;
+}
+.file-progress {
+  font-size: 80%;
+  top: 10px;
+  position: relative;
 }
 /* Conditional */
 .show_file #free-download-links.link-section-container {
