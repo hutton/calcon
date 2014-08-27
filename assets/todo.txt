@@ -1,3 +1,4 @@
+- Use correct private stripe key
 - rel="nofollow" on links
 - Fix xls order in regex
 - Pdf format
