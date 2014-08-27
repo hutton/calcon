@@ -1,3 +1,4 @@
+- rel="nofollow" on links
 - Effect on hover over drop zone
 - Pdf format
 - Better file display
