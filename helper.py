@@ -66,8 +66,6 @@ def process_calendar(calendar):
 
     sorted_events = sorted(events, key=lambda event: event.get('Start'))
 
-#sorted_candidates = sorted(candidates.values(), key=lambda x: x['content_score'], reverse=True)
-
     return sorted_events
 
 

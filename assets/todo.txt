@@ -1,11 +1,4 @@
-- Use correct private stripe key
-- Check matching of filename and hash
-- rel="nofollow" on links
-- Fix xls order in regex
-- Pdf format
-- Titles in templates
 - Effect on hover over drop zone
-- Better file display
 - Email errors
 - Support link
 - Manual file upload
@@ -14,6 +7,13 @@
 
 Done
 ----
+- Better file display
+- Pdf format
+- Titles in templates
+- rel="nofollow" on links
+- Fix xls order in regex
+- Use correct private stripe key
+- Check matching of filename and hash
 - Added header meta tags
 - Download progress
 - border-radius on .link-section-container

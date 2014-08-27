@@ -3,7 +3,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Migraines.ics</title>
+    <title>{{ filename }}</title>
 
     <style type="text/css">
     * {
@@ -13,51 +13,65 @@
     }
 
     body {
-    	font-family: sans-serif;
+    	font-family: Helvetica, sans-serif;
     	margin: 20px;
     }
 
     .event{
-    	margin: 20px 0px;
+        background-color: #f0f0f0;
     }
 
-    .event > div > span{
-    	min-width: 120px;
-    	display: inline-block;
+    .event-even{
+        background-color: transparent;
+    }
+
+    .label{
+    	width: 140px;
         font-weight: bold;
+        padding-left: 10px;
+    }
+
+    .event-spacer{
+    }
+
+    .content{
+        padding-top: -17px;
+        padding-left: 130px;
+        padding-right: 10px;
     }
     </style>
 
 </head>
 <body>
 	<h1>Events</h1>
-
     {% for event in events %}
-    <div class="event">{% if 'Summary' in event %}
+    <div class='event {% if forloop.counter|divisibleby:"2" %}event-even{% endif %}'>{% if 'Summary' in event %}
+        <div class="event-spacer">&nbsp;</div>
         <div>
-			<span>Summary:</span>{{ event.Summary }}
+			<div class="label">Summary</div><div class="content">{{ event.Summary }}</div>
         </div>{% endif %}{% if 'Description' in event %}
         <div>
-			<span>Description: </span>{{ event.Description }}
+			<div class="label">Description</div><div class="content">{{ event.Description }}</div>
         </div>{% endif %}{% if 'Start' in event %}
         <div>
-			<span>Start: </span>{{ event.Start }}
+			<div class="label">Start</div><div class="content">{{ event.Start }}</div>
         </div>{% endif %}{% if 'End' in event %}
         <div>
-			<span>End: </span>{{ event.End }}
+			<div class="label">End</div><div class="content">{{ event.End }}</div>
         </div>{% endif %}{% if 'Organizer' in event %}
         <div>
-			<span>Organizer: </span>{{ event.Organizer }}
+			<div class="label">Organizer</div><div class="content">{{ event.Organizer }}</div>
         </div>{% endif %}{% if 'Attendees' in event %}
         <div>
-			<span>Attendees: </span>{{ event.Attendees }}
+			<div class="label">Attendees</div><div class="content">{{ event.Attendees }}</div>
         </div>{% endif %}{% if 'Location' in event %}
         <div>
-			<span>Location: </span>{{ event.Location }}
+			<div class="label">Location</div><div class="content">{{ event.Location }}</div>
         </div>{% endif %}{% if 'Created' in event %}
         <div>
-			<span>Created: </span>{{ event.Created }}
+			<div class="label">Created</div><div class="content">{{ event.Created }}</div>
         </div>{% endif %}
+        <div class="event-spacer">&nbsp;</div>
     </div>{% endfor %}
 </body>
 </html>

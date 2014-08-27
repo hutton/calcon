@@ -32,9 +32,8 @@ def drop_extension_from_filename(filename):
 
 class Upload(webapp2.RequestHandler):
     @staticmethod
-    def get_conversion_from_hash_and_full_filename(file_hash, original_filename):
-        query = conversion.Conversion.gql("WHERE hash = :hash AND full_filename = :original_filename", hash=file_hash,
-                                          original_filename=original_filename)
+    def get_conversion_from_hash(file_hash):
+        query = conversion.Conversion.gql("WHERE hash = :hash", hash=file_hash)
         conversions = query.fetch(1)
         if conversions:
             return conversions[0]
@@ -61,7 +60,7 @@ class Upload(webapp2.RequestHandler):
             file_hash = hashlib.md5(file_content).hexdigest()
 
             try:
-                current_conversion = self.get_conversion_from_hash_and_full_filename(file_hash, full_filename)
+                current_conversion = self.get_conversion_from_hash(file_hash)
 
                 start_time = time.time()
 

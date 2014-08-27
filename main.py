@@ -85,24 +85,18 @@ class ShowFile(webapp2.RequestHandler):
 
 
 class Pay(webapp2.RequestHandler):
-    @staticmethod
-    def get_conversion_from_hash(file_hash):
-        query = conversion.Conversion.gql("WHERE hash = :hash", hash=file_hash)
-        conversions = query.fetch(1)
-        if conversions:
-            return conversions[0]
-        else:
-            return None
 
     def post(self):
 
-        stripe.api_key = "c1r52uIFDTaniTJc29tMbGGo0CGJeDtu"
+        config = Configuration.get_instance()
+
+        stripe.api_key = config.private_stripe_key
 
         # Get the credit card details submitted by the form
         token = self.request.POST['stripeToken']
         file_hash = self.request.POST['key']
 
-        current_conversion = self.get_conversion_from_hash(file_hash)
+        current_conversion = get_conversion_from_hash(file_hash)
 
         if current_conversion:
             # Create the charge on Stripe's servers - this will charge the user's card

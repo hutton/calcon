@@ -50,8 +50,16 @@
             <p>Opps!</p><p><br/><p><span id="file-upload-failed-message">There was a problem processing your file.</span></p><br/>Try another?</p>
         </div>
         <div id="file-message">
-            <div id="filename">{{ full_filename }}</div>
-            <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Events</div>
+            <div id="file-message-file" class="file-type red">
+                <div>
+                    <span></span>
+                    <p>.ICS</p>
+                </div>
+            </div>
+            <div id="file-message-content">
+                <div id="filename">{{ full_filename }}</div>
+                <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Events</div>
+            </div>
         </div>
     </div>
 
@@ -61,7 +69,7 @@
         <div class="link-section-container" id="free-download-links">
             <div class="title">Free</div>
             <div class="content">
-                <a class="download-link" href="\download\{{ key }}\{{ filename }}.csv">
+                <a class="download-link" rel="nofollow" href="\download\{{ key }}\{{ filename }}.csv">
                     <div class="file-type blue file-type-jump">
                         <div>
                             <span></span>
@@ -70,12 +78,12 @@
                     </div>
                 </a>
             </div>
-            <div class="footer">Click to<br/>download</div>
+            <div id="free-download-footer" class="footer">Click to<br/>download</div>
         </div>
         <div class="link-section-container" id="paid-download-links">
             <div class="title" id="not-paid-title">All these formats for <span class="underline">just $2</span>!</div>
             <div class="content">
-                <a class="download-link" href="/download/{{ key }}/{{ filename }}.xlsx">
+                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.xlsx">
                     <div class="file-type green file-type-jump">
                         <div>
                             <span></span>
@@ -83,7 +91,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" href="/download/{{ key }}/{{ filename }}.html">
+                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.html">
                     <div class="file-type pink file-type-jump">
                         <div>
                             <span></span>
@@ -91,7 +99,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" href="/download/{{ key }}/{{ filename }}.xml">
+                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.xml">
                     <div class="file-type yellow file-type-jump">
                         <div>
                             <span></span>
@@ -99,7 +107,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" href="/download/{{ key }}/{{ filename }}.pdf">
+                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.pdf">
                     <div class="file-type red file-type-jump">
                         <div>
                             <span></span>
@@ -107,7 +115,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" href="/download/{{ key }}/{{ filename }}.json">
+                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.json">
                     <div class="file-type orange file-type-jump">
                         <div>
                             <span></span>
@@ -115,7 +123,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" href="/download/{{ key }}/{{ filename }}.txt">
+                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.txt">
                     <div class="file-type brown file-type-jump">
                         <div>
                             <span></span>
@@ -123,7 +131,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" href="/download/{{ key }}/{{ filename }}.tsv">
+                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.tsv">
                     <div class="file-type green file-type-jump">
                         <div>
                             <span></span>

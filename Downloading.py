@@ -86,16 +86,16 @@ def generate_xml_content(events):
     return template.render(path, {'events': events})
 
 
-def generate_html_content(events):
+def generate_html_content(events, filename):
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/html_template.html')
 
-    return template.render(path, {'events': events})
+    return template.render(path, {'events': events, 'filename': filename})
 
 
-def generate_pdf_content(events):
+def generate_pdf_content(events, filename):
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/pdf_template.html')
 
-    html_output = template.render(path, {'events': events})
+    html_output = template.render(path, {'events': events, 'filename': filename})
 
     pdf_output = StringIO.StringIO()
 
@@ -149,7 +149,7 @@ class Downloading(webapp2.RequestHandler):
     def get(self):
 
         matches = re.match(
-            r"/download/(?P<hash>[0-9a-z]+)/(?P<filename>[-\w^&'@{}[\],$=!#().%+~ ]+).(?P<extension>txt|csv|xls|xlsx|json|tsv|xml|html|pdf)",
+            r"/download/(?P<hash>[0-9a-z]+)/(?P<filename>[-\w^&'@{}[\],$=!#().%+~ ]+).(?P<extension>txt|csv|xlsx|xls|json|tsv|xml|html|pdf)",
             self.request.path)
 
         if matches:
@@ -204,11 +204,11 @@ class Downloading(webapp2.RequestHandler):
 
                 if extension == 'html':
                     self.response.headers['Content-Type'] = 'application/html'
-                    output_content = generate_html_content(events)
+                    output_content = generate_html_content(events, filename + '.' + extension)
 
                 if extension == 'pdf':
                     self.response.headers['Content-Type'] = 'application/pdf'
-                    output_content = generate_pdf_content(events)
+                    output_content = generate_pdf_content(events, filename + '.' + extension)
 
                 log_download(current_conversion, time.time() - start_time, extension)
 

@@ -542,6 +542,20 @@ body {
   margin: 60px auto 0px auto;
   text-align: center;
 }
+#file-message {
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+#file-message-file {
+  float: left;
+}
+#file-message-content {
+  float: right;
+  margin-left: 20px;
+  margin-top: 25px;
+}
 #filename {
   font-size: 150%;
   margin-bottom: 10px;

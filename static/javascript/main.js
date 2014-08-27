@@ -48,6 +48,10 @@ window.App = Backbone.View.extend({
 
     uploadingProgress: $('#uploading-message > .progress > span'),
 
+    downloadBigMessage: $('#link-container-footer'),
+
+    downloadFreeMessage: $('#free-download-footer'),
+
     el: $("body"),
 
     events: {
@@ -210,6 +214,7 @@ window.App = Backbone.View.extend({
     },
 
     downloadStart: function(event){
+        var that = this;
         var target = $(event.currentTarget);
 
         var link = target.attr('href');
@@ -228,6 +233,8 @@ window.App = Backbone.View.extend({
 
             target.addClass('disable-link');
             fileType.addClass('file-type-spinny');
+            this.downloadBigMessage.html('Downloading...');
+            this.downloadFreeMessage.html('Downloading...');
 
             _.delay(function(){
                 $.ajax({
@@ -238,6 +245,8 @@ window.App = Backbone.View.extend({
                 }).always(function() {
                     fileType.removeClass('file-type-spinny');
                     target.removeClass('disable-link');
+                    that.downloadBigMessage.html('Click to download');
+                    that.downloadFreeMessage.html('Click to<br/>download');
                 });
             }, 10);
 
