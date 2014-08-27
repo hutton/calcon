@@ -1,4 +1,5 @@
 - Use correct private stripe key
+- Check matching of filename and hash
 - rel="nofollow" on links
 - Fix xls order in regex
 - Pdf format
