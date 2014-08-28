@@ -1,4 +1,5 @@
 - Remove google fonts link
+- Fix Safari download
 - Update filename when uploading
 - Check pdf alternate background
 - Effect on hover over drop zone
