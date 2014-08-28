@@ -7,6 +7,14 @@ Template
 https://python-docx.readthedocs.org/en/latest/#api-documentation
 https://docs.djangoproject.com/en/dev/topics/templates/
 
+self.response.headers['Content-Type'] = 'application/json'
+self.response.headers['Content-Transfer-Encoding'] = 'binary'
+self.response.headers['Accept-Range'] = 'bytes'
+self.response.headers['Content-Length'] = current_conversion.file_size
+self.response.headers['Content-Encoding'] = current_conversion.file_size
+self.response.headers['Content-Disposition'] = 'attachment; filename=' + current_conversion.file_name + '.' current_conversion.extension
+
+
 
 			$('a').click(function(e){
 				e.preventDefault();
