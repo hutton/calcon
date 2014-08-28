@@ -1,5 +1,6 @@
 - Remove google fonts link
 - Update filename when uploading
+- Check pdf alternate background
 - Effect on hover over drop zone
 - Email errors
 - Support link
