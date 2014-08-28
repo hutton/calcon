@@ -519,6 +519,13 @@ body {
   margin: 20px auto;
   font-size: 150%;
 }
+#file-upload-container {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+#file-upload-container > div {
+  font-size: 150%;
+}
 .hover {
   border: 5px #8080ff dashed;
 }

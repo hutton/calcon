@@ -175,7 +175,10 @@ class Downloading(webapp2.RequestHandler):
                 events = process_calendar(gcal)
 
                 if extension == 'csv':
-                    self.response.headers['Content-Type'] = 'application/csv'
+                    self.response.headers['Content-Type'] = 'application/x-unknown'
+                    self.response.headers['Content-Disposition'] = 'attachment; filename=' + filename + '.' + extension + ''
+                    self.response.headers['Content-Transfer-Encoding'] = 'binary'
+                    self.response.headers['Content-Length'] = current_conversion.file_size
                     output_content = generate_csv_content(events)
 
                 if extension == 'xls':

@@ -7,7 +7,7 @@ window.App = Backbone.View.extend({
 
         this.tests = {
             fileReader: typeof FileReader != 'undefined',
-            dnd: 'draggable' in document.createElement('span'),
+            dnd: false, //'draggable' in document.createElement('span'),
             formData: !!window.FormData,
             progress: "upload" in new XMLHttpRequest
         };
@@ -26,6 +26,18 @@ window.App = Backbone.View.extend({
         });
 
         this.currentPaid = this.linkContainer.hasClass('paid');
+
+        if (this.tests.dnd){
+            this.holderTitle.show();
+            this.fileUpload.hide();
+        } else {
+            this.holderTitle.hide();
+            this.fileUpload.show();
+
+            $('#file-upload').on('change', function(event, two){
+                  that.sendFiles(event.originalEvent.files);
+            });
+        }
     },
 
     holder: $('#holder'),
@@ -52,10 +64,14 @@ window.App = Backbone.View.extend({
 
     downloadFreeMessage: $('#free-download-footer'),
 
+    holderTitle: $('#holder-title'),
+
+    fileUpload: $('#file-upload-container'),
+
     el: $("body"),
 
     events: {
-        "click .download-link": "downloadStart"
+        "click .download-link > .file-type": "downloadStart"
     },
 
     onDrop: function (e) {
@@ -142,6 +158,8 @@ window.App = Backbone.View.extend({
     },
 
     clearFile: function(){
+        this.holderTitle.html('Drop file here');
+
         this.statusPanel.hide();
         this.linkContainer.removeClass('show_file');
         this.linkContainer.removeClass('paid');
@@ -167,6 +185,8 @@ window.App = Backbone.View.extend({
     },
 
     showFileStatus: function(){
+        this.holderTitle.html('Drop another...');
+
         this.statusPanel.show();
 
         this.uploadingMessage.hide();
@@ -214,45 +234,57 @@ window.App = Backbone.View.extend({
     },
 
     downloadStart: function(event){
-        var that = this;
-        var target = $(event.currentTarget);
+        this.event = event;
 
-        var link = target.attr('href');
+        window.setTimeout(downloadStarted, 20);
 
-        var pattern = /[\/\\]download[\/\\]([0-9a-z]+)[\/\\]([0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+)/g
-
-        var matches = pattern.exec(link)
-
-        if (matches != null){
-            var hash = matches[1];
-            var filename = matches[2];
-
-            var downloadId = hash + "_" + filename;
-
-            var fileType = target.find('.file-type');
-
-            target.addClass('disable-link');
-            fileType.addClass('file-type-spinny');
-            this.downloadBigMessage.html('Downloading...');
-            this.downloadFreeMessage.html('Downloading...');
-
-            _.delay(function(){
-                $.ajax({
-                    type: 'GET',
-                    url: '/download-progress',
-                    data: { 'downloadId' : downloadId },
-                    dataType: "json"
-                }).always(function() {
-                    fileType.removeClass('file-type-spinny');
-                    target.removeClass('disable-link');
-                    that.downloadBigMessage.html('Click to download');
-                    that.downloadFreeMessage.html('Click to<br/>download');
-                });
-            }, 10);
-
-        }
+        return true;
     }
 });
+
+function downloadStarted(){
+    var event = window.App.event;
+
+    var that = window.App;
+    var target = $(event.currentTarget);
+
+    target = target.parent();
+
+    var link = target.attr('href');
+
+    var pattern = /[\/\\]download[\/\\]([0-9a-z]+)[\/\\]([0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+)/g
+
+    var matches = pattern.exec(link)
+
+    if (matches != null){
+        var hash = matches[1];
+        var filename = matches[2];
+
+        var downloadId = hash + "_" + filename;
+
+        var fileType = target.find('.file-type');
+
+        target.addClass('disable-link');
+        fileType.addClass('file-type-spinny');
+        that.downloadBigMessage.html('Downloading...');
+        that.downloadFreeMessage.html('Downloading...');
+
+        $.ajax({
+            type: 'GET',
+            url: '/download-progress',
+            data: { 'downloadId' : downloadId },
+            dataType: "json"
+        }).always(function() {
+            fileType.removeClass('file-type-spinny');
+            target.removeClass('disable-link');
+            that.downloadBigMessage.html('Click to download');
+            that.downloadFreeMessage.html('Click to<br/>download');
+        });
+
+        return true;
+    }
+
+}
 
 //if (tests.dnd) {
 //    holder.ondragover = function () {
