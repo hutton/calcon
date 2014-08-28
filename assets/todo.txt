@@ -1,3 +1,4 @@
+- Update filename when uploading
 - Effect on hover over drop zone
 - Email errors
 - Support link
