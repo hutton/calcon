@@ -21,6 +21,7 @@ import cloudstorage as gcs
 from helper import process_calendar, log_upload, support_email
 from google.appengine._internal.django.utils import simplejson
 
+
 def drop_extension_from_filename(filename):
     sp = filename.split('.')
 
@@ -105,8 +106,11 @@ class Upload(webapp2.RequestHandler):
 
                         self.response.status = 500
                 else:
-                    if current_conversion.full_filename != full_filename:
+                    filename = drop_extension_from_filename(full_filename)
+
+                    if current_conversion.full_filename != full_filename or current_conversion.filename != filename:
                         current_conversion.full_filename = full_filename
+                        current_conversion.filename = filename
 
                         db.put(current_conversion)
 
