@@ -25,7 +25,7 @@ import upload
 
 sys.path.insert(0, 'libs')
 
-import Conversion
+import conversion
 import downloading
 import stripe
 
@@ -43,7 +43,7 @@ def get_conversion_from_hash(file_hash):
         return None
 
 
-class MainHandler(webapp2.RequestHandler):
+class Home(webapp2.RequestHandler):
     def get(self):
 
         config = Configuration.get_instance()
@@ -122,8 +122,16 @@ class Pay(webapp2.RequestHandler):
         self.redirect("/" + file_hash)
 
 
-app = webapp2.WSGIApplication([('/', MainHandler),
+class What(webapp2.RequestHandler):
+    def get(self):
+
+        path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/what.html')
+        self.response.out.write(template.render(path, {}))
+
+
+app = webapp2.WSGIApplication([('/', Home),
                                ('/upload', upload.Upload),
                                ('/download/.*', downloading.Downloading),
                                ('/pay', Pay),
+                               ('/what', What),
                                ('/.*', ShowFile)], debug=True)

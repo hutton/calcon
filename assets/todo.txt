@@ -1,12 +1,12 @@
 - Effect on hover over drop zone
-- Email errors
-- Support link
 *** Launch ***
 - .docx format
 - Stats page
 
 Done
 ----
+- Support link
+- Email errors
 - Manual file upload
 - Check pdf alternate background
 - Update filename when uploading

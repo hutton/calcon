@@ -17,11 +17,11 @@ window.App = Backbone.View.extend({
             //that.holderDropFile.removeClass('file-type-jump-now');
         });
         this.holder.on('dragover', function (e) {
-            //that.holderDropFile.addClass('file-type-jump-now');
+            that.holder.addClass('holder-hover');
             return false;
         });
         this.holder.on('dragend', function (e) {
-            that.holderDropFile.removeClass('file-type-jump-now');
+            that.holder.removeClass('holder-hover');
             return false;
         });
 

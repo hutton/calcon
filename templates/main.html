@@ -11,9 +11,10 @@
 </head>
 <body>
     <div class="fixed-width">
-        <!--<div id="header-links">-->
-            <!--<a class="header-link" href="mailto:icsconverter@gmail.com">Support</a>-->
-        <!--</div>-->
+        <div id="header-links">
+            <a class="header-link" href="mailto:icsconverter@gmail.com">Support</a>
+            <a class="header-link" href="/what">What is a .ics file?</a>
+        </div>
         <div id="header-title">
         ICS File Converter
         </div>
@@ -34,7 +35,7 @@
             </div>
         </div>
         <div id="holder-title">Drop file here</div>
-        <div id="file-upload-container">
+        <div id="file-upload-container" style="display: none;">
             <div>Select a file</div>
             <input id="file-upload" type="file"/>
         </div>
@@ -86,7 +87,7 @@
             <div id="free-download-footer" class="footer">Click to<br/>download</div>
         </div>
         <div class="link-section-container" id="paid-download-links">
-            <div class="title" id="not-paid-title">All these formats <span class="underline">just $2</span>!</div>
+            <div class="title" id="not-paid-title">All these formats <span class="underline">just $2</span></div>
             <div class="content">
                 <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.xlsx">
                     <div class="file-type green file-type-jump">
