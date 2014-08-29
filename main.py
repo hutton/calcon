@@ -126,5 +126,4 @@ app = webapp2.WSGIApplication([('/', MainHandler),
                                ('/upload', upload.Upload),
                                ('/download/.*', downloading.Downloading),
                                ('/pay', Pay),
-                               ('/download-progress', downloading.DownloadProgress),
                                ('/.*', ShowFile)], debug=True)

@@ -1,17 +1,17 @@
-- Remove google fonts link
-- Fix Safari download
-- Update filename when uploading
-- Check pdf alternate background
 - Effect on hover over drop zone
 - Email errors
 - Support link
-- Manual file upload
 *** Launch ***
 - .docx format
 - Stats page
 
 Done
 ----
+- Manual file upload
+- Check pdf alternate background
+- Update filename when uploading
+- Remove google fonts link
+- Fix Safari download
 - Better file display
 - Pdf format
 - Titles in templates

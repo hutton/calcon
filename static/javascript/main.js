@@ -7,7 +7,7 @@ window.App = Backbone.View.extend({
 
         this.tests = {
             fileReader: typeof FileReader != 'undefined',
-            dnd: false, //'draggable' in document.createElement('span'),
+            dnd: 'draggable' in document.createElement('span'),
             formData: !!window.FormData,
             progress: "upload" in new XMLHttpRequest
         };
@@ -34,8 +34,13 @@ window.App = Backbone.View.extend({
             this.holderTitle.hide();
             this.fileUpload.show();
 
-            $('#file-upload').on('change', function(event, two){
-                  that.sendFiles(event.originalEvent.files);
+            $('#file-upload').on('change', function(event){
+                if (this.files != null && this.files.length > 0){
+
+                    that.Routes.navigate("", {trigger: true});
+
+                    that.sendFiles(this.files);
+                }
             });
         }
     },
@@ -71,7 +76,7 @@ window.App = Backbone.View.extend({
     el: $("body"),
 
     events: {
-        "click .download-link > .file-type": "downloadStart"
+        "click .download-link": "downloadStart"
     },
 
     onDrop: function (e) {
@@ -185,7 +190,7 @@ window.App = Backbone.View.extend({
     },
 
     showFileStatus: function(){
-        this.holderTitle.html('Drop another...');
+        this.holderTitle.html('Drop another');
 
         this.statusPanel.show();
 
@@ -234,57 +239,59 @@ window.App = Backbone.View.extend({
     },
 
     downloadStart: function(event){
-        this.event = event;
+        var that = this;
 
-        window.setTimeout(downloadStarted, 20);
+        event.preventDefault();
 
-        return true;
+        var target = $(event.currentTarget);
+
+        var link = target.attr('href');
+
+        var pattern = /[\/\\]download[\/\\]([0-9a-z]+)[\/\\]([0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+)/g
+
+        var matches = pattern.exec(link)
+
+        if (matches != null){
+            var hash = matches[1];
+            var filename = matches[2];
+
+            var downloadId = hash + "_" + filename;
+
+            var fileType = target.find('.file-type');
+
+            this.linkContainer.find('a').addClass('disable-link');
+            fileType.addClass('file-type-spinny');
+
+            this.downloadBigMessage.html('Downloading...');
+            this.downloadFreeMessage.html('Downloading...');
+
+            this.checkForDownload(downloadId, function(){
+                fileType.removeClass('file-type-spinny');
+                that.linkContainer.find('a').removeClass('disable-link');
+                that.downloadBigMessage.html('Click to download');
+                that.downloadFreeMessage.html('Click to<br/>download');
+            });
+
+            _.delay(function(){
+                window.location.href = link;
+            }, 100);
+        }
+    },
+
+    checkForDownload: function(downloadId, done){
+        var that = this;
+
+        if (_.isUndefined($.cookie(downloadId))){
+            _.delay(function(){
+                that.checkForDownload(downloadId, done);
+            }, 500);
+        } else {
+            done();
+
+            $.removeCookie(downloadId);
+        }
     }
 });
-
-function downloadStarted(){
-    var event = window.App.event;
-
-    var that = window.App;
-    var target = $(event.currentTarget);
-
-    target = target.parent();
-
-    var link = target.attr('href');
-
-    var pattern = /[\/\\]download[\/\\]([0-9a-z]+)[\/\\]([0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+)/g
-
-    var matches = pattern.exec(link)
-
-    if (matches != null){
-        var hash = matches[1];
-        var filename = matches[2];
-
-        var downloadId = hash + "_" + filename;
-
-        var fileType = target.find('.file-type');
-
-        target.addClass('disable-link');
-        fileType.addClass('file-type-spinny');
-        that.downloadBigMessage.html('Downloading...');
-        that.downloadFreeMessage.html('Downloading...');
-
-        $.ajax({
-            type: 'GET',
-            url: '/download-progress',
-            data: { 'downloadId' : downloadId },
-            dataType: "json"
-        }).always(function() {
-            fileType.removeClass('file-type-spinny');
-            target.removeClass('disable-link');
-            that.downloadBigMessage.html('Click to download');
-            that.downloadFreeMessage.html('Click to<br/>download');
-        });
-
-        return true;
-    }
-
-}
 
 //if (tests.dnd) {
 //    holder.ondragover = function () {

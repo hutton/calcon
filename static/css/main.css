@@ -492,6 +492,13 @@ body {
   text-decoration: underline;
 }
 /********************* Header ********************/
+#header-links {
+  margin: 10px;
+}
+.header-link {
+  float: right;
+  padding: 20px;
+}
 #header-title {
   font-size: 400%;
   text-align: center;

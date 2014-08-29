@@ -1,5 +1,6 @@
 import sys
 from types import *
+from google.appengine.api import mail
 import download_item
 
 sys.path.insert(0, 'libs')
@@ -80,6 +81,7 @@ def log_upload(current_conversion, time):
 
     db.put(new_upload)
 
+
 def log_download(current_conversion, time, extension):
     new_download = download_item.Download()
 
@@ -91,3 +93,10 @@ def log_download(current_conversion, time, extension):
     new_download.extension = extension
 
     db.put(new_download)
+
+
+def support_email(subject, message):
+    mail.send_mail(sender="ICS Convert Support <simon.hutton@gmail.com>",
+                   to="Simon <simon.hutton@gmail.com>",
+                   subject=subject,
+                   body=message)

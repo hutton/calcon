@@ -18,7 +18,7 @@ import hashlib
 from google.appengine.ext import blobstore
 import logging
 import cloudstorage as gcs
-from helper import process_calendar, log_upload
+from helper import process_calendar, log_upload, support_email
 from google.appengine._internal.django.utils import simplejson
 
 def drop_extension_from_filename(filename):
@@ -105,6 +105,11 @@ class Upload(webapp2.RequestHandler):
 
                         self.response.status = 500
                 else:
+                    if current_conversion.full_filename != full_filename:
+                        current_conversion.full_filename = full_filename
+
+                        db.put(current_conversion)
+
                     response = {'message': "Exisiting calendar.",
                                 'paid': not current_conversion.paid_date is None,
                                 'filename': current_conversion.filename,
@@ -117,6 +122,8 @@ class Upload(webapp2.RequestHandler):
             except Exception, e:
                 logging.error('Exception while tyring to upload.')
                 logging.error(e.message)
+
+                support_email('Upload Failed', e.message)
 
                 response = {'message': "Something bad happened, we're looking at it."}
 
