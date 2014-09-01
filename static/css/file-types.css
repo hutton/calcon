@@ -7,6 +7,8 @@
 .file-type {
   display: inline-block;
   -webkit-perspective: 300;
+  -moz-perspective: 300;
+  perspective: 300;
   width: 4em;
   height: 6em;
 }
@@ -20,7 +22,9 @@
 }
 .file-type-spin:hover div {
   transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
   animation: spinny linear 0.8s;
+  -moz-animation: spinny linear 0.8s;
   -webkit-animation: spinny linear 0.8s;
 }
 .file-type-jump div {
@@ -37,6 +41,7 @@
   transform-style: preserve-3d;
   animation: spinny linear 2s infinite;
   -webkit-animation: spinny linear 2s infinite;
+  -moz-animation: spinny linear 2s infinite;
 }
 /* Standard syntax */
 @keyframes spinny {
