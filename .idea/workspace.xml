@@ -4,22 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/static/javascript/main.js" line="81" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd66e4eb-f6bc-4afb-ab49-739c79bbf9ab" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/blurb.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Downloading.py" afterPath="$PROJECT_DIR$/downloading.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascript/all-min.js" afterPath="$PROJECT_DIR$/static/javascript/all-min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/file-types.css" afterPath="$PROJECT_DIR$/static/css/file-types.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/file-types.less" afterPath="$PROJECT_DIR$/static/css/file-types.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/main.css" afterPath="$PROJECT_DIR$/static/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/main.html" afterPath="$PROJECT_DIR$/templates/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/javascript/main.js" afterPath="$PROJECT_DIR$/static/javascript/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/main.less" afterPath="$PROJECT_DIR$/static/css/main.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/todo.txt" afterPath="$PROJECT_DIR$/assets/todo.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/what.html" afterPath="$PROJECT_DIR$/templates/what.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="cd66e4eb-f6bc-4afb-ab49-739c79bbf9ab" name="Default" comment="" />
     <ignored path="calcon.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
