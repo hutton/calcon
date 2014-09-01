@@ -1,10 +1,17 @@
-- Effect on hover over drop zone
+- What page
 *** Launch ***
 - .docx format
 - Stats page
 
+Ideas
+-----
+- Show sample online
+- View item online
+- Email item
+
 Done
 ----
+- Effect on hover over drop zone
 - Support link
 - Email errors
 - Manual file upload

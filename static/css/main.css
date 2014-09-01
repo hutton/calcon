@@ -148,12 +148,9 @@ table {
   transform: rotateY(0deg);
 }
 .file-type-spin:hover div {
-  -webkit-transform: rotateY(360deg);
-  -moz-transform: rotateY(360deg);
-  -o-transform: rotateY(360deg);
-  -ms-transform: rotateY(360deg);
-  transform: rotateY(360deg);
-  transition-duration: 0.8s;
+  transform-style: preserve-3d;
+  animation: spinny linear 0.8s;
+  -webkit-animation: spinny linear 0.8s;
 }
 .file-type-jump div {
   transition-duration: 0.2s;
@@ -529,8 +526,7 @@ h3 {
   text-align: center;
 }
 .holder-hover {
-  border: 5px rgba(0, 0, 0, 0.3) dashed !important;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 20px inset;
+  border: 5px rgba(0, 0, 0, 0.6) dashed !important;
 }
 #holder > .file-type {
   margin-top: 40px;

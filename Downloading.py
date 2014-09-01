@@ -153,7 +153,7 @@ class Downloading(webapp2.RequestHandler):
 
                     self.response.headers['Content-Transfer-Encoding'] = 'binary'
                     self.response.headers['Accept-Range'] = 'bytes'
-                    self.response.headers['Content-Length'] = current_conversion.file_size
+                    self.response.headers['Content-Length'] = str(current_conversion.file_size)
                     self.response.headers['Content-Encoding'] = 'binary'
                     self.response.headers['Content-Disposition'] = 'attachment; filename=' + filename + '.' + extension
 
@@ -161,41 +161,54 @@ class Downloading(webapp2.RequestHandler):
                         self.response.headers['Content-Type'] = 'application/csv'
                         output_content = generate_csv_content(events)
 
-                    if extension == 'xls':
-                        self.response.headers['Content-Type'] = 'application/xls'
-                        output_content = generate_xls_content(events)
+                        log_download(current_conversion, time.time() - start_time, extension)
 
-                    if extension == 'xlsx':
-                        self.response.headers['Content-Type'] = 'application/xlsx'
-                        output_content = generate_xlsx_content(events)
+                        self.response.out.write(output_content)
+                    else:
+                        if current_conversion.paid_date:
+                            if extension == 'xls':
+                                self.response.headers['Content-Type'] = 'application/xls'
+                                output_content = generate_xls_content(events)
 
-                    if extension == 'json':
-                        self.response.headers['Content-Type'] = 'application/json'
-                        output_content = generate_json_content(events)
+                            if extension == 'xlsx':
+                                self.response.headers['Content-Type'] = 'application/xlsx'
+                                output_content = generate_xlsx_content(events)
 
-                    if extension == 'tsv':
-                        self.response.headers['Content-Type'] = 'application/tsv'
-                        output_content = generate_tsv_content(events)
+                            if extension == 'json':
+                                self.response.headers['Content-Type'] = 'application/json'
+                                output_content = generate_json_content(events)
 
-                    if extension == 'txt':
-                        self.response.headers['Content-Type'] = 'application/txt'
-                        output_content = generate_txt_content(events)
+                            if extension == 'tsv':
+                                self.response.headers['Content-Type'] = 'application/tsv'
+                                output_content = generate_tsv_content(events)
 
-                    if extension == 'xml':
-                        self.response.headers['Content-Type'] = 'application/xml'
-                        output_content = generate_xml_content(events)
+                            if extension == 'txt':
+                                self.response.headers['Content-Type'] = 'application/txt'
+                                output_content = generate_txt_content(events)
 
-                    if extension == 'html':
-                        self.response.headers['Content-Type'] = 'application/html'
-                        output_content = generate_html_content(events, filename + '.' + extension)
+                            if extension == 'xml':
+                                self.response.headers['Content-Type'] = 'application/xml'
+                                output_content = generate_xml_content(events)
 
-                    if extension == 'pdf':
-                        self.response.headers['Content-Type'] = 'application/pdf'
-                        output_content = generate_pdf_content(events, filename + '.' + extension)
+                            if extension == 'html':
+                                self.response.headers['Content-Type'] = 'application/html'
+                                output_content = generate_html_content(events, filename + '.' + extension)
 
-                    log_download(current_conversion, time.time() - start_time, extension)
+                            if extension == 'pdf':
+                                self.response.headers['Content-Type'] = 'application/pdf'
+                                output_content = generate_pdf_content(events, filename + '.' + extension)
 
-                    self.response.out.write(output_content)
+                            log_download(current_conversion, time.time() - start_time, extension)
+
+                            self.response.out.write(output_content)
+                        else:
+                            support_email('Download Failed',
+                                          "Trying to download file type (" + extension + ") which hasn't been paid for, hash: " + file_hash)
+
+                            logging.warn(
+                                "Trying to download file type (" + extension + ") which hasn't been paid for, hash: " + file_hash)
+
+                            self.response.status = 404
                 else:
                     support_email('Download Failed', 'Could not find hash: ' + file_hash)
 

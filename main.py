@@ -133,5 +133,5 @@ app = webapp2.WSGIApplication([('/', Home),
                                ('/upload', upload.Upload),
                                ('/download/.*', downloading.Downloading),
                                ('/pay', Pay),
-                               ('/what', What),
+                               ('/what-is-a-ics-file', What),
                                ('/.*', ShowFile)], debug=True)

@@ -14,6 +14,7 @@ window.App = Backbone.View.extend({
 
         this.holder.on('drop', function (e) {
             that.onDrop(e);
+            that.holder.removeClass('holder-hover');
             //that.holderDropFile.removeClass('file-type-jump-now');
         });
         this.holder.on('dragover', function (e) {

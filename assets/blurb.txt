@@ -1,0 +1,3 @@
+
+ICS files are also used for hotel bookings, flight itineraries, restaurant reservations and just about anything that can
+be booked online.  We can instantly convert them all to an easy readable format that suits you.

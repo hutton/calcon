@@ -13,22 +13,22 @@
     <div class="fixed-width">
         <div id="header-links">
             <a class="header-link" href="mailto:icsconverter@gmail.com">Support</a>
-            <a class="header-link" href="/what">What is a .ics file?</a>
+            <a class="header-link" href="/what-is-a-ics-file">What is a .ics file?</a>
         </div>
         <div id="header-title">
         ICS File Converter
         </div>
-        <!--<div id="header-sub-title">-->
-            <!--<div>-->
-            <!--Get all these other file formats for just $2-->
-            <!--</div>-->
-            <!--<div>-->
-            <!--XLSX, HTML, XML, PDF, JSON, TXT, TSV-->
-            <!--</div>-->
-        <!--</div>-->
+        <div id="header-sub-title">
+            <div>
+            Instantly convert ICS files to CSV
+            </div>
+            <div>
+            and lots of other formats
+            </div>
+        </div>
     </div>
     <div class="fixed-width" id="holder">
-        <div id="holder-drop-file" class="file-type red big file-type-jump">
+        <div id="holder-drop-file" class="file-type red big file-type-spin">
             <div>
                 <span></span>
                 <p>.ICS</p>
@@ -75,7 +75,7 @@
         <div class="link-section-container" id="free-download-links">
             <div class="title">Free</div>
             <div class="content">
-                <a class="download-link" rel="nofollow" href="\download\{{ key }}\{{ filename }}.csv">
+                <a class="download-link" rel="nofollow" href="\download\{{ key|default:'sample' }}\{{ filename|default:'404' }}.csv">
                     <div class="file-type blue file-type-jump">
                         <div>
                             <span></span>

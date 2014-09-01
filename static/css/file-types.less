@@ -24,9 +24,11 @@
 }
 
 .file-type-spin:hover div {
-    .transform(rotateY(360deg));
-    transition-duration: 0.8s;    
+    transform-style: preserve-3d;
+    animation: spinny linear 0.8s;
+    -webkit-animation: spinny linear 0.8s;
 }
+
 .file-type-jump div{
     transition-duration: 0.2s;
 }
