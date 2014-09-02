@@ -81,7 +81,11 @@ class ShowFile(webapp2.RequestHandler):
                                                                 'web_debug': config.web_debug}))
                 return
 
-        self.redirect('/')
+        path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
+        self.response.out.write(template.render(path, {'status': '404',
+                                                       'message': "We don't have what you're looking for."}))
+
+        self.response.status = 404
 
 
 class Pay(webapp2.RequestHandler):

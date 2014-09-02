@@ -208,11 +208,19 @@ class Downloading(webapp2.RequestHandler):
                             logging.warn(
                                 "Trying to download file type (" + extension + ") which hasn't been paid for, hash: " + file_hash)
 
+                            path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
+                            self.response.out.write(template.render(path, {'status': '404',
+                                                                           'message': "We don't have what you're looking for."}))
+
                             self.response.status = 404
                 else:
                     support_email('Download Failed', 'Could not find hash: ' + file_hash)
 
                     logging.warn('Could not find hash: ' + file_hash)
+
+                    path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
+                    self.response.out.write(template.render(path, {'status': '404',
+                                                                   'message': "We don't have what you're looking for."}))
 
                     self.response.status = 404
             else:
@@ -220,10 +228,18 @@ class Downloading(webapp2.RequestHandler):
 
                 logging.warn('Could not parse path: ' + self.request.path)
 
+                path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
+                self.response.out.write(template.render(path, {'status': '404',
+                                                               'message': "We don't have what you're looking for."}))
+
                 self.response.status = 404
         except Exception, e:
             support_email('Download Failed', 'Exception: ' + e.message)
 
             logging.error(e.message)
+
+            path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
+            self.response.out.write(template.render(path, {'status': '500',
+                                                           'message': "Something bad happened, we're looking at it."}))
 
             self.response.status = 500

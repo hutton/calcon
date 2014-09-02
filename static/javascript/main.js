@@ -228,14 +228,12 @@ window.App = Backbone.View.extend({
             this.fileMessage.find('#event-count').hide();
         } else {
             this.fileMessage.find('#event-count').show();
-            this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Events");
-        }
 
-        if (_.isUndefined(convertionInfo.todo_count) && convertionInfo.todo_count > 0){
-            this.fileMessage.find('#todo-count').hide();
-        } else {
-            this.fileMessage.find('#todo-count').show();
-            this.fileMessage.find('#todo-count').html(convertionInfo.todo_count + " Todos");
+            if (convertionInfo.event_count == 1 ){
+                this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Event");
+            } else {
+                this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Events");
+            }
         }
     },
 

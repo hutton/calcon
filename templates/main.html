@@ -62,7 +62,7 @@
             </div>
             <div id="file-message-content">
                 <div id="filename">{{ full_filename }}</div>
-                <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Events</div>
+                <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Event{{ event_count|pluralize }}</div>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
         <div class="link-section-container" id="paid-download-links">
             <div class="title" id="not-paid-title">All these formats <span class="underline">just $2</span></div>
             <div class="content">
-                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.xlsx">
+                <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'404' }}.xlsx">
                     <div class="file-type green file-type-jump">
                         <div>
                             <span></span>
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.html">
+                <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'404' }}.html">
                     <div class="file-type pink file-type-jump">
                         <div>
                             <span></span>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.xml">
+                <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'404' }}.xml">
                     <div class="file-type yellow file-type-jump">
                         <div>
                             <span></span>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.pdf">
+                <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'404' }}.pdf">
                     <div class="file-type red file-type-jump">
                         <div>
                             <span></span>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.json">
+                <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'404' }}.json">
                     <div class="file-type orange file-type-jump">
                         <div>
                             <span></span>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.txt">
+                <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'404' }}.txt">
                     <div class="file-type brown file-type-jump">
                         <div>
                             <span></span>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                 </a>
-                <a class="download-link" rel="nofollow" href="/download/{{ key }}/{{ filename }}.tsv">
+                <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'404' }}.tsv">
                     <div class="file-type green file-type-jump">
                         <div>
                             <span></span>
