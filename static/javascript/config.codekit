@@ -46,6 +46,28 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/min\/stats-ck.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/min\/stats-ck.js",
+		"outputAbbreviatedPath": "\/min\/min\/stats-ck-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/stats.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/stats.js",
+		"outputAbbreviatedPath": "\/min\/stats-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/tp\/backbone-min.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -63,6 +85,17 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/tp\/backbone.js",
 		"outputAbbreviatedPath": "\/tp\/min\/backbone-ck.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/tp\/Chart.min.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/tp\/Chart.min.js",
+		"outputAbbreviatedPath": "\/tp\/min\/Chart.min-ck.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"outputStyle": 1,

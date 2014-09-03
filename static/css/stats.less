@@ -62,11 +62,11 @@ h4{
 /*************************************************/
 
 .stat-title{
-    margin: 40px 0px 30px 0px;
+    margin: 40px 20px 30px 20px;
 }
 
 .stat-section{
-    margin: 20px 0px;
+    margin: 20px 20px;
 
 }
 .stat-section-title{
@@ -75,11 +75,19 @@ h4{
 
 .stat-section-item{
     display: inline-block;
-    border: 1px solid @border-color;
-    padding: 10px 20px;
+    padding: 10px 20px 10px 0px;
     margin: 10px 20px 10px 0px;
+    text-align: right;
+    vertical-align: top;
 }
 
 .stat-section-item > div{
+    font-size: 160%;
+    line-height: 1.4em;
+}
 
+.stat-section-item > div:first-child{
+    text-align: left;
+    font-size: 160%;
+    line-height: 1.4em;
 }

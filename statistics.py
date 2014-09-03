@@ -11,8 +11,13 @@ def extract_data(items):
     uploads = [download for download in items if not download.download]
     downloads = [download for download in items if download.download]
 
+    file_types = ['csv', 'xslx', 'html', 'xml', 'pdf', 'json', 'txt', 'tsv']
+
+    file_type_frequencies = [len([download for download in items if download.extension == extension]) for extension in file_types]
+
     return {'uploads': len(uploads),
-            'downloads': len(downloads)}
+            'downloads': len(downloads),
+            'fileTypeFrequencies': file_type_frequencies}
 
 
 class Statistics(webapp2.RequestHandler):
@@ -22,7 +27,9 @@ class Statistics(webapp2.RequestHandler):
 
         query = Download.all()
 
-        all_downloads = query.fetch(None)
+        # all_downloads = query.fetch(None)
+
+        all_downloads = []
 
         today_items = [download for download in all_downloads if download.created_date > today]
         month_items = [download for download in all_downloads if download.created_date > month_ago]

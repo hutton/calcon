@@ -15,12 +15,16 @@
                 Today
             </div>
             <div class="stat-section-item">
-                <h3>Uploads</h3>
+                <div>Uploads</div>
                 <div>{{ today.uploads }}</div>
             </div>
             <div class="stat-section-item">
-                <h3>Downloads</h3>
+                <div>Downloads</div>
                 <div>{{ today.downloads }}</div>
+            </div>
+            <div class="stat-section-item">
+                <div>Download Types</div>
+                <canvas id="myChart" width="400" height="100"></canvas>
             </div>
         </div>
         <div class="stat-section">
@@ -28,11 +32,11 @@
                 This Month
             </div>
             <div class="stat-section-item">
-                <h3>Uploads</h3>
+                <div>Uploads</div>
                 <div>{{ month.uploads }}</div>
             </div>
             <div class="stat-section-item">
-                <h3>Downloads</h3>
+                <div>Downloads</div>
                 <div>{{ month.downloads }}</div>
             </div>
         </div>
@@ -41,15 +45,19 @@
                 All
             </div>
             <div class="stat-section-item">
-                <h3>Uploads</h3>
+                <div>Uploads</div>
                 <div>{{ all.uploads }}</div>
             </div>
             <div class="stat-section-item">
-                <h3>Downloads</h3>
+                <div>Downloads</div>
                 <div>{{ all.downloads }}</div>
             </div>
         </div>
     </div>
+
+    <script src="/static/javascript/tp/jquery-2.1.1.js" language="javascript" type="text/javascript"></script>
+    <script src="/static/javascript/tp/Chart.min.js" language="javascript" type="text/javascript"></script>
+    <script src="/static/javascript/stats.js" language="javascript" type="text/javascript"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
