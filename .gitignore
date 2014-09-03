@@ -1,1 +1,10 @@
 .pyc
+.idea/workspace.xml
+
+*.pyc
+
+downloading.pyc
+
+*.pyc
+
+main.pyc

@@ -19,6 +19,7 @@ import sys
 import datetime
 import re
 from configuration import Configuration
+import statistics
 
 import upload
 
@@ -138,4 +139,5 @@ app = webapp2.WSGIApplication([('/', Home),
                                ('/download/.*', downloading.Downloading),
                                ('/pay', Pay),
                                ('/what-is-a-ics-file', What),
+                               ('/statistics', statistics.Statistics),
                                ('/.*', ShowFile)], debug=True)

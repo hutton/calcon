@@ -11,7 +11,7 @@
     <div class="fixed-width center">
         <div id="error-container">
             <h1>Oh no!</h1>
-            <h3>{{ message }}</h3>
+            <h3>{{ message|safe }}</h3>
             <div id="holder-drop-file" class="file-type red big file-type-spin">
                 <div>
                     <span></span>
@@ -19,8 +19,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="fixed-width">
     </div>
 
     <script>

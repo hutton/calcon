@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Statistics - ICS Converter</title>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/stats.css" />
+    <link rel="shortcut icon" href="/static/images/32x32.png">
+</head>
+<body>
+    <div class="fixed-width">
+        <h2 class="stat-title">Statistics</h2>
+        <div class="stat-section">
+            <div class="stat-section-title">
+                Today
+            </div>
+            <div class="stat-section-item">
+                <h3>Uploads</h3>
+                <div>{{ today.uploads }}</div>
+            </div>
+            <div class="stat-section-item">
+                <h3>Downloads</h3>
+                <div>{{ today.downloads }}</div>
+            </div>
+        </div>
+        <div class="stat-section">
+            <div class="stat-section-title">
+                This Month
+            </div>
+            <div class="stat-section-item">
+                <h3>Uploads</h3>
+                <div>{{ month.uploads }}</div>
+            </div>
+            <div class="stat-section-item">
+                <h3>Downloads</h3>
+                <div>{{ month.downloads }}</div>
+            </div>
+        </div>
+        <div class="stat-section">
+            <div class="stat-section-title">
+                All
+            </div>
+            <div class="stat-section-item">
+                <h3>Uploads</h3>
+                <div>{{ all.uploads }}</div>
+            </div>
+            <div class="stat-section-item">
+                <h3>Downloads</h3>
+                <div>{{ all.downloads }}</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-53976130-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+</body>
+</html>
