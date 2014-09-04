@@ -14,7 +14,8 @@ def extract_data(items):
 
     file_types = ['csv', 'xslx', 'html', 'xml', 'pdf', 'json', 'txt', 'tsv']
 
-    file_type_frequencies = [len([download for download in items if download.extension == extension]) for extension in file_types]
+    file_type_frequencies = [len([download for download in items if download.extension == extension]) for extension in
+                             file_types]
 
     return {'uploads': len(uploads),
             'downloads': len(downloads),
@@ -42,12 +43,17 @@ class StatisticsData(webapp2.RequestHandler):
         month_items = [download for download in all_downloads if download.created_date > month_ago]
 
         today_values = extract_data(today_items)
-        month_values = extract_data(month_items)
-        all_values = extract_data(all_downloads)
+        today_values['title'] = "Today"
 
-        response = {'today': today_values,
-                           'month': month_values,
-                           'all': all_values}
+        month_values = extract_data(month_items)
+        month_values['title'] = "Month"
+
+        all_values = extract_data(all_downloads)
+        all_values['title'] = "All"
+
+        response = [today_values,
+                    month_values,
+                    all_values]
 
         self.response.out.write(simplejson.dumps(response))
 

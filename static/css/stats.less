@@ -1,6 +1,7 @@
 
 @import "reset.less";
 @import "elements.less";
+@import "progress.less";
 
 @font-face {
   font-family: 'Open Sans Light';
@@ -61,6 +62,16 @@ h4{
 
 /*************************************************/
 
+#stats-loading{
+    font-size: 160%;
+    margin-top: 100px;
+    text-align: center;
+}
+
+#stats-loading .progress{
+    width: 180px;
+}
+
 .stat-title{
     margin: 40px 20px 30px 20px;
 }
@@ -71,6 +82,7 @@ h4{
 }
 .stat-section-title{
     border-bottom: 1px solid @border-color;
+    font-size: 120%;
 }
 
 .stat-section-item{

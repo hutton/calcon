@@ -31,7 +31,7 @@ window.StatsView = Backbone.View.extend({
             }
         ]};
 
-        this.lineChart = new Chart(ctx).Bar(data);
+        new Chart(ctx).Bar(data);
 
         return this;
     },
@@ -57,17 +57,13 @@ window.App = Backbone.View.extend({
 
             var response = jQuery.parseJSON(data);
 
-            var view = new StatsView({model: response.today});
+            that.statsListEl.empty();
 
-            that.statsListEl.append(view.el);
+            _.each(response, function(statDataItem){
+                var view = new StatsView({model: statDataItem});
 
-            view = new StatsView({model: response.month});
-
-            that.statsListEl.append(view.el);
-
-            view = new StatsView({model: response.all});
-
-            that.statsListEl.append(view.el);
+                that.statsListEl.append(view.el);
+            });
         });
     }
 });

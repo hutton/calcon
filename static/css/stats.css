@@ -127,6 +127,46 @@ table {
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
+.progress {
+  height: 2px;
+  background: rgba(0, 0, 0, 0.05);
+  margin: 10px auto;
+  width: 300px;
+}
+.progress > span {
+  display: block;
+  height: 100%;
+  background: #4679BD;
+}
+.indefinite > span {
+  position: relative;
+  width: 10% !important;
+  -webkit-animation: myfirst linear 2s infinite;
+  animation: myfirst linear 2s infinite;
+}
+/* Standard syntax */
+@keyframes myfirst {
+  0% {
+    left: 0%;
+  }
+  50% {
+    left: 90%;
+  }
+  100% {
+    left: 0%;
+  }
+}
+@-webkit-keyframes myfirst {
+  0% {
+    left: 0%;
+  }
+  50% {
+    left: 90%;
+  }
+  100% {
+    left: 0%;
+  }
+}
 @font-face {
   font-family: 'Open Sans Light';
   font-style: normal;
@@ -169,6 +209,14 @@ h4 {
   line-height: 1.8em;
 }
 /*************************************************/
+#stats-loading {
+  font-size: 160%;
+  margin-top: 100px;
+  text-align: center;
+}
+#stats-loading .progress {
+  width: 180px;
+}
 .stat-title {
   margin: 40px 20px 30px 20px;
 }
@@ -177,6 +225,7 @@ h4 {
 }
 .stat-section-title {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 120%;
 }
 .stat-section-item {
   display: inline-block;
