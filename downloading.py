@@ -134,7 +134,7 @@ class Downloading(webapp2.RequestHandler):
                 filename = matches.group("filename")
                 extension = matches.group("extension")
 
-                download_id = file_hash + '_' + filename + '.' + extension
+                download_id = file_hash + '.' + extension
 
                 self.response.set_cookie(download_id)
 

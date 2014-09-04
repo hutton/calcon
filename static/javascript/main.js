@@ -254,7 +254,11 @@ window.App = Backbone.View.extend({
             var hash = matches[1];
             var filename = matches[2];
 
-            var downloadId = hash + "_" + filename;
+            var split = filename.split(".");
+
+            var extension = split[split.length - 1];
+
+            var downloadId = hash + "." + extension;
 
             var fileType = target.find('.file-type');
 
@@ -291,27 +295,6 @@ window.App = Backbone.View.extend({
         }
     }
 });
-
-//if (tests.dnd) {
-//    holder.ondragover = function () {
-//        this.className = 'hover';
-//        return false;
-//    };
-//    holder.ondragend = function () {
-//        this.className = '';
-//        return false;
-//    };
-//    holder.ondrop = function (e) {
-//        this.className = '';
-//        e.preventDefault();
-//        readfiles(e.dataTransfer.files);
-//    }
-//} else {
-//    fileupload.className = 'hidden';
-//    fileupload.querySelector('input').onchange = function () {
-//        readfiles(this.files);
-//    };
-//}
 
 window.Workspace = Backbone.Router.extend({
 

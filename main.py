@@ -140,4 +140,5 @@ app = webapp2.WSGIApplication([('/', Home),
                                ('/pay', Pay),
                                ('/what-is-a-ics-file', What),
                                ('/statistics', statistics.Statistics),
+                               ('/statistics-data', statistics.StatisticsData),
                                ('/.*', ShowFile)], debug=True)

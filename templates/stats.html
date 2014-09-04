@@ -10,53 +10,34 @@
 <body>
     <div class="fixed-width">
         <h2 class="stat-title">Statistics</h2>
-        <div class="stat-section">
-            <div class="stat-section-title">
-                Today
-            </div>
-            <div class="stat-section-item">
-                <div>Uploads</div>
-                <div>{{ today.uploads }}</div>
-            </div>
-            <div class="stat-section-item">
-                <div>Downloads</div>
-                <div>{{ today.downloads }}</div>
-            </div>
-            <div class="stat-section-item">
-                <div>Download Types</div>
-                <canvas id="myChart" width="400" height="100"></canvas>
-            </div>
+        <div id="stat-sections-container">
         </div>
-        <div class="stat-section">
-            <div class="stat-section-title">
-                This Month
-            </div>
-            <div class="stat-section-item">
-                <div>Uploads</div>
-                <div>{{ month.uploads }}</div>
-            </div>
-            <div class="stat-section-item">
-                <div>Downloads</div>
-                <div>{{ month.downloads }}</div>
-            </div>
-        </div>
-        <div class="stat-section">
+    </div>
+
+    <script type="text/template" id="stats-view-template">
             <div class="stat-section-title">
                 All
             </div>
             <div class="stat-section-item">
                 <div>Uploads</div>
-                <div>{{ all.uploads }}</div>
+                <div><%= uploads %></div>
             </div>
             <div class="stat-section-item">
                 <div>Downloads</div>
-                <div>{{ all.downloads }}</div>
+                <div><%= downloads %></div>
             </div>
-        </div>
-    </div>
+            <div class="stat-section-item">
+                <div>Download Types</div>
+                <canvas class="download-type-chart" width="400" height="100"></canvas>
+            </div>
+    </script>
+
 
     <script src="/static/javascript/tp/jquery-2.1.1.js" language="javascript" type="text/javascript"></script>
     <script src="/static/javascript/tp/Chart.min.js" language="javascript" type="text/javascript"></script>
+    <script src="/static/javascript/tp/underscore-min.js" language="javascript" type="text/javascript"></script>
+    <script src="/static/javascript/tp/backbone.js" language="javascript" type="text/javascript"></script>
+
     <script src="/static/javascript/stats.js" language="javascript" type="text/javascript"></script>
 
     <script>

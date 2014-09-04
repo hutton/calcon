@@ -626,6 +626,11 @@ h4 {
 #filename {
   font-size: 150%;
   margin-bottom: 10px;
+  max-width: 460px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  vertical-align: middle;
 }
 /********************* Links ***********************/
 #link-container-header {
