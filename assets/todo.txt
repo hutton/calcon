@@ -1,7 +1,6 @@
 - What page
 *** Launch ***
 - .docx format
-- Stats page
 
 Ideas
 -----
@@ -11,6 +10,7 @@ Ideas
 
 Done
 ----
+- Stats page
 - Effect on hover over drop zone
 - Support link
 - Email errors
