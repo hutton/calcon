@@ -21,6 +21,33 @@ def extract_data(items):
             'downloads': len(downloads),
             'fileTypeFrequencies': file_type_frequencies}
 
+def same_day(date1, date2):
+    return date1.year == date2.year and date1.month == date2.month and date1.day == date2.day
+
+def extract_trend_data(items):
+
+    items.sort(key=lambda download_item: download_item.created_date)
+
+    first_date = items[0].created_date
+    last_date = items[len(items) - 1].created_date
+
+    current_date = first_date
+
+    uploads = []
+    downloads = []
+    labels = []
+
+    while current_date < last_date:
+        matches = [item for item in items if same_day(current_date, item.created_date)]
+
+        uploads.append(len([match for match in matches if not match.download]))
+        downloads.append(len([match for match in matches if match.download]))
+        labels.append(current_date.strftime('%a %d %b'))
+
+        current_date = current_date + timedelta(1)
+
+    return labels, uploads, downloads
+
 
 class Statistics(webapp2.RequestHandler):
     def get(self):
@@ -51,9 +78,18 @@ class StatisticsData(webapp2.RequestHandler):
         all_values = extract_data(all_downloads)
         all_values['title'] = "All"
 
-        response = [today_values,
+        trend_labels, trend_uploads, trend_downloads = extract_trend_data(month_items)
+
+        trend_data = {'labels': trend_labels,
+                      'uploads': trend_uploads,
+                      'downloads': trend_downloads}
+
+        days_data = [today_values,
                     month_values,
                     all_values]
+
+        response = {'days': days_data,
+                    'trend': trend_data}
 
         self.response.out.write(simplejson.dumps(response))
 
