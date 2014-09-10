@@ -150,13 +150,7 @@ class Downloading(webapp2.RequestHandler):
                     self.response.status = 200
                 else:
                     if current_conversion:
-                        blob_reader = blobstore.BlobReader(current_conversion.blob_key)
-
-                        file_content = blob_reader.read()
-
-                        gcal = icalendar.Calendar.from_ical(file_content)
-
-                        events = process_calendar(gcal)
+                        events = current_conversion.get_events()
 
                         self.response.headers['Content-Transfer-Encoding'] = 'binary'
                         self.response.headers['Accept-Range'] = 'bytes'

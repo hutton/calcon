@@ -1,4 +1,12 @@
+import sys
+sys.path.insert(0, 'libs')
+
 from google.appengine.ext import db
+
+from google.appengine.ext import blobstore
+
+import icalendar
+from helper import process_calendar
 
 __author__ = 'simonhutton'
 
@@ -18,3 +26,27 @@ class Conversion(db.Model):
     full_filename = db.StringProperty()
     event_count = db.IntegerProperty()
     todo_count = db.IntegerProperty()
+    first_ten_events = db.TextProperty()
+
+    def get_events(self):
+        blob_reader = blobstore.BlobReader(self.blob_key)
+
+        file_content = blob_reader.read()
+
+        converted_calendar = icalendar.Calendar.from_ical(file_content)
+
+        return process_calendar(converted_calendar)
+
+    def get_first_ten_events(self):
+        if self.first_ten_events:
+            return self.first_ten_events
+
+        events = self.get_events()
+
+        first_ten = events[:10]
+
+        self.first_ten_events = first_ten
+
+        self.put()
+
+        return first_ten

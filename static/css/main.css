@@ -632,6 +632,13 @@ h4 {
   overflow-wrap: break-word;
   vertical-align: middle;
 }
+#items-view {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
 /********************* Links ***********************/
 #link-container-header {
   font-size: 150%;

@@ -83,6 +83,7 @@ class Upload(webapp2.RequestHandler):
                         current_conversion.filename = drop_extension_from_filename(full_filename)
                         current_conversion.file_size = file_size
                         current_conversion.event_count = len(events)
+                        current_conversion.first_ten_events = simplejson.dumps(events[:10])
 
                         current_conversion.blob_key = self.save_file(file_hash, file_content)
 

@@ -1,15 +1,15 @@
-- What page
+- Show sample online
 *** Launch ***
 - .docx format
 
 Ideas
 -----
-- Show sample online
 - View item online
 - Email item
 
 Done
 ----
+- What page
 - Stats page
 - Effect on hover over drop zone
 - Support link

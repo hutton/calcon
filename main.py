@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import json
 import logging
 import sys
 import datetime
@@ -33,6 +34,7 @@ import stripe
 import os
 from google.appengine.ext.webapp import template
 import webapp2
+from google.appengine._internal.django.utils import simplejson
 
 
 def get_conversion_from_hash(file_hash):
@@ -70,6 +72,7 @@ class ShowFile(webapp2.RequestHandler):
             current_conversion = get_conversion_from_hash(file_hash)
 
             if current_conversion:
+
                 path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
 
                 self.response.out.write(template.render(path, {'show_file': True,
@@ -79,6 +82,7 @@ class ShowFile(webapp2.RequestHandler):
                                                                 'key': current_conversion.hash,
                                                                 'filename': current_conversion.filename,
                                                                 'full_filename': current_conversion.full_filename,
+                                                                'events': json.loads(str(current_conversion.get_first_ten_events())),
                                                                 'web_debug': config.web_debug}))
                 return
 

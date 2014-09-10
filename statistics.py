@@ -58,6 +58,7 @@ class Statistics(webapp2.RequestHandler):
 class StatisticsData(webapp2.RequestHandler):
     def get(self):
         today = datetime.combine(date.today(), time())
+        yesterday = today - timedelta(days=1)
         month_ago = today - timedelta(days=30)
 
         query = Download.all()
@@ -67,13 +68,17 @@ class StatisticsData(webapp2.RequestHandler):
         # all_downloads = []
 
         today_items = [download for download in all_downloads if download.created_date > today]
+        yesterday_items = [download for download in all_downloads if yesterday < download.created_date < today]
         month_items = [download for download in all_downloads if download.created_date > month_ago]
 
         today_values = extract_data(today_items)
         today_values['title'] = "Today"
 
+        yesterday_values = extract_data(yesterday_items)
+        yesterday_values['title'] = "Yesterday"
+
         month_values = extract_data(month_items)
-        month_values['title'] = "Month"
+        month_values['title'] = "Last 30 days"
 
         all_values = extract_data(all_downloads)
         all_values['title'] = "All"
@@ -85,6 +90,7 @@ class StatisticsData(webapp2.RequestHandler):
                       'downloads': trend_downloads}
 
         days_data = [today_values,
+                     yesterday_values,
                     month_values,
                     all_values]
 
