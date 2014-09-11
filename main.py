@@ -76,7 +76,7 @@ class ShowFile(webapp2.RequestHandler):
 
                 path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
 
-                first_ten_events = json.loads(str(current_conversion.get_first_ten_events()))
+                first_ten_events = current_conversion.get_first_ten_events()
 
                 first_ten_events = format_events_for_html(first_ten_events)
 
