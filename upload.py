@@ -90,7 +90,7 @@ class Upload(webapp2.RequestHandler):
 
                         db.put(current_conversion)
 
-                        first_ten_events = json.loads(str(current_conversion.get_first_ten_events()))
+                        first_ten_events = current_conversion.get_first_ten_events()
 
                         first_ten_events = format_events_for_html(first_ten_events)
 
