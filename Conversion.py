@@ -7,6 +7,7 @@ from google.appengine.ext import blobstore
 
 import icalendar
 from helper import process_calendar
+from google.appengine._internal.django.utils import simplejson
 
 __author__ = 'simonhutton'
 
@@ -39,14 +40,15 @@ class Conversion(db.Model):
 
     def get_first_ten_events(self):
         if self.first_ten_events:
-            return self.first_ten_events
+            return json.loads(str(self.first_ten_events))
+        else:
+            events = self.get_events()
+    
+            first_ten = simplejson.dumps(events[:10])
 
-        events = self.get_events()
-
-        first_ten = events[:10]
-
-        self.first_ten_events = first_ten
-
-        self.put()
-
-        return first_ten
+            self.first_ten_events = first_ten
+    
+            self.put()
+            
+            return first_ten
+            
