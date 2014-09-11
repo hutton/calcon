@@ -3,6 +3,7 @@ import logging
 import os
 import sys
 import time
+import traceback
 from google.appengine.api import memcache
 from xhtml2pdf import pisa
 from helper import process_calendar, log_download, support_email
@@ -238,6 +239,7 @@ class Downloading(webapp2.RequestHandler):
             support_email('Download Failed', 'Exception: ' + e.message)
 
             logging.error(e.message)
+            logging.error(traceback.format_exc())
 
             path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
             self.response.out.write(template.render(path, {'status': '500',

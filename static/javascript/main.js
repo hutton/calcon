@@ -74,12 +74,16 @@ window.App = Backbone.View.extend({
 
     fileUpload: $('#file-upload-container'),
 
+    itemsViewBackground: $('#items-view-background'),
+
     itemsView: $('#items-view'),
 
     el: $("body"),
 
     events: {
-        "click .download-link": "downloadStart"
+        "click .download-link": "downloadStart",
+        "click #view-items-link": "viewEvents",
+        "click #items-view-background": "hideEvents"
     },
 
     onDrop: function (e) {
@@ -302,6 +306,14 @@ window.App = Backbone.View.extend({
 
             $.removeCookie(downloadId);
         }
+    },
+
+    viewEvents: function(){
+        this.itemsViewBackground.fadeIn('fast');
+    },
+
+    hideEvents: function(){
+        this.itemsViewBackground.fadeOut('fast');
     }
 });
 

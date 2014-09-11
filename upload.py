@@ -21,6 +21,7 @@ import logging
 import cloudstorage as gcs
 from helper import process_calendar, log_upload, support_email, format_events_for_html
 from google.appengine._internal.django.utils import simplejson
+import traceback
 
 
 def drop_extension_from_filename(filename):
@@ -121,9 +122,7 @@ class Upload(webapp2.RequestHandler):
 
                         db.put(current_conversion)
 
-                    first_ten_events = json.loads(str(current_conversion.get_first_ten_events()))
-
-                    first_ten_events = format_events_for_html(first_ten_events)
+                    first_ten_events = format_events_for_html(current_conversion.get_first_ten_events())
 
                     response = {'message': "Exisiting calendar.",
                                 'paid': not current_conversion.paid_date is None,
@@ -138,6 +137,7 @@ class Upload(webapp2.RequestHandler):
             except Exception, e:
                 logging.error('Exception while tyring to upload.')
                 logging.error(e.message)
+                logging.error(traceback.format_exc())
 
                 support_email('Upload Failed', e.message)
 
