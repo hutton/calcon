@@ -8,3 +8,9 @@ downloading.pyc
 *.pyc
 
 main.pyc
+
+*.pyc
+
+*.pyc
+
+upload.pyc
