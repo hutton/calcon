@@ -1,4 +1,5 @@
 import sys
+import json
 sys.path.insert(0, 'libs')
 
 from google.appengine.ext import db
@@ -44,9 +45,9 @@ class Conversion(db.Model):
         else:
             events = self.get_events()
     
-            first_ten = simplejson.dumps(events[:10])
+            first_ten = events[:10]
 
-            self.first_ten_events = first_ten
+            self.first_ten_events = simplejson.dumps(first_ten)
     
             self.put()
             
