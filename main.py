@@ -20,6 +20,7 @@ import sys
 import datetime
 import re
 from configuration import Configuration
+from helper import format_events_for_html
 import statistics
 
 import upload
@@ -75,6 +76,10 @@ class ShowFile(webapp2.RequestHandler):
 
                 path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/main.html')
 
+                first_ten_events = json.loads(str(current_conversion.get_first_ten_events()))
+
+                first_ten_events = format_events_for_html(first_ten_events)
+
                 self.response.out.write(template.render(path, {'show_file': True,
                                                                'stripe_key': config.public_stripe_key,
                                                                'paid': current_conversion.paid_date is not None,
@@ -82,7 +87,7 @@ class ShowFile(webapp2.RequestHandler):
                                                                 'key': current_conversion.hash,
                                                                 'filename': current_conversion.filename,
                                                                 'full_filename': current_conversion.full_filename,
-                                                                'events': json.loads(str(current_conversion.get_first_ten_events())),
+                                                                'events': first_ten_events,
                                                                 'web_debug': config.web_debug}))
                 return
 

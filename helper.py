@@ -100,3 +100,15 @@ def support_email(subject, message):
                    to="Simon <simon.hutton@gmail.com>",
                    subject=subject,
                    body=message)
+
+
+def format_events_for_html(events):
+
+    for event in events:
+        if 'Summary' in event:
+            event['Summary'] = event['Summary'].replace('\n', '<br/>')
+
+        if 'Description' in event:
+            event['Description'] = event['Description'].replace('\n', '<br/>')
+
+    return events

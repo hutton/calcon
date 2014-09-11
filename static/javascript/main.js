@@ -74,6 +74,8 @@ window.App = Backbone.View.extend({
 
     fileUpload: $('#file-upload-container'),
 
+    itemsView: $('#items-view'),
+
     el: $("body"),
 
     events: {
@@ -169,6 +171,7 @@ window.App = Backbone.View.extend({
         this.statusPanel.hide();
         this.linkContainer.removeClass('show_file');
         this.linkContainer.removeClass('paid');
+        this.itemsView.empty();
     },
 
     showUploading: function(){
@@ -235,6 +238,12 @@ window.App = Backbone.View.extend({
                 this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Events");
             }
         }
+
+        if (!_.isUndefined(convertionInfo.events)){
+            var itemsView = new ItemsView({model: convertionInfo.events})
+
+            this.itemsView.append(itemsView.el);
+        }
     },
 
     downloadStart: function(event){
@@ -295,6 +304,23 @@ window.App = Backbone.View.extend({
         }
     }
 });
+
+window.ItemsView = Backbone.View.extend({
+    initialize: function () {
+        this.render();
+    },
+
+    template: _.template($('#items-view-template').html()),
+
+    render: function(){
+        this.$el.html(this.template({'events':this.model}));
+
+        return this;
+    },
+
+    className: 'event-item'
+});
+
 
 window.Workspace = Backbone.Router.extend({
 

@@ -1,3 +1,4 @@
+import json
 import string
 from google.appengine.api.app_identity import app_identity
 from google.appengine.ext import db
@@ -18,7 +19,7 @@ import hashlib
 from google.appengine.ext import blobstore
 import logging
 import cloudstorage as gcs
-from helper import process_calendar, log_upload, support_email
+from helper import process_calendar, log_upload, support_email, format_events_for_html
 from google.appengine._internal.django.utils import simplejson
 
 
@@ -89,13 +90,18 @@ class Upload(webapp2.RequestHandler):
 
                         db.put(current_conversion)
 
+                        first_ten_events = json.loads(str(current_conversion.get_first_ten_events()))
+
+                        first_ten_events = format_events_for_html(first_ten_events)
+
                         response = {'message': "Calendar created.",
                                     'paid': not current_conversion.paid_date is None,
                                     'filename': current_conversion.filename,
                                     'full_filename': current_conversion.full_filename,
                                     'event_count': current_conversion.event_count,
                                     'todo_count': current_conversion.todo_count,
-                                    'key': current_conversion.hash}
+                                    'key': current_conversion.hash,
+                                    'events': first_ten_events}
 
                         log_upload(current_conversion, time.time() - start_time)
                     else:
@@ -115,13 +121,18 @@ class Upload(webapp2.RequestHandler):
 
                         db.put(current_conversion)
 
+                    first_ten_events = json.loads(str(current_conversion.get_first_ten_events()))
+
+                    first_ten_events = format_events_for_html(first_ten_events)
+
                     response = {'message': "Exisiting calendar.",
                                 'paid': not current_conversion.paid_date is None,
                                 'filename': current_conversion.filename,
                                 'full_filename': current_conversion.full_filename,
                                 'event_count': current_conversion.event_count,
                                 'todo_count': current_conversion.todo_count,
-                                'key': current_conversion.hash}
+                                'key': current_conversion.hash,
+                                'events': first_ten_events}
 
                     log_upload(current_conversion, time.time() - start_time)
             except Exception, e:
