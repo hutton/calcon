@@ -14,3 +14,7 @@ main.pyc
 *.pyc
 
 upload.pyc
+
+*.pyc
+
+conversion.pyc
