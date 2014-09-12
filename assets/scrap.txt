@@ -5,6 +5,8 @@ Template
 .txt, .html, .xml, .pdf, .docx
 
 
+<div>View events »</div>
+
 
 div{
     font-family: Arial;
