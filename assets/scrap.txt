@@ -4,49 +4,35 @@ TabLib
 Template
 .txt, .html, .xml, .pdf, .docx
 
-https://python-docx.readthedocs.org/en/latest/#api-documentation
-https://docs.djangoproject.com/en/dev/topics/templates/
-
-self.response.headers['Content-Type'] = 'application/json'
-self.response.headers['Content-Transfer-Encoding'] = 'binary'
-self.response.headers['Accept-Range'] = 'bytes'
-self.response.headers['Content-Length'] = current_conversion.file_size
-self.response.headers['Content-Encoding'] = current_conversion.file_size
-self.response.headers['Content-Disposition'] = 'attachment; filename=' + current_conversion.file_name + '.' current_conversion.extension
 
 
-
-			$('a').click(function(e){
-				e.preventDefault();
-
-				var link = $(this).attr('href');
-
-				window.location.href = link;
-			});
-
-
-from google.appengine.api import mail
-
-mail.send_mail(sender="Example.com Support <support@example.com>",
-              to="Albert Johnson <Albert.Johnson@example.com>",
-              subject="Your account has been approved",
-              body="""
-Dear Albert:
-
-Your example.com account has been approved.  You can now visit
-http://www.example.com/ and sign in using your Google Account to
-access new features.
-
-Please let us know if you have any questions.
-
-The example.com Team
-""")
-
-
-inputElement.onchange = function(event) {
-   var fileList = inputElement.files;
-   //TODO do something with fileList.  
+div{
+    font-family: Arial;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #000000;
+    
 }
 
-<input type="file" id="fileinput" />
-var myFile = $('#fileinput').prop('files');
+div:hover{
+    border: 1px solid rgba(0,0,0,0.20);
+    background: rgba(0,0,0,0.20);
+    color: white;
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box; 
+}
+
+div:active{
+    border: 1px solid rgba(0,0,0,0.22);
+    background: rgba(0,0,0,0.22);
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box; 
+}
+
+div {
+  -webkit-transition: all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition:         all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275); }
