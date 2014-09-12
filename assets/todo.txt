@@ -2,6 +2,7 @@
 - Drop shadow on items view
 - animate opening items view
 - Improve View events link
+- HTML and PDF views to use preprocess
 
 *** Launch ***
 - .docx format
