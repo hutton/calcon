@@ -78,6 +78,8 @@ window.App = Backbone.View.extend({
 
     itemsView: $('#items-view'),
 
+    itemsViewContainer: $('#event-items-container'),
+
     viewItemsLink: $('#view-items-link'),
 
     itemsViewCount: $('#items-view-count'),
@@ -180,7 +182,7 @@ window.App = Backbone.View.extend({
         this.statusPanel.hide();
         this.linkContainer.removeClass('show_file');
         this.linkContainer.removeClass('paid');
-        this.itemsView.empty();
+        this.itemsViewContainer.empty();
     },
 
     showUploading: function(){
@@ -245,14 +247,14 @@ window.App = Backbone.View.extend({
 
             if (convertionInfo.event_count == 1 ){
                 this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Event");
-                this.viewItemsLink.html('View event');
+                this.viewItemsLink.html('View event »');
             } else {
                 this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Events");
 
                 if (convertionInfo.event_count <= 10 ){
-                    this.viewItemsLink.html('View events');
+                    this.viewItemsLink.html('View events »');
                 } else {
-                    this.viewItemsLink.html('View first 10 events');
+                    this.viewItemsLink.html('View first 10 events »');
                     this.itemsViewCount.show();
                     this.itemsViewCount.html(convertionInfo.event_count - 10 + ' more events');
                 }
@@ -263,7 +265,7 @@ window.App = Backbone.View.extend({
         if (!_.isUndefined(convertionInfo.events)){
             var itemsView = new ItemsView({model: convertionInfo.events})
 
-            this.itemsView.append(itemsView.el);
+            this.itemsViewContainer.append(itemsView.el);
         }
     },
 
@@ -326,11 +328,21 @@ window.App = Backbone.View.extend({
     },
 
     viewEvents: function(){
-        this.itemsViewBackground.fadeIn('fast');
+        var that = this;
+        this.itemsViewBackground.show();
+        _.delay(function(){
+            that.itemsViewBackground.removeClass('hidden');
+        }, 10);
     },
 
     hideEvents: function(){
-        this.itemsViewBackground.fadeOut('fast');
+        var that = this;
+
+        this.itemsViewBackground.addClass('hidden');
+
+        _.delay(function(){
+            that.itemsViewBackground.hide();
+        }, 400);
     }
 });
 

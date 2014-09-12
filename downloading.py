@@ -6,7 +6,7 @@ import time
 import traceback
 from google.appengine.api import memcache
 from xhtml2pdf import pisa
-from helper import process_calendar, log_download, support_email
+from helper import process_calendar, log_download, support_email, format_events_for_html
 
 sys.path.insert(0, 'libs')
 
@@ -90,11 +90,15 @@ def generate_xml_content(events):
 def generate_html_content(events, filename):
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/html_template.html')
 
+    events = format_events_for_html(events)
+
     return template.render(path, {'events': events, 'filename': filename})
 
 
 def generate_pdf_content(events, filename):
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/pdf_template.html')
+
+    events = format_events_for_html(events)
 
     html_output = template.render(path, {'events': events, 'filename': filename})
 

@@ -217,10 +217,29 @@ h4{
 
 #view-items-link{
     .medium-font;
-    text-decoration: underline;
     cursor: pointer;
     margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.2);
+    display: inline-block;
 }
+
+#view-items-link:hover{
+    border: 1px solid rgba(0,0,0,0.20);
+    background: rgba(0,0,0,0.20);
+    color: white;
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box;
+}
+
+#view-items-link:active{
+    border: 1px solid rgba(0,0,0,0.22);
+    background: rgba(0,0,0,0.22);
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box;
+}
+
 
 /**************** Items view *******************/
 
@@ -244,6 +263,12 @@ h4{
     min-height: 100%;
     overflow-y: auto;
     cursor: pointer;
+    opacity: 1.0;
+    .transition-duration(0.4s);
+}
+
+#items-view-background.hidden{
+    opacity: 0.0;
 }
 
 #items-view-background-inner{
@@ -266,6 +291,13 @@ h4{
     background: white;
     margin: 60px auto;
     max-width: 800px;
+    box-shadow: 0px 0px 30px rgba(0,0,0,0.4);
+    .transition-duration(0.4s);
+    .scale(1.0);
+}
+
+#items-view-background.hidden #items-view{
+    .scale(0.7);
 }
 
 #items-view .event{
@@ -278,7 +310,9 @@ h4{
 }
 
 #items-view .event:nth-child(even){
-    background: rgba(0,0,0,0.05);
+    background: rgba(0,0,0,0.03);
+    border-top: 1px solid rgba(0,0,0,0.04);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
 #items-view .label{
@@ -309,7 +343,7 @@ h4{
     background: #000000;
     color: white;
     border-radius: 40px;
-    padding: 6px 10px;
+    padding: 6px 15px;
     border: 2px white solid;
     box-shadow: 0px 0px 5px #000000;
 }

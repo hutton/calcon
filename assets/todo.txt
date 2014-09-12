@@ -1,6 +1,3 @@
-- Show 'more events' when uploading
-- Drop shadow on items view, borders on sections
-- animate opening items view
 - Improve View events link
 - HTML and PDF views to use preprocess
 
@@ -15,6 +12,9 @@ Ideas
 
 Done
 ----
+- animate opening items view
+- Drop shadow on items view, borders on sections
+- Show 'more events' when uploading
 - What page
 - Stats page
 - Effect on hover over drop zone
