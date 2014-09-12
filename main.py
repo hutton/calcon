@@ -84,6 +84,7 @@ class ShowFile(webapp2.RequestHandler):
                                                                'stripe_key': config.public_stripe_key,
                                                                'paid': current_conversion.paid_date is not None,
                                                                 'event_count': current_conversion.event_count,
+                                                                'event_count_minus_ten': current_conversion.event_count - 10,
                                                                 'key': current_conversion.hash,
                                                                 'filename': current_conversion.filename,
                                                                 'full_filename': current_conversion.full_filename,

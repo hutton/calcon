@@ -56,7 +56,7 @@ window.App = Backbone.View.extend({
 
     processingMessage: $('#processing-message'),
 
-    fileMessage: $('#file-message'),
+    fileMessage: $('#file-message-container'),
 
     linkContainer: $('.link-container'),
 
@@ -77,6 +77,11 @@ window.App = Backbone.View.extend({
     itemsViewBackground: $('#items-view-background'),
 
     itemsView: $('#items-view'),
+
+    viewItemsLink: $('#view-items-link'),
+
+    itemsViewCount: $('#items-view-count'),
+
 
     el: $("body"),
 
@@ -231,6 +236,8 @@ window.App = Backbone.View.extend({
 
         this.fileMessage.find('#filename').html(convertionInfo.full_filename);
 
+        this.itemsViewCount.hide();
+
         if (_.isUndefined(convertionInfo.event_count) && convertionInfo.event_count > 0){
             this.fileMessage.find('#event-count').hide();
         } else {
@@ -238,9 +245,19 @@ window.App = Backbone.View.extend({
 
             if (convertionInfo.event_count == 1 ){
                 this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Event");
+                this.viewItemsLink.html('View event');
             } else {
                 this.fileMessage.find('#event-count').html(convertionInfo.event_count + " Events");
+
+                if (convertionInfo.event_count <= 10 ){
+                    this.viewItemsLink.html('View events');
+                } else {
+                    this.viewItemsLink.html('View first 10 events');
+                    this.itemsViewCount.show();
+                    this.itemsViewCount.html(convertionInfo.event_count - 10 + ' more events');
+                }
             }
+
         }
 
         if (!_.isUndefined(convertionInfo.events)){

@@ -54,18 +54,29 @@
         <div id="file-upload-failed" style="display: none;">
             <p>Opps!</p><p><br/><p><span id="file-upload-failed-message">There was a problem processing your file.</span></p><br/>Try another?</p>
         </div>
-        <div id="file-message">
-            <div id="file-message-file" class="file-type red">
-                <div>
-                    <span></span>
-                    <p>.ICS</p>
+        <div id="file-message-container">
+            <div id="file-message">
+                <div id="file-message-file" class="file-type red">
+                    <div>
+                        <span></span>
+                        <p>.ICS</p>
+                    </div>
+                </div>
+                <div id="file-message-content">
+                    <div id="filename">{{ full_filename }}</div>
+                    <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Event{{ event_count|pluralize }}</div>
                 </div>
             </div>
-            <div id="file-message-content">
-                <div id="filename">{{ full_filename }}</div>
-                <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Event{{ event_count|pluralize }}</div>
-                <div id="view-items-link">View Events</div>
-            </div>
+            {% if event_count <= 10 %}
+                {% if event_count == 1 %}
+                    <div id="view-items-link">View event</div>
+                {% else %}
+                    <div id="view-items-link">View events</div>
+                {% endif %}
+            {% else %}
+                <div id="view-items-link">View first 10 events</div>
+            {% endif %}
+
         </div>
 
     </div>
@@ -199,7 +210,16 @@
                     </div>{% endif %}
                 </div>{% endfor %}
             </div>
+            {% if event_count > 10 %}
+                <div id="items-view-count">{{ event_count_minus_ten }} more events</div>
+            {% endif %}
+
         </div>
+        </div>
+        <div id="items-view-close">
+            <div>
+                Click to close
+            </div>
         </div>
     </div>
 

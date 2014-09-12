@@ -219,7 +219,7 @@ h4{
     .medium-font;
     text-decoration: underline;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 /**************** Items view *******************/
@@ -243,6 +243,7 @@ h4{
     width: 100%;
     min-height: 100%;
     overflow-y: auto;
+    cursor: pointer;
 }
 
 #items-view-background-inner{
@@ -258,7 +259,7 @@ h4{
 #items-view{
     overflow-y: auto;
     border: 1px solid rgba(0,0,0,0.35);
-    padding: 40px;
+    padding: 20px 0px;
     border-radius: 10px;
     text-align: left;
     line-height: 1.5em;
@@ -269,7 +270,7 @@ h4{
 
 #items-view .event{
     margin: 10px 0px;
-    padding: 10px;
+    padding: 15px 50px;
 }
 
 #items-view .event > div{
@@ -290,6 +291,28 @@ h4{
     margin-left: 140px;
 }
 
+#items-view-count{
+    text-align: center;
+    margin: 30px 0px 20px 0px;
+    .medium-font;
+}
+
+#items-view-close{
+    position: fixed;
+    bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+#items-view-close > div{
+    display: inline-block;
+    background: #000000;
+    color: white;
+    border-radius: 40px;
+    padding: 6px 10px;
+    border: 2px white solid;
+    box-shadow: 0px 0px 5px #000000;
+}
 /********************* Links ***********************/
 #link-container-header{
     .medium-font;
