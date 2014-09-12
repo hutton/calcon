@@ -1,9 +1,14 @@
-- Show sample online
+- Show 'more events' when uploading
+- Drop shadow on items view
+- animate opening items view
+- Improve View events link
+
 *** Launch ***
 - .docx format
 
 Ideas
 -----
+- Show sample online
 - View item online
 - Email item
 
