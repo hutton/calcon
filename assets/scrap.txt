@@ -37,5 +37,10 @@ div:active{
 }
 
 div {
+    -webkit-animation-delay: 2s; /* Chrome, Safari, Opera */
+    animation-delay: 2s;
+}
+
+div {
   -webkit-transition: all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition:         all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275); }
