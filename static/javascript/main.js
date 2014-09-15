@@ -84,6 +84,7 @@ window.App = Backbone.View.extend({
 
     itemsViewCount: $('#items-view-count'),
 
+    itemsViewTitle: $('#items-view-title'),
 
     el: $("body"),
 
@@ -139,6 +140,8 @@ window.App = Backbone.View.extend({
                     that.setFileInfo(response);
 
                     that.Routes.navigate(response.key, {trigger: true});
+
+                    that.viewEvents();
 
                     // that.showFileStatus();
                 }
@@ -239,6 +242,7 @@ window.App = Backbone.View.extend({
         this.fileMessage.find('#filename').html(convertionInfo.full_filename);
 
         this.itemsViewCount.hide();
+        this.itemsViewTitle.hide();
 
         if (_.isUndefined(convertionInfo.event_count) && convertionInfo.event_count > 0){
             this.fileMessage.find('#event-count').hide();
@@ -254,7 +258,11 @@ window.App = Backbone.View.extend({
                 if (convertionInfo.event_count <= 10 ){
                     this.viewItemsLink.html('View events »');
                 } else {
+                    this.itemsViewTitle.show();
+                    this.itemsViewTitle.html('First 10 of ' + convertionInfo.event_count + ' Events');
+
                     this.viewItemsLink.html('View first 10 events »');
+
                     this.itemsViewCount.show();
                     this.itemsViewCount.html(convertionInfo.event_count - 10 + ' more events');
                 }

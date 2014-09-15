@@ -621,6 +621,7 @@ h4 {
 #file-message-content {
   float: right;
   margin-left: 20px;
+  margin-right: 20px;
   margin-top: 25px;
 }
 #filename {
@@ -632,30 +633,18 @@ h4 {
   overflow-wrap: break-word;
   vertical-align: middle;
 }
+#view-items-link-container {
+  clear: both;
+}
 #view-items-link {
-  font-size: 150%;
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin-top: 15px;
+  padding: 10px 10px 0px 10px;
   cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
   display: inline-block;
 }
 #view-items-link:hover {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: rgba(0, 0, 0, 0.2);
-  color: white;
-  -webkit-background-clip: padding-box;
-  /* for Safari */
-
-  background-clip: padding-box;
-}
-#view-items-link:active {
-  border: 1px solid rgba(0, 0, 0, 0.22);
-  background: rgba(0, 0, 0, 0.22);
-  -webkit-background-clip: padding-box;
-  /* for Safari */
-
-  background-clip: padding-box;
+  text-decoration: underline;
 }
 /**************** Items view *******************/
 .radial_background {
@@ -755,6 +744,13 @@ h4 {
   -ms-transform: scale(0.7);
   transform: scale(0.7);
 }
+#items-view-title {
+  text-align: center;
+  font-size: 150%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
 #items-view .event {
   margin: 10px 0px;
   padding: 15px 50px;
@@ -774,6 +770,7 @@ h4 {
 }
 #items-view .content {
   margin-left: 140px;
+  word-wrap: break-word;
 }
 #items-view-count {
   text-align: center;

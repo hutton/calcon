@@ -201,6 +201,7 @@ h4{
 #file-message-content{
     float: right;
     margin-left: 20px;
+    margin-right: 20px;
     margin-top: 25px;
 }
 
@@ -215,31 +216,22 @@ h4{
     vertical-align: middle;
 }
 
+#view-items-link-container{
+    clear: both;
+}
+
 #view-items-link{
-    .medium-font;
     cursor: pointer;
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin-top: 15px;
+    padding: 10px 10px 0px 10px;
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(0,0,0,0.2);
     display: inline-block;
 }
 
 #view-items-link:hover{
-    border: 1px solid rgba(0,0,0,0.20);
-    background: rgba(0,0,0,0.20);
-    color: white;
-    -webkit-background-clip: padding-box; /* for Safari */
-    background-clip: padding-box;
+    text-decoration: underline;
 }
-
-#view-items-link:active{
-    border: 1px solid rgba(0,0,0,0.22);
-    background: rgba(0,0,0,0.22);
-    -webkit-background-clip: padding-box; /* for Safari */
-    background-clip: padding-box;
-}
-
 
 /**************** Items view *******************/
 
@@ -300,6 +292,14 @@ h4{
     .scale(0.7);
 }
 
+#items-view-title{
+    text-align: center;
+    .medium-font;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
 #items-view .event{
     margin: 10px 0px;
     padding: 15px 50px;
@@ -323,6 +323,7 @@ h4{
 
 #items-view .content{
     margin-left: 140px;
+    word-wrap: break-word;
 }
 
 #items-view-count{

@@ -66,17 +66,17 @@
                     <div id="filename">{{ full_filename }}</div>
                     <div id="event-count" {% if not event_count %}style="display: none;"{% endif %}>{{ event_count }} Event{{ event_count|pluralize }}</div>
                 </div>
-            </div>
-            <div>
-            {% if event_count <= 10 %}
-                {% if event_count == 1 %}
-                    <div id="view-items-link">View event »</div>
+                <div id="view-items-link-container">
+                {% if event_count <= 10 %}
+                    {% if event_count == 1 %}
+                        <div id="view-items-link">View event »</div>
+                    {% else %}
+                        <div id="view-items-link">View events »</div>
+                    {% endif %}
                 {% else %}
-                    <div id="view-items-link">View events »</div>
+                    <div id="view-items-link">View first 10 events »</div>
                 {% endif %}
-            {% else %}
-                <div id="view-items-link">View first 10 events »</div>
-            {% endif %}
+                </div>
             </div>
         </div>
 
@@ -182,36 +182,37 @@
     <div class="hidden" id="items-view-background" style="display: none;">
         <div id="items-view-background-inner">
             <div id="items-view">
+                <div id="items-view-title">{{ items_view_title }}</div>
                 <div id="event-items-container">
                     <div class="event-items">
                     {% for event in events %}
-                    <div class="event">{% if 'Summary' in event %}
-                        <div>
-                            <div class="label">Summary</div><div class="content">{{ event.Summary|safe }}</div>
-                        </div>{% endif %}{% if 'Description' in event %}
-                        <div>
-                            <div class="label">Description</div><div class="content">{{ event.Description|safe }}</div>
-                        </div>{% endif %}{% if 'Start' in event %}
-                        <div>
-                            <div class="label">Start</div><div class="content">{{ event.Start }}</div>
-                        </div>{% endif %}{% if 'End' in event %}
-                        <div>
-                            <div class="label">End</div><div class="content">{{ event.End }}</div>
-                        </div>{% endif %}{% if 'Organizer' in event %}
-                        <div>
-                            <div class="label">Organizer</div><div class="content">{{ event.Organizer }}</div>
-                        </div>{% endif %}{% if 'Attendees' in event %}
-                        <div>
-                            <div class="label">Attendees</div><div class="content">{{ event.Attendees }}</div>
-                        </div>{% endif %}{% if 'Location' in event %}
-                        <div>
-                            <div class="label">Location</div><div class="content">{{ event.Location }}</div>
-                        </div>{% endif %}{% if 'Created' in event %}
-                        <div>
-                            <div class="label">Created</div><div class="content">{{ event.Created }}</div>
-                        </div>{% endif %}
-                    </div>{% endfor %}
-                </div>
+                        <div class="event">{% if 'Summary' in event %}
+                            <div>
+                                <div class="label">Summary</div><div class="content">{{ event.Summary|safe }}</div>
+                            </div>{% endif %}{% if 'Description' in event %}
+                            <div>
+                                <div class="label">Description</div><div class="content">{{ event.Description|safe }}</div>
+                            </div>{% endif %}{% if 'Start' in event %}
+                            <div>
+                                <div class="label">Start</div><div class="content">{{ event.Start }}</div>
+                            </div>{% endif %}{% if 'End' in event %}
+                            <div>
+                                <div class="label">End</div><div class="content">{{ event.End }}</div>
+                            </div>{% endif %}{% if 'Organizer' in event %}
+                            <div>
+                                <div class="label">Organizer</div><div class="content">{{ event.Organizer }}</div>
+                            </div>{% endif %}{% if 'Attendees' in event %}
+                            <div>
+                                <div class="label">Attendees</div><div class="content">{{ event.Attendees }}</div>
+                            </div>{% endif %}{% if 'Location' in event %}
+                            <div>
+                                <div class="label">Location</div><div class="content">{{ event.Location }}</div>
+                            </div>{% endif %}{% if 'Created' in event %}
+                            <div>
+                                <div class="label">Created</div><div class="content">{{ event.Created }}</div>
+                            </div>{% endif %}
+                        </div>{% endfor %}
+                    </div>
                 </div>
                 <div id="items-view-count" {% if event_count <= 10 %}style="display: none;"{% endif %}>{{ event_count_minus_ten }} more events</div>
             </div>

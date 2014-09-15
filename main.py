@@ -58,6 +58,13 @@ class Home(webapp2.RequestHandler):
                                                        'web_debug': config.web_debug}))
 
 
+def generate_items_title(event_count):
+    if not event_count or event_count <= 10:
+        return ''
+
+    return 'First 10 of ' + str(event_count) + ' Events'
+
+
 class ShowFile(webapp2.RequestHandler):
     def get(self):
 
@@ -80,6 +87,8 @@ class ShowFile(webapp2.RequestHandler):
 
                 first_ten_events = format_events_for_html(first_ten_events)
 
+                items_view_title = generate_items_title(current_conversion.event_count)
+
                 self.response.out.write(template.render(path, {'show_file': True,
                                                                'stripe_key': config.public_stripe_key,
                                                                'paid': current_conversion.paid_date is not None,
@@ -89,6 +98,7 @@ class ShowFile(webapp2.RequestHandler):
                                                                 'filename': current_conversion.filename,
                                                                 'full_filename': current_conversion.full_filename,
                                                                 'events': first_ten_events,
+                                                                'items_view_title': items_view_title,
                                                                 'web_debug': config.web_debug}))
                 return
 
