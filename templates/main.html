@@ -3,9 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>ICS File Converter</title>
-    <meta name="description" content="A simple web service to instantly convert ICS files to CSV and loads of other formats including XLSX, PDF, HTML & XML.">
+    <meta name="description" content="A simple web service to view and convert ICS files to CSV and loads of other formats including XLSX, PDF, HTML & XML.">
     <meta name="keywords"
-          content="ics to csv, convert ics, ics, ics viewer, convert icalendar, icalendar to csv, ics to pdf, ics to xslx, ics to xsl, ics to xml, ics to html, ics to Excel">
+          content="ics to csv, convert ics, ics, view ics, open ics, ics viewer, convert icalendar, icalendar to csv, ics to pdf, ics to xslx, ics to xsl, ics to xml, ics to html, ics to Excel">
 
     <link type="text/css" rel="stylesheet" href="/static/css/main.css" />
     <link rel="shortcut icon" href="/static/images/32x32.png">
@@ -17,12 +17,12 @@
             <a class="header-link" href="/what-is-a-ics-file">What is a .ics file?</a>
         </div>
         <div id="header-title" itemprop="name">
-        ICS File Converter
+        ICS File Viewer
         </div>
         <meta itemprop="url" content="https://icsconvert.appspot.com/">
         <div id="header-sub-title">
             <div itemprop="description">
-            Instantly convert ICS files to CSV and loads of other formats
+            Instantly view ICS files and convert to any format
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
                 <p>.ICS</p>
             </div>
         </div>
-        <div id="holder-title">Drop file here</div>
+        <div id="holder-title">Drop file here to view</div>
         <div id="file-upload-container" style="display: none;">
             <div>Select a file</div>
             <input id="file-upload" type="file"/>
@@ -100,7 +100,7 @@
             <div id="free-download-footer" class="footer">Click to<br/>download</div>
         </div>
         <div class="link-section-container" id="paid-download-links">
-            <div class="title" id="not-paid-title">All these formats <span class="underline">just $2</span></div>
+            <div class="title" id="not-paid-title">Get all these formats for <span class="underline">just $2</span></div>
             <div class="content">
                 <a class="download-link" rel="nofollow" href="/download/{{ key|default:'sample' }}/{{ filename|default:'sample' }}.xlsx">
                     <div class="file-type green file-type-jump">

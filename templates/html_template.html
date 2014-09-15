@@ -27,7 +27,9 @@
     }
 
     .event:nth-child(even){
-        background: rgba(0,0,0,0.05);
+        background: rgba(0, 0, 0, 0.03);
+        border-top: 1px solid rgba(0, 0, 0, 0.04);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     }
 
     .label{
@@ -43,15 +45,15 @@
 
 </head>
 <body>
-	<h1>Events</h1>
+	<h1>{% if event_count > 1 %}{{ event_count }} Events{% endif %}</h1>
 
     {% for event in events %}
     <div class="event">{% if 'Summary' in event %}
         <div>
-			<div class="label">Summary</div><div class="content">{{ event.Summary }}</div>
+			<div class="label">Summary</div><div class="content">{{ event.Summary|safe }}</div>
         </div>{% endif %}{% if 'Description' in event %}
         <div>
-			<div class="label">Description</div><div class="content">{{ event.Description }}</div>
+			<div class="label">Description</div><div class="content">{{ event.Description|safe }}</div>
         </div>{% endif %}{% if 'Start' in event %}
         <div>
 			<div class="label">Start</div><div class="content">{{ event.Start }}</div>

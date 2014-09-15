@@ -18,3 +18,5 @@ upload.pyc
 *.pyc
 
 conversion.pyc
+
+helper.pyc

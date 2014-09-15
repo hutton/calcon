@@ -6,7 +6,7 @@ import time
 import traceback
 from google.appengine.api import memcache
 from xhtml2pdf import pisa
-from helper import process_calendar, log_download, support_email, format_events_for_html
+from helper import process_calendar, log_download, support_email, format_events_for_html, format_events_for_txt
 
 sys.path.insert(0, 'libs')
 
@@ -78,6 +78,8 @@ def generate_tsv_content(events):
 def generate_txt_content(events):
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/txt_template.txt')
 
+    events = format_events_for_txt(events)
+
     return template.render(path, {'events': events})
 
 
@@ -87,20 +89,20 @@ def generate_xml_content(events):
     return template.render(path, {'events': events})
 
 
-def generate_html_content(events, filename):
+def generate_html_content(events, filename, event_count):
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/html_template.html')
 
     events = format_events_for_html(events)
 
-    return template.render(path, {'events': events, 'filename': filename})
+    return template.render(path, {'events': events, 'filename': filename, 'event_count': event_count})
 
 
-def generate_pdf_content(events, filename):
+def generate_pdf_content(events, filename, event_count):
     path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/pdf_template.html')
 
     events = format_events_for_html(events)
 
-    html_output = template.render(path, {'events': events, 'filename': filename})
+    html_output = template.render(path, {'events': events, 'filename': filename, 'event_count': event_count})
 
     pdf_output = StringIO.StringIO()
 
@@ -198,11 +200,11 @@ class Downloading(webapp2.RequestHandler):
 
                                 if extension == 'html':
                                     self.response.headers['Content-Type'] = 'application/html'
-                                    output_content = generate_html_content(events, filename + '.' + extension)
+                                    output_content = generate_html_content(events, filename + '.' + extension, current_conversion.event_count)
 
                                 if extension == 'pdf':
                                     self.response.headers['Content-Type'] = 'application/pdf'
-                                    output_content = generate_pdf_content(events, filename + '.' + extension)
+                                    output_content = generate_pdf_content(events, filename + '.' + extension, current_conversion.event_count)
 
                                 log_download(current_conversion, time.time() - start_time, extension)
 
