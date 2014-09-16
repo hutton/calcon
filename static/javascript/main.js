@@ -30,20 +30,22 @@ window.App = Backbone.View.extend({
 
         if (this.tests.dnd){
             this.holderTitle.show();
+            $('#holder-title-upload-container').show();
             this.fileUpload.hide();
         } else {
             this.holderTitle.hide();
+            $('#holder-title-upload-container').hide();
             this.fileUpload.show();
-
-            $('#file-upload').on('change', function(event){
-                if (this.files != null && this.files.length > 0){
-
-                    that.Routes.navigate("", {trigger: true});
-
-                    that.sendFiles(this.files);
-                }
-            });
         }
+
+        $('.file-upload').on('change', function(event){
+            if (this.files != null && this.files.length > 0){
+
+                that.Routes.navigate("", {trigger: true});
+
+                that.sendFiles(this.files);
+            }
+        });
     },
 
     holder: $('#holder'),
@@ -338,6 +340,9 @@ window.App = Backbone.View.extend({
     viewEvents: function(){
         var that = this;
         this.itemsViewBackground.show();
+
+        this.itemsViewBackground.scrollTop(0);
+
         _.delay(function(){
             that.itemsViewBackground.removeClass('hidden');
         }, 10);

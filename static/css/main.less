@@ -136,17 +136,39 @@ h4{
 }
 
 #holder > .file-type{
-    margin-top: 40px;
+    margin-top: 25px;
 }
 
 #holder-title{
     text-align: center;
-    margin: 20px auto;
+    margin: 10px auto 25px auto;
     .medium-font;
 }
 
+#holder-title-upload-container{
+    display: inline-block;
+	position: relative;
+	overflow: hidden;
+}
+
+#holder-title-upload-container:hover{
+    text-decoration: underline;
+}
+
+#holder-title-upload-container input.file-upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
 #file-upload-container{
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 5px;
 }
 #file-upload-container > div{

@@ -135,11 +135,15 @@ class Upload(webapp2.RequestHandler):
 
                     log_upload(current_conversion, time.time() - start_time)
             except Exception, e:
+                trace = traceback.format_exc()
+
                 logging.error('Exception while tyring to upload.')
                 logging.error(e.message)
-                logging.error(traceback.format_exc())
+                logging.error(trace)
 
-                support_email('Upload Failed', e.message)
+                email_message = e.message + '\r\n\r\n' + trace
+
+                support_email('Upload Failed', email_message)
 
                 response = {'message': "Something bad happened, we're looking at it."}
 

@@ -33,10 +33,16 @@
                 <p>.ICS</p>
             </div>
         </div>
-        <div id="holder-title">Drop file here</div>
+
+        <div id="holder-title">Drop file here
+        </div>
+        <div id="holder-title-upload-container">
+            <span>or click to upload</span>
+            <input type="file" class="file-upload" />
+        </div>
         <div id="file-upload-container" style="display: none;">
             <div>Select a file</div>
-            <input id="file-upload" type="file"/>
+            <input class="file-upload" type="file"/>
         </div>
     </div>
 
@@ -83,7 +89,7 @@
     </div>
 
     <div class="fixed-width link-container {% if paid %}paid{% endif %} {% if show_file %}show_file{% endif %}">
-        <div id="link-container-header">Convert ICS files to any of these formats.</div>
+        <div id="link-container-header">Convert your ICS file to any of these formats.</div>
         <div id="paid-title">You Rock! Here's your files.</div>
         <div class="link-section-container" id="free-download-links">
             <div class="title">Free</div>

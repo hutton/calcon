@@ -24,18 +24,15 @@ if hasattr(a, 'property'):
 </div>
 
 
-.btn{
+.holder-title-upload-container{
     display: inline-block;
     border-bottom: 1px solid black;
-}
-
-.fileUpload {
 	position: relative;
 	overflow: hidden;
 	margin: 10px;
 }
 
-.fileUpload input.upload {
+.holder-title-upload-container input.upload {
 	position: absolute;
 	top: 0;
 	right: 0;

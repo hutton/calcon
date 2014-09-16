@@ -1,3 +1,4 @@
+import logging
 import sys
 from types import *
 from google.appengine.api import mail
@@ -19,8 +20,18 @@ def add_text_field(component, component_name, dict, dict_name):
 def add_date_field(component, component_name, dict, dict_name):
     value = component.get(component_name)
 
-    if value:
-        dict[dict_name] = str(value.dt)
+    if not isinstance(value, (list, tuple)):
+        if value:
+            dict[dict_name] = str(value.dt)
+    else:
+        logging.warn('Got a list as a date field')
+        logging.warn(value)
+
+        if len(value) > 0:
+            value = value[0]
+
+            if value:
+                dict[dict_name] = str(value.dt)
 
 
 def add_attendee_field(component, event):

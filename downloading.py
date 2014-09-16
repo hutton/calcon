@@ -242,10 +242,14 @@ class Downloading(webapp2.RequestHandler):
 
                 self.response.status = 404
         except Exception, e:
-            support_email('Download Failed', 'Exception: ' + e.message)
+            trace = traceback.format_exc()
 
             logging.error(e.message)
-            logging.error(traceback.format_exc())
+            logging.error(trace)
+
+            email_message = e.message + '\r\n\r\n' + trace
+
+            support_email('Download Failed', email_message)
 
             path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
             self.response.out.write(template.render(path, {'status': '500',
