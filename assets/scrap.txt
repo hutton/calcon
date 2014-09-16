@@ -9,3 +9,10 @@ Template
 File "/base/data/home/apps/s~icsconvert/7.378723341461840795/helper.py", line 23, in add_date_field
     dict[dict_name] = str(value.dt)
 AttributeError: 'list' object has no attribute 'dt'
+
+
+assert isinstance(lst, (list, tuple))
+
+if hasattr(a, 'property'):
+    a.property
+    
