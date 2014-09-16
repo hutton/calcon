@@ -5,42 +5,7 @@ Template
 .txt, .html, .xml, .pdf, .docx
 
 
-<div>View events »</div>
 
-&#187;
-
-div{
-    font-family: Arial;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border: 1px solid #000000;
-    
-}
-
-div:hover{
-    border: 1px solid rgba(0,0,0,0.20);
-    background: rgba(0,0,0,0.20);
-    color: white;
-    -webkit-background-clip: padding-box; /* for Safari */
-    background-clip: padding-box; 
-}
-
-div:active{
-    border: 1px solid rgba(0,0,0,0.22);
-    background: rgba(0,0,0,0.22);
-    -webkit-background-clip: padding-box; /* for Safari */
-    background-clip: padding-box; 
-}
-
-div {
-    -webkit-animation-delay: 2s; /* Chrome, Safari, Opera */
-    animation-delay: 2s;
-}
-
-div {
-  -webkit-transition: all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition:         all 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+File "/base/data/home/apps/s~icsconvert/7.378723341461840795/helper.py", line 23, in add_date_field
+    dict[dict_name] = str(value.dt)
+AttributeError: 'list' object has no attribute 'dt'
