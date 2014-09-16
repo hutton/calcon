@@ -20,3 +20,5 @@ upload.pyc
 conversion.pyc
 
 helper.pyc
+
+.idea/libraries/Google_App_Engine_SDK.xml
