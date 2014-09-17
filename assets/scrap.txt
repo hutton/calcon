@@ -5,41 +5,14 @@ Template
 .txt, .html, .xml, .pdf, .docx
 
 
+Hi,
 
-File "/base/data/home/apps/s~icsconvert/7.378723341461840795/helper.py", line 23, in add_date_field
-    dict[dict_name] = str(value.dt)
-AttributeError: 'list' object has no attribute 'dt'
+I just wanted to let you know about 'ICS File Viewer' (https://icsconvert.appspot.com/).  
 
+It's a easy to use web app which lets you instantly view the contents of ICS (iCalendar) files and convert them to CSV, XLSX, HTML, PDF, XML, JSON, TSV or TXT.  Just drag and drop an ICS file onto the page and instantly see and convert it.  The web app uses Python and runs on Google App Engine.
 
-assert isinstance(lst, (list, tuple))
-
-if hasattr(a, 'property'):
-    a.property
-    
+Thanks
+Simon
 
 
-<div class="fileUpload btn btn-primary">
-    <span>or click here to upload</span>
-    <input type="file" class="upload" />
-</div>
 
-
-.holder-title-upload-container{
-    display: inline-block;
-    border-bottom: 1px solid black;
-	position: relative;
-	overflow: hidden;
-	margin: 10px;
-}
-
-.holder-title-upload-container input.upload {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 0;
-	padding: 0;
-	font-size: 20px;
-	cursor: pointer;
-	opacity: 0;
-	filter: alpha(opacity=0);
-}
