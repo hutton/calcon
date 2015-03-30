@@ -148,6 +148,14 @@ class Upload(webapp2.RequestHandler):
                 response = {'message': "Something bad happened, we're looking at it."}
 
                 self.response.status = 500
+        else:
+            response = {'message': "Something bad happened, we're looking at it."}
+
+            logging.error(self.request.params.multi)
+
+            support_email('Upload Failed', str(self.request.params.multi))
+
+            self.response.status = 500
 
         self.response.out.write(simplejson.dumps(response))
 

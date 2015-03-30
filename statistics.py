@@ -1,4 +1,5 @@
 from datetime import date, datetime, time, timedelta
+import logging
 import os
 from google.appengine.ext.webapp import template
 import webapp2
@@ -57,19 +58,27 @@ class Statistics(webapp2.RequestHandler):
 
 class StatisticsData(webapp2.RequestHandler):
     def get(self):
+        logging.info('Starting to fetch statistics')
+
         today = datetime.combine(date.today(), time())
         yesterday = today - timedelta(days=1)
         month_ago = today - timedelta(days=30)
 
         query = Download.all()
 
+        logging.info('Built query')
+
         all_downloads = query.fetch(None)
+
+        logging.info('Called fetch on query')
 
         # all_downloads = []
 
-        today_items = [download for download in all_downloads if download.created_date > today]
-        yesterday_items = [download for download in all_downloads if yesterday < download.created_date < today]
         month_items = [download for download in all_downloads if download.created_date > month_ago]
+        yesterday_items = [download for download in month_items if yesterday < download.created_date < today]
+        today_items = [download for download in month_items if download.created_date > today]
+
+        logging.info('Sorted results into buckets')
 
         today_values = extract_data(today_items)
         today_values['title'] = "Today"
@@ -80,8 +89,12 @@ class StatisticsData(webapp2.RequestHandler):
         month_values = extract_data(month_items)
         month_values['title'] = "Last 30 days"
 
+        logging.info('Extracted today, yesterday and month')
+
         all_values = extract_data(all_downloads)
         all_values['title'] = "All"
+
+        logging.info('Extracted all')
 
         trend_labels, trend_uploads, trend_downloads = extract_trend_data(month_items)
 
