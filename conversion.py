@@ -2,7 +2,7 @@ import sys
 import json
 sys.path.insert(0, 'libs')
 
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 from google.appengine.ext import blobstore
 
@@ -14,21 +14,21 @@ __author__ = 'simonhutton'
 
 # Hash, BlobKey, Created Date, Date Paid, FileName, FileSize
 
-class Conversion(db.Model):
+class Conversion(ndb.Model):
     '''
     classdocs
     '''
 
-    hash = db.StringProperty()
-    blob_key = db.BlobProperty()
-    created_date = db.DateTimeProperty(auto_now_add=True)
-    paid_date = db.DateTimeProperty()
-    filename = db.StringProperty()
-    file_size = db.IntegerProperty()
-    full_filename = db.StringProperty()
-    event_count = db.IntegerProperty()
-    todo_count = db.IntegerProperty()
-    first_ten_events = db.TextProperty()
+    hash = ndb.StringProperty()
+    blob_key = ndb.BlobProperty()
+    created_date = ndb.DateTimeProperty(auto_now_add=True)
+    paid_date = ndb.DateTimeProperty()
+    filename = ndb.StringProperty()
+    file_size = ndb.IntegerProperty()
+    full_filename = ndb.StringProperty()
+    event_count = ndb.IntegerProperty()
+    todo_count = ndb.IntegerProperty()
+    first_ten_events = ndb.TextProperty()
 
     def get_events(self):
         blob_reader = blobstore.BlobReader(self.blob_key)

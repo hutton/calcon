@@ -1,18 +1,18 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 __author__ = 'simonhutton'
 
 # Hash, BlobKey, Created Date, Date Paid, FileName, FileSize
 
-class Download(db.Model):
+class Download(ndb.Model):
     '''
     classdocs
     '''
 
-    download = db.BooleanProperty()
-    hash = db.StringProperty()
-    filename = db.StringProperty()
-    extension = db.StringProperty()
-    file_size = db.IntegerProperty()
-    time = db.FloatProperty()
-    created_date = db.DateTimeProperty(auto_now_add=True)
+    download = ndb.BooleanProperty()
+    hash = ndb.StringProperty()
+    filename = ndb.StringProperty()
+    extension = ndb.StringProperty()
+    file_size = ndb.IntegerProperty()
+    time = ndb.FloatProperty()
+    created_date = ndb.DateTimeProperty(auto_now_add=True)

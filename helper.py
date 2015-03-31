@@ -7,7 +7,7 @@ import download_item
 sys.path.insert(0, 'libs')
 
 import icalendar
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 
 def add_text_field(component, component_name, dict, dict_name):
@@ -90,7 +90,7 @@ def log_upload(current_conversion, time):
     new_upload.file_size = current_conversion.file_size
     new_upload.time = time
 
-    db.put(new_upload)
+    new_upload.put()
 
 
 def log_download(current_conversion, time, extension):
@@ -103,7 +103,7 @@ def log_download(current_conversion, time, extension):
     new_download.time = time
     new_download.extension = extension
 
-    db.put(new_download)
+    new_download.put()
 
 
 def support_email(subject, message):

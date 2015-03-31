@@ -1,18 +1,18 @@
 import datetime
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
 __author__ = 'simonhutton'
 
 
-class Configuration(db.Model):
+class Configuration(ndb.Model):
     CACHE_TIME = datetime.timedelta(minutes=5)
 
     _INSTANCE = None
     _INSTANCE_AGE = None
 
-    public_stripe_key = db.StringProperty()
-    private_stripe_key = db.StringProperty()
-    web_debug = db.BooleanProperty()
+    public_stripe_key = ndb.StringProperty()
+    private_stripe_key = ndb.StringProperty()
+    web_debug = ndb.BooleanProperty()
 
 
     @classmethod
@@ -26,7 +26,7 @@ class Configuration(db.Model):
                 cls._INSTANCE.private_stripe_key = 'c1r52uIFDTaniTJc29tMbGGo0CGJeDtu'
                 cls._INSTANCE.web_debug = True
 
-                db.put(cls._INSTANCE)
+                cls._INSTANCE.put()
 
             cls._INSTANCE_AGE = now
         return cls._INSTANCE

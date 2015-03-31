@@ -1,7 +1,7 @@
 import json
 import string
 from google.appengine.api.app_identity import app_identity
-from google.appengine.ext import db
+
 import time
 
 __author__ = 'simonhutton'
@@ -89,7 +89,7 @@ class Upload(webapp2.RequestHandler):
 
                         current_conversion.blob_key = self.save_file(file_hash, file_content)
 
-                        db.put(current_conversion)
+                        current_conversion.put()
 
                         first_ten_events = current_conversion.get_first_ten_events()
 
@@ -120,7 +120,7 @@ class Upload(webapp2.RequestHandler):
                         current_conversion.full_filename = full_filename
                         current_conversion.filename = filename
 
-                        db.put(current_conversion)
+                        current_conversion.put()
 
                     first_ten_events = format_events_for_html(current_conversion.get_first_ten_events())
 

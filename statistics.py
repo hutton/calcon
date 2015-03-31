@@ -1,6 +1,7 @@
 from datetime import date, datetime, time, timedelta
 import logging
 import os
+from google.appengine.ext.ndb import Query
 from google.appengine.ext.webapp import template
 import webapp2
 from download_item import Download
@@ -64,13 +65,15 @@ class StatisticsData(webapp2.RequestHandler):
         yesterday = today - timedelta(days=1)
         month_ago = today - timedelta(days=30)
 
-        query = Download.all()
+        query = Download.query()
 
         logging.info('Built query')
 
-        all_downloads = query.fetch(None)
+        query_options = {'batch_size': 1000}
 
-        logging.info('Called fetch on query')
+        all_downloads = query.fetch(**query_options)
+
+        logging.info('Called fetch(**query_options) on query')
 
         # all_downloads = []
 

@@ -5,6 +5,7 @@ import sys
 import time
 import traceback
 from google.appengine.api import memcache
+from google.appengine.runtime import DeadlineExceededError
 from xhtml2pdf import pisa
 from helper import process_calendar, log_download, support_email, format_events_for_html, format_events_for_txt
 
@@ -241,6 +242,21 @@ class Downloading(webapp2.RequestHandler):
                                                                'message': "We don't have what you're looking for."}))
 
                 self.response.status = 404
+        except DeadlineExceededError, e:
+            trace = traceback.format_exc()
+
+            logging.error(e.message)
+            logging.error(trace)
+
+            email_message = self.request.path + '\r\n\r\n' + e.message + '\r\n\r\n' + trace
+
+            support_email('DeadlineExceededError', email_message)
+
+            path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
+            self.response.out.write(template.render(path, {'status': '500',
+                                                           'message': "Something bad happened, we're looking at it."}))
+
+            self.response.status = 500
         except Exception, e:
             trace = traceback.format_exc()
 
