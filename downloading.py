@@ -233,15 +233,26 @@ class Downloading(webapp2.RequestHandler):
 
                         self.response.status = 404
             else:
-                support_email('Download Failed', 'Could not parse path: ' + self.request.path)
+                matches = re.match(
+                    r"/download/(?P<hash>[0-9a-z]+)",
+                    self.request.path)
 
-                logging.warn('Could not parse path: ' + self.request.path)
+                if matches:
+                    logging.warn('Could not parse path: ' + self.request.path + ' redirecting.')
 
-                path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
-                self.response.out.write(template.render(path, {'status': '404',
-                                                               'message': "We don't have what you're looking for."}))
+                    file_hash = matches.group("hash")
 
-                self.response.status = 404
+                    self.redirect("/" + file_hash)
+                else:
+                    support_email('Download Failed', 'Could not parse path: ' + self.request.path)
+
+                    logging.warn('Could not parse path: ' + self.request.path)
+
+                    path = os.path.join(os.path.join(os.path.dirname(__file__), 'html'), '../templates/error.html')
+                    self.response.out.write(template.render(path, {'status': '404',
+                                                                   'message': "We don't have what you're looking for."}))
+
+                    self.response.status = 404
         except DeadlineExceededError, e:
             trace = traceback.format_exc()
 

@@ -153,7 +153,8 @@ class Upload(webapp2.RequestHandler):
 
             logging.error(self.request.params.multi)
 
-            support_email('Upload Failed', str(self.request.params.multi))
+            if len(self.request.params.multi) > 0:
+                support_email('Upload Failed', str(self.request.params.multi))
 
             self.response.status = 500
 
