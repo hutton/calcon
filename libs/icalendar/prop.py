@@ -55,6 +55,7 @@ from icalendar.parser import unescape_char
 from icalendar.parser_tools import DEFAULT_ENCODING
 from icalendar.parser_tools import SEQUENCE_TYPES
 from icalendar.parser_tools import to_unicode
+from icalendar.timezone_cache import _timezone_cache
 
 import base64
 import binascii
@@ -310,7 +311,7 @@ class vDDDTypes(object):
         if isinstance(ical, cls):
             return ical.dt
         u = ical.upper()
-        if u.startswith('-P') or u.startswith('P'):
+        if u.startswith(('P', '-P', '+P')):
             return vDuration.from_ical(ical)
         try:
             return vDatetime.from_ical(ical, timezone=timezone)
@@ -387,7 +388,7 @@ class vDatetime(object):
             try:
                 tzinfo = pytz.timezone(timezone)
             except pytz.UnknownTimeZoneError:
-                pass
+                tzinfo = _timezone_cache.get(timezone, None)
 
         try:
             timetuple = (
@@ -624,6 +625,7 @@ class vRecur(CaselessDict):
         'BYSECOND': vInt,
         'BYMINUTE': vInt,
         'BYHOUR': vInt,
+        'BYWEEKNO': vInt,
         'BYMONTHDAY': vInt,
         'BYYEARDAY': vInt,
         'BYMONTH': vInt,
@@ -665,7 +667,12 @@ class vRecur(CaselessDict):
         try:
             recur = cls()
             for pairs in ical.split(';'):
-                key, vals = pairs.split('=')
+                try:
+                    key, vals = pairs.split('=')
+                except ValueError:
+                    # E.g. incorrect trailing semicolon, like (issue #157):
+                    # FREQ=YEARLY;BYMONTH=11;BYDAY=1SU;
+                    continue
                 recur[key] = cls.parse_type(key, vals)
             return dict(recur)
         except:

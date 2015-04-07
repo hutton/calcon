@@ -73,7 +73,8 @@ class Upload(webapp2.RequestHandler):
                         cal = icalendar.Calendar.from_ical(file_content)
                     except Exception, e:
                         cal = None
-                        logging.info('File ' + full_filename + ' was not a valid calendar')
+                        logging.warn('Could not convert "' + full_filename + '".')
+                        logging.warn(e.message)
 
                     if cal:
                         current_conversion = conversion.Conversion()
@@ -104,6 +105,7 @@ class Upload(webapp2.RequestHandler):
                                     'key': current_conversion.hash,
                                     'events': first_ten_events}
 
+                        logging.info('Uploaded "' + current_conversion.full_filename + '" with ' + str(current_conversion.event_count) + ' events.')
                         log_upload(current_conversion, time.time() - start_time)
                     else:
                         # Not a valid iCalendar

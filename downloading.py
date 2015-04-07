@@ -172,6 +172,8 @@ class Downloading(webapp2.RequestHandler):
 
                             log_download(current_conversion, time.time() - start_time, extension)
 
+                            logging.info('Downloaded "' + filename + '.' + extension + '" with ' + str(current_conversion.event_count) + ' events.')
+
                             self.response.out.write(output_content)
                         else:
                             if current_conversion.paid_date:
@@ -208,6 +210,7 @@ class Downloading(webapp2.RequestHandler):
                                     output_content = generate_pdf_content(events, filename + '.' + extension, current_conversion.event_count)
 
                                 log_download(current_conversion, time.time() - start_time, extension)
+                                logging.info('Downloaded "' + filename + '.' + extension + '" with ' + str(current_conversion.event_count) + ' events.')
 
                                 self.response.out.write(output_content)
                             else:
