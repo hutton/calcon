@@ -127,7 +127,7 @@ class Pay(webapp2.RequestHandler):
             # Create the charge on Stripe's servers - this will charge the user's card
             try:
                 charge = stripe.Charge.create(
-                    amount=100,
+                    amount=200,
                     currency="usd",
                     card=token,
                     description=current_conversion.filename

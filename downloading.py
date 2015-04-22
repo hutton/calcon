@@ -166,9 +166,9 @@ class Downloading(webapp2.RequestHandler):
                         self.response.headers['Content-Encoding'] = 'binary'
                         self.response.headers['Content-Disposition'] = 'attachment; filename=' + filename + '.' + extension
 
-                        if extension == 'csv':
-                            self.response.headers['Content-Type'] = 'application/csv'
-                            output_content = generate_csv_content(events)
+                        if extension == 'txt':
+                            self.response.headers['Content-Type'] = 'application/txt;charset=utf-8'
+                            output_content = generate_txt_content(events)
 
                             log_download(current_conversion, time.time() - start_time, extension)
 
@@ -193,9 +193,9 @@ class Downloading(webapp2.RequestHandler):
                                     self.response.headers['Content-Type'] = 'application/tsv'
                                     output_content = generate_tsv_content(events)
 
-                                if extension == 'txt':
-                                    self.response.headers['Content-Type'] = 'application/txt'
-                                    output_content = generate_txt_content(events)
+                                if extension == 'csv':
+                                    self.response.headers['Content-Type'] = 'application/csv'
+                                    output_content = generate_csv_content(events)
 
                                 if extension == 'xml':
                                     self.response.headers['Content-Type'] = 'application/xml'
