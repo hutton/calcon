@@ -1,18 +1,11 @@
-TabLib
-.csv, .tsv, .xlsx, .xls, .json, .yaml, .ods, 
+import ntpath
 
-Template
-.txt, .html, .xml, .pdf, .docx
+def path_leaf(path):
+    head, tail = ntpath.split(path)
+    return tail or ntpath.basename(head)
 
-
-Hi,
-
-I just wanted to let you know about 'ICS File Viewer' (https://icsconvert.appspot.com/).  
-
-It's a easy to use web app which lets you instantly view the contents of ICS (iCalendar) files and convert them to CSV, XLSX, HTML, PDF, XML, JSON, TSV or TXT.  Just drag and drop an ICS file onto the page and instantly see and convert it.  The web app uses Python and runs on Google App Engine.
-
-Thanks
-Simon
-
-
+>>> paths = ['a/b/c/', 'a/b/c', '\\a\\b\\c', '\\a\\b\\c\\', 'a\\b\\c', 
+...     'a/b/../../a/b/c/', 'a/b/../../a/b/c']
+>>> [path_leaf(path) for path in paths]
+['c', 'c', 'c', 'c', 'c', 'c', 'c']
 
