@@ -22,6 +22,7 @@ import cloudstorage as gcs
 from helper import process_calendar, log_upload, support_email, format_events_for_html
 from google.appengine._internal.django.utils import simplejson
 import traceback
+import ntpath
 
 
 def drop_extension_from_filename(filename):
@@ -57,7 +58,9 @@ class Upload(webapp2.RequestHandler):
         if len(self.request.params.multi.dicts) > 1 and 'file' in self.request.params.multi.dicts[1]:
             file_info = self.request.POST['file']
 
-            full_filename = file_info.filename
+            head, tail = ntpath.split(file_info.filename)
+
+            full_filename = tail or ntpath.basename(head)
             file_content = file_info.file.read()
             file_size = len(file_content)
             file_hash = hashlib.md5(file_content).hexdigest()
@@ -74,7 +77,10 @@ class Upload(webapp2.RequestHandler):
                     except Exception, e:
                         cal = None
                         logging.warn('Could not convert "' + full_filename + '".')
+                        logging.warn('Storing failed conversion "' + full_filename + '" with hash ' + file_hash + '.')
                         logging.warn(e.message)
+
+                        self.save_file(file_hash, file_content)
 
                     if cal:
                         current_conversion = conversion.Conversion()

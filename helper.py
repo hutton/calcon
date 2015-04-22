@@ -127,12 +127,5 @@ def format_events_for_html(events):
 
 def format_events_for_txt(events):
 
-    for event in events:
-        if 'Summary' in event:
-            event['Summary'] = event['Summary'].replace('\n', '\r\n')
-
-        if 'Description' in event:
-            event['Description'] = event['Description'].replace('\n', '\r\n')
-
     return events
 

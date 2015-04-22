@@ -174,6 +174,8 @@ class Downloading(webapp2.RequestHandler):
 
                             logging.info('Downloaded "' + filename + '.' + extension + '" with ' + str(current_conversion.event_count) + ' events.')
 
+                            output_content = output_content.replace('\n', '\r\n')
+
                             self.response.out.write(output_content)
                         else:
                             if current_conversion.paid_date:
