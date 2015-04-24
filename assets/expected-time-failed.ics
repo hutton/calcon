@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTAMP:20120420T154533-0000
+DTSTART:20120428T180000-0000
+DTEND:20120428T220000-0000
+SUMMARY:23rd Annual Kids Day in the Park
+DESCRIPTION:It’s a great day to be a kid as the annual Kid’s Day in the Park returns to Hagan Park (2197 Chase Drive) in Rancho Cordova. Fun starts at 11 a.m. and continues to 3 p.m. on Saturday, April 28.\n\nFREE ADMISSION! Celebrate the&nbsp;“Water, Water Everywhere” theme at the Bobble Lagoon, Finding Nemo playscape, and more. Petting Barn, train rides, fabulous children’s entertainment on the&nbsp;Kid’s Stage, food trucks, jump houses, and rides – all for kids and their parents. Get free health screenings and parent resources at dozens of exhibitors each hosting a free activity for kids. Kids complete our PAL Bike Safety Rodeo and are eligible to win one of 100 bikes. Woo-Hoo! Visit www.cordovacouncil.org or call 273-5704 for more information. \n
+UID:3817
+LOCATION:Hagan Community Park, 2197 Chase Drive Rancho Cordova, California 95670
+CLASS:PUBLIC
+BEGIN:ALARM
+TRIGGER:
+ACTION:
+DESCRIPTION:
+END:VALARM
+END:VEVENT
+END:VCALENDAR
