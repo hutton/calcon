@@ -14,7 +14,7 @@ def extract_data(items):
     uploads = [download for download in items if not download.download]
     downloads = [download for download in items if download.download]
 
-    file_types = ['csv', 'xslx', 'html', 'xml', 'pdf', 'json', 'txt', 'tsv']
+    file_types = ['csv', 'xlsx', 'html', 'xml', 'pdf', 'json', 'txt', 'tsv']
 
     file_type_frequencies = [len([download for download in items if download.extension == extension]) for extension in
                              file_types]
