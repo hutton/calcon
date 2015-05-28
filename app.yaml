@@ -4,6 +4,12 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+instance_class: F1
+automatic_scaling:
+  min_idle_instances: 1
+  max_idle_instances: 995
+  max_pending_latency: 15.0s
+
 handlers:
 - url: /css
   static_dir: css
