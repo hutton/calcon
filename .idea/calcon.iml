@@ -8,14 +8,17 @@
         <option name="templatesFolder" value="" />
         <option name="email" value="simon.hutton@gmail.com" />
         <option name="gp" value="dfd3dfd3dfdddfcbdfdedfdddfdedfd3dfd9dfcfdfc5dfdadfdfdfd9dfcddfc7" />
-        <option name="oauth2" value="false" />
+        <option name="oauth2" value="true" />
+        <option name="deployConfigured" value="true" />
+        <option name="saveCredentials" value="true" />
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 2.7.8 (/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 2.7.6 (/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Google App Engine SDK" level="project" />
     <orderEntry type="library" name="Google App Engine SDK" level="project" />
   </component>
   <component name="TemplatesService">
@@ -26,4 +29,3 @@
     </option>
   </component>
 </module>
-
