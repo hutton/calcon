@@ -65,7 +65,9 @@ class StatisticsData(webapp2.RequestHandler):
         yesterday = today - timedelta(days=1)
         month_ago = today - timedelta(days=30)
 
-        query = Download.query()
+        three_months_ago = datetime.now() + timedelta(days=-91)
+
+        query = Download.query(Download.created_date > three_months_ago)
 
         logging.info('Built query')
 
@@ -95,7 +97,7 @@ class StatisticsData(webapp2.RequestHandler):
         logging.info('Extracted today, yesterday and month')
 
         all_values = extract_data(all_downloads)
-        all_values['title'] = "All"
+        all_values['title'] = "Last 3 months"
 
         logging.info('Extracted all')
 

@@ -70,6 +70,7 @@ def process_calendar(calendar):
 
             add_date_field(component, 'dtstart', event, 'Start')
             add_date_field(component, 'dtend', event, 'End')
+            add_date_field(component, 'last-modified', event, 'LastModified')
             add_date_field(component, 'created', event, 'Created')
 
             add_attendee_field(component, event)

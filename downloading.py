@@ -22,7 +22,7 @@ from google.appengine._internal.django.utils import simplejson
 
 __author__ = 'simonhutton'
 
-column_order = ['Summary', 'Description', 'Start', 'End', 'Organizer', 'Attendees', 'Location', 'Created']
+column_order = ['Summary', 'Description', 'Start', 'End', 'Organizer', 'Attendees', 'Location', 'LastModified', 'Created']
 
 
 def order_columns(column_name, keys):

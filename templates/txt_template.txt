@@ -8,6 +8,7 @@ End:         {{ event.End }}{% endif %}{% if 'Organizer' in event %}
 Organizer:   {{ event.Organizer|safe }}{% endif %}{% if 'Attendees' in event %}
 Attendees:   {{ event.Attendees|safe }}{% endif %}{% if 'Location' in event %}
 Location:    {{ event.Location|safe }}{% endif %}{% if 'Created' in event %}
+LastModified:{{ event.LastModified|safe }}{% endif %}{% if 'LastModified' in event %}
 Created:     {{ event.Created|safe }}{% endif %}
 {% endfor %}
 
