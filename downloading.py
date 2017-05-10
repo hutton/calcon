@@ -216,8 +216,8 @@ class Downloading(webapp2.RequestHandler):
 
                                 self.response.out.write(output_content)
                             else:
-                                support_email('Download Failed',
-                                              "Trying to download file type (" + extension + ") which hasn't been paid for, hash: " + file_hash)
+                                # support_email('Download Failed',
+                                #               "Trying to download file type (" + extension + ") which hasn't been paid for, hash: " + file_hash)
 
                                 logging.warn(
                                     "Trying to download file type (" + extension + ") which hasn't been paid for, hash: " + file_hash)
